@@ -1,6 +1,7 @@
 package frames;
 
 public class mainFrame extends javax.swing.JFrame {
+    private static mainFrame mainFrame = new mainFrame();
     public mainFrame() {
         initComponents();
     }
@@ -24,8 +25,13 @@ public class mainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main() {
-        
+    public static void main(boolean visible) {
+        if(visible == true){
+            mainFrame.setResizable(false);
+            mainFrame.setVisible(true);
+        }else{
+            mainFrame.setVisible(false);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
