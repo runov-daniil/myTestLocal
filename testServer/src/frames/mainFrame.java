@@ -110,20 +110,20 @@ public class mainFrame extends javax.swing.JFrame {
         settingsPanelLayout.setHorizontalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(202, 202, 202)
+                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(logServerBtn)
                     .addComponent(startServerBtn))
-                .addContainerGap(393, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
-                .addContainerGap(97, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(startServerBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(logServerBtn)
-                .addContainerGap())
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         statisticsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
