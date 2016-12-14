@@ -11,7 +11,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         questionPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        questionTable = new javax.swing.JTable();
         createQuestion = new javax.swing.JButton();
         deleteQuestion = new javax.swing.JButton();
         editQuestion = new javax.swing.JButton();
@@ -24,14 +24,14 @@ public class mainFrame extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         studentsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        studentsTable = new javax.swing.JTable();
         createStudent = new javax.swing.JButton();
         deleteStudent = new javax.swing.JButton();
         editStudent = new javax.swing.JButton();
         statisticsStudent = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        teacherTable = new javax.swing.JTable();
         editTeacher = new javax.swing.JButton();
         deleteTeacher = new javax.swing.JButton();
         createTeacher = new javax.swing.JButton();
@@ -40,7 +40,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         questionPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        questionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -48,7 +48,7 @@ public class mainFrame extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(questionTable);
 
         createQuestion.setText("Добавить");
 
@@ -143,7 +143,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         studentsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        studentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -151,7 +151,7 @@ public class mainFrame extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(studentsTable);
 
         createStudent.setText("Добавить");
 
@@ -192,7 +192,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ученики", studentsPanel);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        teacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -200,7 +200,7 @@ public class mainFrame extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(teacherTable);
 
         editTeacher.setText("Редактировать");
 
@@ -291,15 +291,15 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JButton logServerBtn;
     private javax.swing.JPanel questionPanel;
+    private javax.swing.JTable questionTable;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JButton startServerBtn;
     private javax.swing.JPanel statisticsPanel;
     private javax.swing.JButton statisticsStudent;
     private javax.swing.JPanel studentsPanel;
+    private javax.swing.JTable studentsTable;
+    private javax.swing.JTable teacherTable;
     // End of variables declaration//GEN-END:variables
 }
