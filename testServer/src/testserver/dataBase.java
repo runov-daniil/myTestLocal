@@ -18,12 +18,14 @@ public class dataBase {
     //Закрытие базы
     public  static void closeConnection() throws ClassNotFoundException, SQLException {
         conn.close();
-        st.close();
-        rs.close();
     }
     //Авторизация
-    public static void autorization() throws ClassNotFoundException, SQLException {
+    public static String autorization(String login, String password) throws ClassNotFoundException, SQLException {
+        String authStatus = "0";
+        Connection();
         
+        closeConnection();
+        return authStatus;
     }
     //Обновление данных на главной форме
     public static void refreshMainForm() throws ClassNotFoundException, SQLException {

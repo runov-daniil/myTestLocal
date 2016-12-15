@@ -1,5 +1,11 @@
 package frames;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import testserver.dataBase;
+
 public class loginFrame extends javax.swing.JFrame {
     private static loginFrame loginFrame = new loginFrame();
     public loginFrame() {
@@ -22,6 +28,11 @@ public class loginFrame extends javax.swing.JFrame {
         jLabel2.setText("Пароль");
 
         jButton1.setText("Вход");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,6 +71,15 @@ public class loginFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String authStatus = dataBase.autorization(loginText.getText(), passwordText.getText());
+            if(authStatus == "0"){
+                JOptionPane.showMessageDialog(rootPane, "Ошибка авторизации!");
+            }
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
