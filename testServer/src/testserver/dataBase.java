@@ -14,4 +14,9 @@ public class dataBase {
         conn = DriverManager.getConnection("jdbc:sqlite:data.db");
         st = conn.createStatement();
     }
+    
+    //Обновление данных на главной форме
+    public static void refreshMainForm() throws ClassNotFoundException, SQLException {
+        
+    }
 }
