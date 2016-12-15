@@ -4,17 +4,18 @@ import java.sql.*;
 
 public class dataBase {
     private static Connection conn;
-    private static Statement statmt;
-    private static ResultSet ResSet;
+    private static Statement st;
+    private static ResultSet rs;
     
     //Подключение к базе
     public static void Connection() throws ClassNotFoundException, SQLException{
         conn = null;
         Class.forName("org.sqlite.JDBC");
         conn = DriverManager.getConnection("jdbc:sqlite:data.db");
-        ResSet = statmt.executeQuery("SELECT * FROM users");
-        while (ResSet.next()) {
-            System.out.println(ResSet.getString("login"));
+        st = conn.createStatement();
+        rs = st.executeQuery("SELECT * FROM users;");
+        while (rs.next()) {
+            System.out.println(rs.getString("login"));
         }
     }
 }
