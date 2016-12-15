@@ -1,5 +1,9 @@
 package frames;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class mainFrame extends javax.swing.JFrame {
     private static mainFrame mainFrame = new mainFrame();
     public mainFrame() {
@@ -103,6 +107,11 @@ public class mainFrame extends javax.swing.JFrame {
 
         startServerBtn.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         startServerBtn.setText("Старт сервер");
+        startServerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startServerBtnActionPerformed(evt);
+            }
+        });
 
         logServerBtn.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         logServerBtn.setText("Открыть лог");
@@ -264,6 +273,10 @@ public class mainFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void startServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerBtnActionPerformed
+        try {testserver.dataBase.Connection();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_startServerBtnActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
