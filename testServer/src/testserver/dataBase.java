@@ -13,9 +13,5 @@ public class dataBase {
         Class.forName("org.sqlite.JDBC");
         conn = DriverManager.getConnection("jdbc:sqlite:data.db");
         st = conn.createStatement();
-        rs = st.executeQuery("SELECT * FROM users;");
-        while (rs.next()) {
-            System.out.println(rs.getString("login"));
-        }
     }
 }
