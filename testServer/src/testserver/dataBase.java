@@ -13,8 +13,18 @@ public class dataBase {
         Class.forName("org.sqlite.JDBC");
         conn = DriverManager.getConnection("jdbc:sqlite:data.db");
         st = conn.createStatement();
+        conn.setAutoCommit(true);
     }
-    
+    //Закрытие базы
+    public  static void closeConnection() throws ClassNotFoundException, SQLException {
+        conn.close();
+        st.close();
+        rs.close();
+    }
+    //Авторизация
+    public static void autorization() throws ClassNotFoundException, SQLException {
+        
+    }
     //Обновление данных на главной форме
     public static void refreshMainForm() throws ClassNotFoundException, SQLException {
         

@@ -6,4 +6,7 @@ public class TestServer {
         frames.loginFrame.main(true);
     }
     
+    public static void initialization(String level) {
+        
+    }
 }
