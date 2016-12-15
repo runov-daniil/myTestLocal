@@ -28,10 +28,16 @@ public class dataBase {
         while(rs.next()){
             String getLogin = rs.getString("login");
             String getPassword = rs.getString("password");
-            if((getLogin == login)&&(getPassword == password)){
+            System.out.println(login + " " + password);
+            if((getLogin.equals(login))&&(getPassword.equals(password))){
                 flag = true;
                 break;
             }
+        }
+        if(flag == true){
+            rs = st.executeQuery("SELECT level FROM users WHERE login = '" + login + "';");
+            authStatus = rs.getString("level");
+            System.out.println(rs.getString("level"));
         }
         closeConnection();
         return authStatus;
