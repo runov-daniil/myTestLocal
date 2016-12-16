@@ -107,4 +107,8 @@ public class dataBase {
         dtm.setDataVector(table, header);
         closeConnection();
     }
+    //Добавление ученика в базу данных, создание нового пользователя
+    public static void createNewStudent()throws ClassNotFoundException, SQLException {
+        
+    }
 }
