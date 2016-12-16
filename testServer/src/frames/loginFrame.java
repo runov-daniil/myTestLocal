@@ -79,7 +79,6 @@ public class loginFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Ошибка авторизации!");
             }else if(authStatus.equals("admin")){
                 mainFrame.main(true);
-                mainFrame.l
                 this.dispose();
             }
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
