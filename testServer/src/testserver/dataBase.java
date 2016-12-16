@@ -107,8 +107,21 @@ public class dataBase {
         dtm.setDataVector(table, header);
         closeConnection();
     }
+    //Обновление классов
+    public static String refreshClasses() throws ClassNotFoundException, SQLException {
+        String classes = "";
+        Connection();
+        rs = st.executeQuery("SELECT * FROM classes;");
+        while(rs.next()){
+            String number = rs.getString("number");
+            String litera = rs.getString("litera");
+            classes = number + litera + "|";
+        }
+        closeConnection();
+        return classes;
+    }
     //Добавление ученика в базу данных, создание нового пользователя
-    public static void createNewStudent()throws ClassNotFoundException, SQLException {
+    public static void createNewUser(String level)throws ClassNotFoundException, SQLException {
         
     }
 }

@@ -314,12 +314,12 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_startServerBtnActionPerformed
 
     private void createStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createStudentActionPerformed
-        frames.createNewUser.main(true);
+        try {frames.createNewUser.main(true);frames.createNewUser.revealClassSettings();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         enableMainForm(false);
     }//GEN-LAST:event_createStudentActionPerformed
 
     private void createTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createTeacherActionPerformed
-        frames.createNewUser.main(true);
+        try {frames.createNewUser.main(true);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         enableMainForm(false);
         frames.createNewUser.hideClassSettings();
     }//GEN-LAST:event_createTeacherActionPerformed

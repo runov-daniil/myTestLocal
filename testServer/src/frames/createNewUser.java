@@ -1,5 +1,8 @@
 package frames;
 
+import java.sql.SQLException;
+import testserver.dataBase;
+
 public class createNewUser extends javax.swing.JFrame {
     private static createNewUser createNewUser = new createNewUser();
     public createNewUser() {
@@ -126,9 +129,21 @@ public class createNewUser extends javax.swing.JFrame {
         frames.mainFrame.enableMainForm(true);
     }//GEN-LAST:event_formWindowClosing
 
-    public static void main(boolean visible) {
+    public static void main(boolean visible) throws ClassNotFoundException, SQLException {
         if(visible == true){
             createNewUser.setResizable(false);
+            String classes = dataBase.refreshClasses();
+            int lengthString = classes.length();
+            String newString = "";
+            for(int i = 0; i < lengthString; i++){
+                char ch = classes.charAt(i);
+                if(ch == '|'){
+                    createNewUser.classSelect.addItem(newString);
+                    newString = "";
+                }else{
+                    newString = newString + ch;
+                }
+            }
             createNewUser.setVisible(true);
         }else{
             createNewUser.dispose();
@@ -137,6 +152,9 @@ public class createNewUser extends javax.swing.JFrame {
     
     public static void hideClassSettings(){
         createNewUser.jPanel2.setVisible(false);
+    }
+    public static void revealClassSettings(){
+        createNewUser.jPanel2.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
