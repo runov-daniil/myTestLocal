@@ -188,6 +188,11 @@ public class mainFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(studentsTable);
 
         createStudent.setText("Добавить");
+        createStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createStudentActionPerformed(evt);
+            }
+        });
 
         deleteStudent.setText("Удалить");
 
@@ -241,6 +246,11 @@ public class mainFrame extends javax.swing.JFrame {
         deleteTeacher.setText("Удалить");
 
         createTeacher.setText("Добавить");
+        createTeacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createTeacherActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -303,6 +313,17 @@ public class mainFrame extends javax.swing.JFrame {
         try {testserver.dataBase.Connection();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_startServerBtnActionPerformed
 
+    private void createStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createStudentActionPerformed
+        frames.createNewUser.main(true);
+        enableMainForm(false);
+    }//GEN-LAST:event_createStudentActionPerformed
+
+    private void createTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createTeacherActionPerformed
+        frames.createNewUser.main(true);
+        enableMainForm(false);
+        frames.createNewUser.hideClassSettings();
+    }//GEN-LAST:event_createTeacherActionPerformed
+
     public static void main(boolean visible) {
         if(visible == true){
             mainFrame.setResizable(false);
@@ -318,6 +339,14 @@ public class mainFrame extends javax.swing.JFrame {
     
     public static void setQuestionPanel() {
         
+    }
+    
+    public static void enableMainForm(boolean enable) {
+        if(enable == true){
+            mainFrame.setEnabled(true);
+        }else{
+            mainFrame.setEnabled(false);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
