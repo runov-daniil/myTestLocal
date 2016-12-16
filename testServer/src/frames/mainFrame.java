@@ -1,8 +1,11 @@
 package frames;
 
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import testserver.dataBase;
 
 public class mainFrame extends javax.swing.JFrame {
     private static mainFrame mainFrame = new mainFrame();
@@ -21,14 +24,12 @@ public class mainFrame extends javax.swing.JFrame {
         editQuestion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        settingsPanel = new javax.swing.JPanel();
+        servicePanel = new javax.swing.JPanel();
         startServerBtn = new javax.swing.JButton();
         logServerBtn = new javax.swing.JButton();
-        statisticsPanel = new javax.swing.JPanel();
+        settingsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         loginLabel = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        fioLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         studentsPanel = new javax.swing.JPanel();
@@ -108,7 +109,7 @@ public class mainFrame extends javax.swing.JFrame {
                         .addContainerGap())))
         );
 
-        settingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        servicePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         startServerBtn.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         startServerBtn.setText("Старт сервер");
@@ -121,20 +122,20 @@ public class mainFrame extends javax.swing.JFrame {
         logServerBtn.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         logServerBtn.setText("Открыть лог");
 
-        javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
-        settingsPanel.setLayout(settingsPanelLayout);
-        settingsPanelLayout.setHorizontalGroup(
-            settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingsPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout servicePanelLayout = new javax.swing.GroupLayout(servicePanel);
+        servicePanel.setLayout(servicePanelLayout);
+        servicePanelLayout.setHorizontalGroup(
+            servicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(servicePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(servicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(startServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        settingsPanelLayout.setVerticalGroup(
-            settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingsPanelLayout.createSequentialGroup()
+        servicePanelLayout.setVerticalGroup(
+            servicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(servicePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(startServerBtn)
                 .addGap(18, 18, 18)
@@ -142,52 +143,36 @@ public class mainFrame extends javax.swing.JFrame {
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        statisticsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        settingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel2.setText("Имя учетной записи:");
 
         loginLabel.setText("loginLabel");
 
-        jLabel4.setText("ФИО пользователя:");
-
-        fioLabel.setText("fioLabel");
-
         jButton1.setText("Сменить пароль");
 
-        javax.swing.GroupLayout statisticsPanelLayout = new javax.swing.GroupLayout(statisticsPanel);
-        statisticsPanel.setLayout(statisticsPanelLayout);
-        statisticsPanelLayout.setHorizontalGroup(
-            statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statisticsPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
+        settingsPanel.setLayout(settingsPanelLayout);
+        settingsPanelLayout.setHorizontalGroup(
+            settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(statisticsPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(loginLabel))
-                    .addGroup(statisticsPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fioLabel)))
-                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loginLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        statisticsPanelLayout.setVerticalGroup(
-            statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statisticsPanelLayout.createSequentialGroup()
+        settingsPanelLayout.setVerticalGroup(
+            settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(statisticsPanelLayout.createSequentialGroup()
-                        .addGroup(statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(loginLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(statisticsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(fioLabel)))
+                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(loginLabel)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         studentsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -291,11 +276,11 @@ public class mainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(statisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(questionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(servicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1)))
         );
         layout.setVerticalGroup(
@@ -306,8 +291,8 @@ public class mainFrame extends javax.swing.JFrame {
                     .addComponent(questionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(statisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(servicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -326,6 +311,14 @@ public class mainFrame extends javax.swing.JFrame {
             mainFrame.setVisible(false);
         }
     }
+    
+    public static void setSettingsPanel(String login) {
+        mainFrame.loginLabel.setText(login);
+    }
+    
+    public static void setQuestionPanel() {
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createQuestion;
@@ -337,11 +330,9 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JButton editQuestion;
     private javax.swing.JButton editStudent;
     private javax.swing.JButton editTeacher;
-    private javax.swing.JLabel fioLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -352,12 +343,12 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel loginLabel;
     private javax.swing.JPanel questionPanel;
     private javax.swing.JTable questionTable;
+    private javax.swing.JPanel servicePanel;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JButton startServerBtn;
-    private javax.swing.JPanel statisticsPanel;
     private javax.swing.JButton statisticsStudent;
     private javax.swing.JPanel studentsPanel;
-    private javax.swing.JTable studentsTable;
-    private javax.swing.JTable teacherTable;
+    public static javax.swing.JTable studentsTable;
+    public static javax.swing.JTable teacherTable;
     // End of variables declaration//GEN-END:variables
 }

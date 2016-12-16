@@ -25,7 +25,11 @@ public class loginFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Логин");
 
+        loginText.setText("admin");
+
         jLabel2.setText("Пароль");
+
+        passwordText.setText("442014251");
 
         jButton1.setText("Вход");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +83,9 @@ public class loginFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Ошибка авторизации!");
             }else if(authStatus.equals("admin")){
                 mainFrame.main(true);
+                mainFrame.setSettingsPanel(loginText.getText());
+                dataBase.refreshTeachers();
+                dataBase.refreshStudents();
                 this.dispose();
             }
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
