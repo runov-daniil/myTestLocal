@@ -328,6 +328,7 @@ public class mainFrame extends javax.swing.JFrame {
         if(visible == true){
             mainFrame.setResizable(false);
             mainFrame.setVisible(true);
+            mainFrame.setEnabled(true);
         }else{
             mainFrame.setVisible(false);
         }
