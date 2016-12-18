@@ -5,8 +5,8 @@
         <group>
             <file>file:/C:/myTestLocal/testServer/src/frames/mainFrame.java</file>
             <file>file:/C:/myTestLocal/testServer/src/testserver/TestServer.java</file>
+            <file>file:/C:/myTestLocal/testServer/src/frames/createNewUser.java</file>
             <file>file:/C:/myTestLocal/testServer/src/testserver/dataBase.java</file>
-            <file>file:/C:/myTestLocal/testServer/src/frames/loginFrame.java</file>
         </group>
     </open-files>
 </project-private>

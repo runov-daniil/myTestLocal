@@ -120,7 +120,7 @@ public class dataBase {
         closeConnection();
         return classes;
     }
-    //Добавление ученика в базу данных, создание нового пользователя
+    //Добавление пользователей в базу данных, создание нового пользователя
     public static void createNewUser(String level, String FIO, String login, String password, String Class)throws ClassNotFoundException, SQLException {
         Connection();
         switch (level){
@@ -176,5 +176,28 @@ public class dataBase {
                 break;
         }
         closeConnection();
+    }
+    //Удаление пользователей из базы
+    public static void deleteUser(int id, String level) throws ClassNotFoundException, SQLException {
+        switch(level){
+            case "student":
+                System.out.println("Вижу студента, начинаю удаление");
+                System.out.println("Удаляю личные данные");
+                st.execute("DELETE FROM students WHERE id_user = '"+id+"';");
+                System.out.println("Данные удалены, удаляю аккаунт");
+                st.execute("DELETE FROM users WHERE id_user = '"+id+"';");
+                System.out.println("Пользователь удален из системы! Обновляю данные на форме");
+                refreshStudents();
+                break;
+            case "teacher":
+                System.out.println("Вижу учителя, начинаю удаление");
+                System.out.println("Удаляю личные данные");
+                st.execute("DELETE FROM teachers WHERE id_user = '"+id+"';");
+                System.out.println("Данные удалены, удаляю аккаунт");
+                st.execute("DELETE FROM users WHERE id_user = '"+id+"';");
+                System.out.println("Пользователь удален из системы! Обновляю данные на форме");
+                refreshTeachers();
+                break;
+        }
     }
 }

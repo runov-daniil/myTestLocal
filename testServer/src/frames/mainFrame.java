@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import testserver.dataBase;
 
@@ -195,6 +197,11 @@ public class mainFrame extends javax.swing.JFrame {
         });
 
         deleteStudent.setText("Удалить");
+        deleteStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteStudentActionPerformed(evt);
+            }
+        });
 
         editStudent.setText("Редактировать");
 
@@ -323,6 +330,17 @@ public class mainFrame extends javax.swing.JFrame {
         enableMainForm(false);
         frames.createNewUser.hideClassSettings();
     }//GEN-LAST:event_createTeacherActionPerformed
+
+    private void deleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStudentActionPerformed
+        int count = studentsTable.getRowCount();
+        for(int i = 0; i < count; i++){
+            if(studentsTable.isCellSelected(i, 0)){
+                Object object = studentsTable.getValueAt(i, 0);
+                int id = Integer.parseInt(object.toString());
+                try {dataBase.deleteUser(id, "student");} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+            }
+        }        
+    }//GEN-LAST:event_deleteStudentActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
