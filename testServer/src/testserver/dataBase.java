@@ -121,7 +121,42 @@ public class dataBase {
         return classes;
     }
     //Добавление ученика в базу данных, создание нового пользователя
-    public static void createNewUser(String level)throws ClassNotFoundException, SQLException {
-        
+    public static void createNewUser(String level, String FIO, String login, String password, String Class)throws ClassNotFoundException, SQLException {
+        Connection();
+        switch (level){
+            case "student":
+                System.out.println("Вижу студента начинаю сохранение");
+                System.out.println("Вычисляю ID");
+                rs = st.executeQuery("SELECT * FROM users;");
+                int newRec = 0;
+                while (rs.next()) {                    
+                    if(newRec == rs.getInt("id_user")){
+                        newRec++;
+                    }else{
+                        break;
+                    }
+                }
+                st.execute("INSERT INTO users(id_user, login, password, level)VALUES('" + newRec +"', '"+login+"', '"+password+"', '"+level+"');");
+                System.out.println("Аккаунт создан, сохраняю личные данные!");
+                System.out.println("Вычисляю ID класса");
+                int length = Class.length();
+                String litera = String.valueOf(Class.charAt(length - 1));
+                String number = Class.substring(0, length - 1);
+                Statement idClassSt = conn.createStatement();
+                ResultSet idClassRs = idClassSt.executeQuery("SELECT * FROM classes;");
+                int idClass = 0;
+                while (idClassRs.next()) {                    
+                    String currentNumber = idClassRs.getString("number");
+                    String currentLitera = idClassRs.getString("litera");
+                    if(currentLitera.equals(litera) & (currentNumber.equals(number))){
+                        idClass = idClassRs.getInt("id_class");
+                    }
+                }
+                st.execute("INSERT INTO students(id_user, fio, id_class)VALUES('"+newRec+"', '"+FIO+"', '"+idClass+"');");
+                System.out.println("Личные данные сохранены, обновляю данные на форме!");
+                refreshStudents();
+                break;
+        }
+        closeConnection();
     }
 }

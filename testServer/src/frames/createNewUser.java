@@ -1,6 +1,8 @@
 package frames;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import testserver.dataBase;
 
 public class createNewUser extends javax.swing.JFrame {
@@ -26,6 +28,9 @@ public class createNewUser extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -96,6 +101,11 @@ public class createNewUser extends javax.swing.JFrame {
         );
 
         jButton1.setText("Добавить");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,6 +138,19 @@ public class createNewUser extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         frames.mainFrame.enableMainForm(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(jPanel2.isVisible() == true){
+            try {
+                dataBase.createNewUser("student", fioText.getText(), loginText.getText(), passwordText.getText(), classSelect.getSelectedItem().toString());
+                this.dispose();
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        mainFrame.main(true);
+    }//GEN-LAST:event_formWindowClosed
 
     public static void main(boolean visible) throws ClassNotFoundException, SQLException {
         if(visible == true){
