@@ -145,6 +145,11 @@ public class createNewUser extends javax.swing.JFrame {
                 dataBase.createNewUser("student", fioText.getText(), loginText.getText(), passwordText.getText(), classSelect.getSelectedItem().toString());
                 this.dispose();
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        }else{
+           try {
+                dataBase.createNewUser("teacher", fioText.getText(), loginText.getText(), passwordText.getText(), "null");
+                this.dispose();
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {} 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -156,6 +156,24 @@ public class dataBase {
                 System.out.println("Личные данные сохранены, обновляю данные на форме!");
                 refreshStudents();
                 break;
+            case "teacher":
+                System.out.println("Вижу учителя начинаю сохранение");
+                System.out.println("Вычисляю ID");
+                rs = st.executeQuery("SELECT * FROM users;");
+                newRec = 0;
+                while (rs.next()) {                    
+                    if(newRec == rs.getInt("id_user")){
+                        newRec++;
+                    }else{
+                        break;
+                    }
+                }
+                st.execute("INSERT INTO users(id_user, login, password, level)VALUES('" + newRec +"', '"+login+"', '"+password+"', '"+level+"');");
+                System.out.println("Аккаунт пользователя создан, обновляю личные данные");
+                st.execute("INSERT INTO teachers(id_user, fio)VALUES('"+newRec+"', '"+FIO+"');");
+                System.out.println("Личные данные учителя сохранены, обновляю данные на форме");
+                refreshTeachers();
+                break;
         }
         closeConnection();
     }
