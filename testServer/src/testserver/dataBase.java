@@ -127,15 +127,10 @@ public class dataBase {
             case "student":
                 System.out.println("Вижу студента начинаю сохранение");
                 System.out.println("Вычисляю ID");
-                rs = st.executeQuery("SELECT * FROM users;");
-                int newRec = 0;
-                while (rs.next()) {                    
-                    if(newRec == rs.getInt("id_user")){
-                        newRec++;
-                    }else{
-                        break;
-                    }
-                }
+                closeConnection();
+                int newRec = calculationID();
+                System.out.println(newRec);
+                Connection();
                 st.execute("INSERT INTO users(id_user, login, password, level)VALUES('" + newRec +"', '"+login+"', '"+password+"', '"+level+"');");
                 System.out.println("Аккаунт создан, сохраняю личные данные!");
                 System.out.println("Вычисляю ID класса");
@@ -152,6 +147,7 @@ public class dataBase {
                         idClass = idClassRs.getInt("id_class");
                     }
                 }
+                Connection();
                 st.execute("INSERT INTO students(id_user, fio, id_class)VALUES('"+newRec+"', '"+FIO+"', '"+idClass+"');");
                 System.out.println("Личные данные сохранены, обновляю данные на форме!");
                 refreshStudents();
@@ -159,17 +155,12 @@ public class dataBase {
             case "teacher":
                 System.out.println("Вижу учителя начинаю сохранение");
                 System.out.println("Вычисляю ID");
-                rs = st.executeQuery("SELECT * FROM users;");
-                newRec = 0;
-                while (rs.next()) {                    
-                    if(newRec == rs.getInt("id_user")){
-                        newRec++;
-                    }else{
-                        break;
-                    }
-                }
+                newRec = calculationID();
+                System.out.println(newRec);
+                Connection();
                 st.execute("INSERT INTO users(id_user, login, password, level)VALUES('" + newRec +"', '"+login+"', '"+password+"', '"+level+"');");
                 System.out.println("Аккаунт пользователя создан, обновляю личные данные");
+                Connection();
                 st.execute("INSERT INTO teachers(id_user, fio)VALUES('"+newRec+"', '"+FIO+"');");
                 System.out.println("Личные данные учителя сохранены, обновляю данные на форме");
                 refreshTeachers();
@@ -201,5 +192,36 @@ public class dataBase {
                 break;
         }
         closeConnection();
+    }
+    
+    //Вычисление ID
+    private static int calculationID() throws ClassNotFoundException, SQLException {
+        int newRec = 0;
+        Connection();
+        
+        boolean flag = true;
+        while(true){
+            rs = st.executeQuery("SELECT * FROM users;");
+            while(rs.next()){
+                int id = rs.getInt("id_user");
+                System.out.println("ID из базы" + id);
+                if(id == newRec){
+                    System.out.println("ID существует");
+                    flag = true;
+                    break;
+                }else{
+                    System.out.println("ID не существует");
+                    flag = false;
+                }
+            }
+            if(flag == true){
+                newRec++;
+            }else{
+                break;
+            }
+        }
+        System.out.println(newRec);
+        closeConnection();
+        return newRec;
     }
 }
