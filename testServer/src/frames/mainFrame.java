@@ -373,7 +373,7 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteTeacherActionPerformed
 
     private void classesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classesBtnActionPerformed
-        classesFrame.main(true);
+        try {classesFrame.main(true);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_classesBtnActionPerformed
 
     public static void main(boolean visible) {

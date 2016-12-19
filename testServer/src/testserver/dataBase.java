@@ -193,6 +193,25 @@ public class dataBase {
         }
         closeConnection();
     }
+    //Обновление классов для формы работы с классами
+    public static void refreshClassesForm() throws ClassNotFoundException, SQLException{
+        Connection();
+        rs = st.executeQuery("SELECT * FROM classes;");
+        Vector table = new Vector();
+        while(rs.next()){
+            Vector element = new Vector();
+            int number = rs.getInt("number");
+            String litera = rs.getString("litera");
+            element.add(number);
+            element.add(litera);
+            table.add(element);
+        }
+        Vector header = new Vector();
+        header.add("Номер"); header.add("Литера");
+        DefaultTableModel dtm = (DefaultTableModel)frames.classesFrame.classesTable.getModel();
+        dtm.setDataVector(table, header);
+        closeConnection();
+    }
     
     //Вычисление ID
     private static int calculationID() throws ClassNotFoundException, SQLException {

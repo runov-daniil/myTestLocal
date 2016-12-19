@@ -1,5 +1,10 @@
 package frames;
 
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import testserver.dataBase;
+
 public class classesFrame extends javax.swing.JFrame {
     private static classesFrame classesFrame = new classesFrame();
     public classesFrame() {
@@ -64,6 +69,10 @@ public class classesFrame extends javax.swing.JFrame {
 
         jButton1.setText("Добавить");
 
+        numberSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" }));
+
+        literaSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "А", "Б", "В", "Г", "Д" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -126,10 +135,11 @@ public class classesFrame extends javax.swing.JFrame {
         mainFrame.enableMainForm(true);
     }//GEN-LAST:event_formWindowClosing
 
-    public static void main(boolean visible) {
+    public static void main(boolean visible) throws ClassNotFoundException, SQLException {
         if(visible == true){
             mainFrame.enableMainForm(false);
             classesFrame.setResizable(false);
+            dataBase.refreshClassesForm();
             classesFrame.setVisible(true);
         }else{
             classesFrame.setVisible(false);
@@ -137,7 +147,7 @@ public class classesFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable classesTable;
+    public static javax.swing.JTable classesTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -145,7 +155,7 @@ public class classesFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JComboBox<String> literaSelect;
-    private javax.swing.JComboBox<String> numberSelect;
+    public static javax.swing.JComboBox<String> literaSelect;
+    public static javax.swing.JComboBox<String> numberSelect;
     // End of variables declaration//GEN-END:variables
 }
