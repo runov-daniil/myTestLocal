@@ -29,6 +29,7 @@ public class mainFrame extends javax.swing.JFrame {
         servicePanel = new javax.swing.JPanel();
         startServerBtn = new javax.swing.JButton();
         logServerBtn = new javax.swing.JButton();
+        classesBtn = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         loginLabel = new javax.swing.JLabel();
@@ -113,7 +114,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         servicePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        startServerBtn.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        startServerBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         startServerBtn.setText("Старт сервер");
         startServerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,8 +122,16 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
-        logServerBtn.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        logServerBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         logServerBtn.setText("Открыть лог");
+
+        classesBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        classesBtn.setText("Классы");
+        classesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classesBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout servicePanelLayout = new javax.swing.GroupLayout(servicePanel);
         servicePanel.setLayout(servicePanelLayout);
@@ -132,7 +141,8 @@ public class mainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(servicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(startServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(logServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(logServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(classesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         servicePanelLayout.setVerticalGroup(
@@ -142,7 +152,9 @@ public class mainFrame extends javax.swing.JFrame {
                 .addComponent(startServerBtn)
                 .addGap(18, 18, 18)
                 .addComponent(logServerBtn)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(classesBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         settingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -360,6 +372,10 @@ public class mainFrame extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_deleteTeacherActionPerformed
 
+    private void classesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classesBtnActionPerformed
+        classesFrame.main(true);
+    }//GEN-LAST:event_classesBtnActionPerformed
+
     public static void main(boolean visible) {
         if(visible == true){
             mainFrame.setResizable(false);
@@ -387,6 +403,7 @@ public class mainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton classesBtn;
     private javax.swing.JButton createQuestion;
     private javax.swing.JButton createStudent;
     private javax.swing.JButton createTeacher;
