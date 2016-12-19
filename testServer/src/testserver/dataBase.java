@@ -179,13 +179,14 @@ public class dataBase {
     }
     //Удаление пользователей из базы
     public static void deleteUser(int id, String level) throws ClassNotFoundException, SQLException {
+        Connection();
         switch(level){
             case "student":
-                System.out.println("Вижу студента, начинаю удаление");
+                System.out.println("Вижу студента c id "+id);
                 System.out.println("Удаляю личные данные");
                 st.execute("DELETE FROM students WHERE id_user = '"+id+"';");
                 System.out.println("Данные удалены, удаляю аккаунт");
-                st.execute("DELETE FROM users WHERE id_user = '"+id+"';");
+                st.execute("DELETE FROM users WHERE id_user = "+id+";");
                 System.out.println("Пользователь удален из системы! Обновляю данные на форме");
                 refreshStudents();
                 break;
@@ -199,5 +200,6 @@ public class dataBase {
                 refreshTeachers();
                 break;
         }
+        closeConnection();
     }
 }

@@ -251,6 +251,11 @@ public class mainFrame extends javax.swing.JFrame {
         editTeacher.setText("Редактировать");
 
         deleteTeacher.setText("Удалить");
+        deleteTeacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteTeacherActionPerformed(evt);
+            }
+        });
 
         createTeacher.setText("Добавить");
         createTeacher.addActionListener(new java.awt.event.ActionListener() {
@@ -337,10 +342,23 @@ public class mainFrame extends javax.swing.JFrame {
             if(studentsTable.isCellSelected(i, 0)){
                 Object object = studentsTable.getValueAt(i, 0);
                 int id = Integer.parseInt(object.toString());
+                System.out.println(id);
                 try {dataBase.deleteUser(id, "student");} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
             }
         }        
     }//GEN-LAST:event_deleteStudentActionPerformed
+
+    private void deleteTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTeacherActionPerformed
+        int count = teacherTable.getRowCount();
+        for(int i = 0; i < count; i++){
+            if(teacherTable.isCellSelected(i, 0)){
+                Object object = teacherTable.getValueAt(i, 0);
+                int id = Integer.parseInt(object.toString());
+                System.out.println(id);
+                try {dataBase.deleteUser(id, "teacher");} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+            }
+        } 
+    }//GEN-LAST:event_deleteTeacherActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
