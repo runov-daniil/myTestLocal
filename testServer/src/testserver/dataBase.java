@@ -243,4 +243,16 @@ public class dataBase {
         closeConnection();
         return newRec;
     }
+    //Проверка на существование класса при добавлении(отсекаем существующие классы с формы)
+    public static void sortClass(String check) throws ClassNotFoundException, SQLException {
+        Connection();
+        rs = st.executeQuery("SELECT * FROM classes;");
+        while (rs.next()) { 
+            String symbol = "АБВГД";
+            int number = rs.getInt("number");
+            String litera = rs.getString("litera");
+            
+        }
+        closeConnection();
+    }
 }

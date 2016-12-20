@@ -2,6 +2,8 @@ package frames;
 
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import testserver.dataBase;
 
@@ -70,6 +72,16 @@ public class classesFrame extends javax.swing.JFrame {
         jButton1.setText("Добавить");
 
         numberSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" }));
+        numberSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                numberSelectMouseClicked(evt);
+            }
+        });
+        numberSelect.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                numberSelectItemStateChanged(evt);
+            }
+        });
 
         literaSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "А", "Б", "В", "Г", "Д" }));
 
@@ -134,6 +146,18 @@ public class classesFrame extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         mainFrame.enableMainForm(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void numberSelectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_numberSelectItemStateChanged
+        try {
+            dataBase.sortClass(numberSelect.getSelectedItem().toString());
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_numberSelectItemStateChanged
+
+    private void numberSelectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_numberSelectMouseClicked
+        try {
+            dataBase.sortClass(numberSelect.getSelectedItem().toString());
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_numberSelectMouseClicked
 
     public static void main(boolean visible) throws ClassNotFoundException, SQLException {
         if(visible == true){
