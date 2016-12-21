@@ -48,6 +48,11 @@ public class classesFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(classesTable);
 
         jButton2.setText("Удалить");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -182,6 +187,13 @@ public class classesFrame extends javax.swing.JFrame {
             jTabbedPane1.setSelectedIndex(0);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int row = classesTable.getSelectedRow();
+        try {
+            dataBase.deleteClass(Integer.parseInt(classesTable.getValueAt(row, 0).toString()), classesTable.getValueAt(row, 1).toString());
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(boolean visible) throws ClassNotFoundException, SQLException {
         if(visible == true){

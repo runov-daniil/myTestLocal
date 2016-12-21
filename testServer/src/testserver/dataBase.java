@@ -115,7 +115,7 @@ public class dataBase {
         while(rs.next()){
             String number = rs.getString("number");
             String litera = rs.getString("litera");
-            classes = number + litera + "|";
+            classes = classes + number + litera + "|";
         }
         closeConnection();
         return classes;
@@ -221,8 +221,11 @@ public class dataBase {
         closeConnection();
     }
     //Удаление класса из БД
-    public static void deleteClass() throws ClassNotFoundException, SQLException {
-        
+    public static void deleteClass(int number, String litera) throws ClassNotFoundException, SQLException {
+        System.out.println("Запущена процедура удаления "+number+" "+litera+" класса!");
+        Connection();
+        rs = st.executeQuery("SELECT * FROM students;");
+        closeConnection();
     }
     
     //Вычисление ID

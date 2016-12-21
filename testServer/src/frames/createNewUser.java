@@ -161,6 +161,7 @@ public class createNewUser extends javax.swing.JFrame {
         if(visible == true){
             createNewUser.setResizable(false);
             String classes = dataBase.refreshClasses();
+            createNewUser.classSelect.removeAllItems();
             int lengthString = classes.length();
             String newString = "";
             for(int i = 0; i < lengthString; i++){
