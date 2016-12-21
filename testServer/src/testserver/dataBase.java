@@ -128,7 +128,7 @@ public class dataBase {
                 System.out.println("Вижу студента начинаю сохранение");
                 System.out.println("Вычисляю ID");
                 closeConnection();
-                int newRec = calculationID();
+                int newRec = calculationID("user");
                 System.out.println(newRec);
                 Connection();
                 st.execute("INSERT INTO users(id_user, login, password, level)VALUES('" + newRec +"', '"+login+"', '"+password+"', '"+level+"');");
@@ -155,7 +155,7 @@ public class dataBase {
             case "teacher":
                 System.out.println("Вижу учителя начинаю сохранение");
                 System.out.println("Вычисляю ID");
-                newRec = calculationID();
+                newRec = calculationID("user");
                 System.out.println(newRec);
                 Connection();
                 st.execute("INSERT INTO users(id_user, login, password, level)VALUES('" + newRec +"', '"+login+"', '"+password+"', '"+level+"');");
@@ -212,17 +212,24 @@ public class dataBase {
         dtm.setDataVector(table, header);
         closeConnection();
     }
+    //Добавление нового класса в БД
+    public static void createNewClass(int number, String litera) throws ClassNotFoundException, SQLException {
+        Connection();
+        
+        st.execute("INSERT INTO classes(id_class, number, litera)VALUES('', '"+number+"', '"+litera+"');");
+        closeConnection();
+    }
     
     //Вычисление ID
-    private static int calculationID() throws ClassNotFoundException, SQLException {
+    private static int calculationID(String type) throws ClassNotFoundException, SQLException {
         int newRec = 0;
         Connection();
         
         boolean flag = true;
         while(true){
-            rs = st.executeQuery("SELECT * FROM users;");
+            rs = st.executeQuery("SELECT * FROM "+type+"s;");
             while(rs.next()){
-                int id = rs.getInt("id_user");
+                int id = rs.getInt("id_"+type+"");
                 System.out.println("ID из базы" + id);
                 if(id == newRec){
                     System.out.println("ID существует");
