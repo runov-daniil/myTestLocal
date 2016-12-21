@@ -223,9 +223,22 @@ public class dataBase {
     //Удаление класса из БД
     public static void deleteClass(int number, String litera) throws ClassNotFoundException, SQLException {
         System.out.println("Запущена процедура удаления "+number+" "+litera+" класса!");
-        Connection();
-        rs = st.executeQuery("SELECT * FROM students;");
+        Connection();        
+        Statement idClassSt = conn.createStatement();
+        ResultSet idClassRs = idClassSt.executeQuery("SELECT id_class FROM classes WHERE number = '"+number+"' AND litera='"+litera+"';");
+        int deleteID = 0;
+        while(idClassRs.next()){
+            System.out.println("Удаляем класс "+idClassRs.getInt("id_class"));
+            deleteID = idClassRs.getInt("id_class");
+        }
+        System.out.println("Перевожу учеников в системый класс!");
+        st.execute("UPDATE students SET id_class = '0' WHERE id_class = '"+deleteID+"';");
+        st.execute("DELETE FROM classes WHERE id_class = '"+deleteID+"';");
         closeConnection();
+        refreshClassesForm();
+        refreshStudents();
+        frames.classesFrame.numberSelect.setSelectedItem(0);
+        sortClass(1);
     }
     
     //Вычисление ID
