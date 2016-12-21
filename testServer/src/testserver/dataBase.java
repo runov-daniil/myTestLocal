@@ -244,14 +244,27 @@ public class dataBase {
         return newRec;
     }
     //Проверка на существование класса при добавлении(отсекаем существующие классы с формы)
-    public static void sortClass(String check) throws ClassNotFoundException, SQLException {
+    public static void sortClass(int check) throws ClassNotFoundException, SQLException {
         Connection();
         rs = st.executeQuery("SELECT * FROM classes;");
+        frames.classesFrame.literaSelect.removeAllItems();
+        String symbol = "АБВГД";
+        int length = symbol.length();
         while (rs.next()) { 
-            String symbol = "АБВГД";
             int number = rs.getInt("number");
             String litera = rs.getString("litera");
-            
+            char literaCh = litera.charAt(0);
+            for(int i = 0; i < length; i++){
+                char ch = symbol.charAt(i);
+                if((ch == literaCh)&(number == check)){
+                    symbol = symbol.substring(0, i) + symbol.substring(i + 1);
+                    length = length - 1;
+                }
+            }  
+        }
+        length = symbol.length();
+        for(int i = 0; i < length; i++){
+            frames.classesFrame.literaSelect.addItem(String.valueOf(symbol.charAt(i)));
         }
         closeConnection();
     }

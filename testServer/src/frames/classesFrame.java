@@ -83,7 +83,7 @@ public class classesFrame extends javax.swing.JFrame {
             }
         });
 
-        literaSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "А", "Б", "В", "Г", "Д" }));
+        literaSelect.setToolTipText("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -149,13 +149,13 @@ public class classesFrame extends javax.swing.JFrame {
 
     private void numberSelectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_numberSelectItemStateChanged
         try {
-            dataBase.sortClass(numberSelect.getSelectedItem().toString());
+            dataBase.sortClass(Integer.parseInt(numberSelect.getSelectedItem().toString()));
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_numberSelectItemStateChanged
 
     private void numberSelectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_numberSelectMouseClicked
         try {
-            dataBase.sortClass(numberSelect.getSelectedItem().toString());
+            dataBase.sortClass(Integer.parseInt(numberSelect.getSelectedItem().toString()));
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_numberSelectMouseClicked
 
@@ -164,6 +164,7 @@ public class classesFrame extends javax.swing.JFrame {
             mainFrame.enableMainForm(false);
             classesFrame.setResizable(false);
             dataBase.refreshClassesForm();
+            dataBase.sortClass(1);
             classesFrame.setVisible(true);
         }else{
             classesFrame.setVisible(false);
