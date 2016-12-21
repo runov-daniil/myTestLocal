@@ -70,6 +70,11 @@ public class classesFrame extends javax.swing.JFrame {
         jLabel2.setText("Выберите литеру:");
 
         jButton1.setText("Добавить");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         numberSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" }));
         numberSelect.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -158,6 +163,16 @@ public class classesFrame extends javax.swing.JFrame {
             dataBase.sortClass(Integer.parseInt(numberSelect.getSelectedItem().toString()));
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_numberSelectMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            dataBase.createNewClass(Integer.parseInt(numberSelect.getSelectedItem().toString()), literaSelect.getSelectedItem().toString());
+            dataBase.refreshClassesForm();
+            numberSelect.setSelectedIndex(0);
+            dataBase.sortClass(1);
+            jTabbedPane1.setSelectedIndex(0);
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(boolean visible) throws ClassNotFoundException, SQLException {
         if(visible == true){

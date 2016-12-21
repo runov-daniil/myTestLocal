@@ -214,9 +214,10 @@ public class dataBase {
     }
     //Добавление нового класса в БД
     public static void createNewClass(int number, String litera) throws ClassNotFoundException, SQLException {
+        System.out.println("Вычисляю новый ID");
+        int newClass = calculationID("class");
         Connection();
-        
-        st.execute("INSERT INTO classes(id_class, number, litera)VALUES('', '"+number+"', '"+litera+"');");
+        st.execute("INSERT INTO classes(id_class, number, litera)VALUES('"+newClass+"', '"+number+"', '"+litera+"');");
         closeConnection();
     }
     
@@ -227,7 +228,11 @@ public class dataBase {
         
         boolean flag = true;
         while(true){
-            rs = st.executeQuery("SELECT * FROM "+type+"s;");
+            if(!(type.equals("class"))){
+                rs = st.executeQuery("SELECT * FROM "+type+"s;");
+            }else{
+                rs = st.executeQuery("SELECT * FROM "+type+"es;");
+            }
             while(rs.next()){
                 int id = rs.getInt("id_"+type+"");
                 System.out.println("ID из базы" + id);
