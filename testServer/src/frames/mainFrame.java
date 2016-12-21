@@ -216,6 +216,11 @@ public class mainFrame extends javax.swing.JFrame {
         });
 
         editStudent.setText("Редактировать");
+        editStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editStudentActionPerformed(evt);
+            }
+        });
 
         statisticsStudent.setText("Статистика");
 
@@ -375,6 +380,10 @@ public class mainFrame extends javax.swing.JFrame {
     private void classesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classesBtnActionPerformed
         try {classesFrame.main(true);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_classesBtnActionPerformed
+
+    private void editStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStudentActionPerformed
+        editInformation.main(true);
+    }//GEN-LAST:event_editStudentActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
