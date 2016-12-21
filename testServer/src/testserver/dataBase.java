@@ -240,6 +240,10 @@ public class dataBase {
         frames.classesFrame.numberSelect.setSelectedItem(0);
         sortClass(1);
     }
+    //Редактирование данных пользователей
+    public static void editInformation() throws ClassNotFoundException, SQLException {
+        
+    }
     
     //Вычисление ID
     private static int calculationID(String type) throws ClassNotFoundException, SQLException {
