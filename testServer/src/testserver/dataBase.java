@@ -220,6 +220,10 @@ public class dataBase {
         st.execute("INSERT INTO classes(id_class, number, litera)VALUES('"+newClass+"', '"+number+"', '"+litera+"');");
         closeConnection();
     }
+    //Удаление класса из БД
+    public static void deleteClass() throws ClassNotFoundException, SQLException {
+        
+    }
     
     //Вычисление ID
     private static int calculationID(String type) throws ClassNotFoundException, SQLException {
