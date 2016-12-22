@@ -266,6 +266,11 @@ public class mainFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(teacherTable);
 
         editTeacher.setText("Редактировать");
+        editTeacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTeacherActionPerformed(evt);
+            }
+        });
 
         deleteTeacher.setText("Удалить");
         deleteTeacher.addActionListener(new java.awt.event.ActionListener() {
@@ -382,8 +387,12 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_classesBtnActionPerformed
 
     private void editStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editStudentActionPerformed
-        editInformation.main(true);
+        editInformation.students(true);
     }//GEN-LAST:event_editStudentActionPerformed
+
+    private void editTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTeacherActionPerformed
+        editInformation.teachers(true);
+    }//GEN-LAST:event_editTeacherActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
