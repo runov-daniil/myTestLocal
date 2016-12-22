@@ -396,6 +396,10 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void editTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTeacherActionPerformed
         editInformation.teachers(true);
+        int row = teacherTable.getSelectedRow();
+        try {
+            dataBase.setDataEditInformation(Integer.parseInt(teacherTable.getValueAt(row, 0).toString()));
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_editTeacherActionPerformed
 
     public static void main(boolean visible) {

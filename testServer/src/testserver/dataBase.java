@@ -340,16 +340,28 @@ public class dataBase {
                             Class = getClassRs.getInt("number") + getClassRs.getString("litera");
                         }
                     }
-                    
-                    System.out.println("Данные определены, заполняю форму");
+                    System.out.println("Данные определены, загружаю информацию на форму");
                     frames.editInformation.fioLabel.setText("ФИО " + FIO);
                     if(level.equals("student")){
                         frames.editInformation.fioClassLabel.setText("Ученик " + FIO);
                         frames.editInformation.classLabel.setText("числится в " + Class + " классе.");
                     }
+                }else if(rs.getString("level").equals("teacher")){
+                    System.out.println("Пользователь учитель, определяю ФИО");
+                    Statement FIOst = conn.createStatement();
+                    ResultSet FIOrs = FIOst.executeQuery("SELECT * FROM teachers;");
+                    String FIO = "";
+                    while(FIOrs.next()){
+                        int FIOid = FIOrs.getInt("id_user");
+                        if(id == FIOid){
+                            FIO = FIOrs.getString("fio");
+                        }
+                    }
+                    System.out.println("Данные определены, загружаю информацию на форму");
+                    frames.editInformation.fioLabel.setText("ФИО "+FIO);
                 }
             }else{
-                System.out.println("ОШИБКА null, такой пользователь в базе не найден!");
+                System.out.println("ОШИБКА null, такой пользователь в базе не найден!");                
             }
         }
         closeConnection();
