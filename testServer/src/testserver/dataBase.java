@@ -242,11 +242,18 @@ public class dataBase {
         sortClass(1);
     }
     //Редактирование данных пользователей
-    public static void editInformation(String level) throws ClassNotFoundException, SQLException {
+    public static void editFIO(String level) throws ClassNotFoundException, SQLException {
         Connection();
         switch(level){
             case "student":
-                
+                String fioStu = editInformation.fioLabel.getText();
+                int lengthStu = fioStu.length();
+                fioStu = fioStu.substring(4, lengthStu);
+                System.out.println(fioStu);
+                st.execute("UPDATE students SET fio = '"+frames.editInformation.switchText.getText()+"' WHERE fio = '"+fioStu+"';");
+                System.out.println("ФИО пользователя успешно изменено, обновляю данные на форме");
+                refreshStudents();
+                editInformation.switchText.setText("");
                 break;
             case "teacher":
                 String fio = editInformation.fioLabel.getText();
