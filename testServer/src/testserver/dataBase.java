@@ -1,5 +1,6 @@
 package testserver;
 
+import frames.editInformation;
 import frames.mainFrame;
 import java.sql.*;
 import java.util.Vector;
@@ -241,8 +242,24 @@ public class dataBase {
         sortClass(1);
     }
     //Редактирование данных пользователей
-    public static void editInformation() throws ClassNotFoundException, SQLException {
-        
+    public static void editInformation(String level) throws ClassNotFoundException, SQLException {
+        Connection();
+        switch(level){
+            case "student":
+                
+                break;
+            case "teacher":
+                String fio = editInformation.fioLabel.getText();
+                int length = fio.length();
+                fio = fio.substring(4, length);
+                System.out.println(fio);
+                st.execute("UPDATE teachers SET fio = '"+frames.editInformation.switchText.getText()+"' WHERE fio = '"+fio+"';");
+                System.out.println("ФИО пользователя успешно изменено, обновляю данные на форме");
+                refreshTeachers();
+                editInformation.switchText.setText("");
+                break;
+        }
+        closeConnection();
     }
     
     //Вычисление ID
