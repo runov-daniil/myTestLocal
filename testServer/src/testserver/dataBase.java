@@ -304,4 +304,54 @@ public class dataBase {
         }
         closeConnection();
     }
+    //Установка данных на форму редактирования
+    public static void setDataEditInformation(int id) throws ClassNotFoundException, SQLException {
+        System.out.println("Устанавливаю первоначальные данные на форму");
+        Connection();
+        System.out.println("Определяю уровень доступа пользователя");
+        String Class = "";
+        rs = st.executeQuery("SELECT * FROM users;");
+        System.out.println("Определяю данные пользователя");
+        while(rs.next()){
+            int id_user = rs.getInt("id_user");
+            if(id == id_user){
+                System.out.println("Пользователь найден");
+                String level = rs.getString("level");
+                System.out.println(level);   
+                if(rs.getString("level").equals("student")){
+                    System.out.println("Пользователь студент, определяю ФИО и класс в котором он числится");
+                    String FIO = "";
+                    int id_class = 0;
+                    Statement FIOst = conn.createStatement();
+                    ResultSet FIOrs = FIOst.executeQuery("SELECT * FROM students;");
+                    while(FIOrs.next()){
+                        int FIOid = FIOrs.getInt("id_user");
+                        if(id == FIOid){
+                            FIO = FIOrs.getString("fio");
+                            id_class = FIOrs.getInt("id_class");
+                        }
+                    }
+                    Statement getClassSt = conn.createStatement();
+                    ResultSet getClassRs = getClassSt.executeQuery("SELECT * FROM classes;");
+                    while(getClassRs.next()){
+                        int getId = getClassRs.getInt("id_class");
+                        if(getId == id_class){
+                            System.out.println("Класс определен");
+                            Class = getClassRs.getInt("number") + getClassRs.getString("litera");
+                        }
+                    }
+                    
+                    System.out.println("Данные определены, заполняю форму");
+                    frames.editInformation.fioLabel.setText("ФИО " + FIO);
+                    if(level.equals("student")){
+                        frames.editInformation.fioClassLabel.setText("Ученик " + FIO);
+                        frames.editInformation.classLabel.setText("числится в " + Class + " классе.");
+                    }
+                }
+            }else{
+                System.out.println("ОШИБКА null, такой пользователь в базе не найден!");
+            }
+        }
+        closeConnection();
+    }
 }

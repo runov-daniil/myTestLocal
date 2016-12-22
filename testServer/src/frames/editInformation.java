@@ -11,27 +11,27 @@ public class editInformation extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        fioLabel = new javax.swing.JLabel();
         switchText = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         classToClass = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        fioClassLabel = new javax.swing.JLabel();
+        classLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        newClassSelect = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        fioLabel.setText("jLabel1");
 
         jButton1.setText("Изменить");
 
-        jLabel3.setText("jLabel3");
+        fioClassLabel.setText("jLabel3");
 
-        jLabel4.setText("jLabel4");
+        classLabel.setText("jLabel4");
 
         jLabel5.setText("Перевести в:");
 
@@ -47,12 +47,12 @@ public class editInformation extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(classToClassLayout.createSequentialGroup()
                         .addGroup(classToClassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
+                            .addComponent(fioClassLabel)
+                            .addComponent(classLabel)
                             .addGroup(classToClassLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(newClassSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 61, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -60,13 +60,13 @@ public class editInformation extends javax.swing.JFrame {
             classToClassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(classToClassLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(fioClassLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(classLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(classToClassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newClassSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -81,7 +81,7 @@ public class editInformation extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(switchText)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(fioLabel)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(classToClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -91,7 +91,7 @@ public class editInformation extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(fioLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(switchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -109,7 +109,7 @@ public class editInformation extends javax.swing.JFrame {
         if(visible == true){
             editInformation.setResizable(false);
             classToClass.setVisible(true);
-            editInformation.setSize(222, 240);
+            editInformation.setSize(300, 240);
             editInformation.setVisible(true); 
         }else{
             editInformation.setVisible(false);
@@ -120,7 +120,7 @@ public class editInformation extends javax.swing.JFrame {
         if(visible == true){
             editInformation.setResizable(false);
             classToClass.setVisible(false);
-            editInformation.setSize(222, 130);
+            editInformation.setSize(300, 130);
             editInformation.setVisible(true); 
         }else{
             editInformation.setVisible(false);
@@ -128,15 +128,15 @@ public class editInformation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JLabel classLabel;
     public static javax.swing.JPanel classToClass;
+    public static javax.swing.JLabel fioClassLabel;
+    public static javax.swing.JLabel fioLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    public static javax.swing.JComboBox<String> newClassSelect;
     private javax.swing.JTextField switchText;
     // End of variables declaration//GEN-END:variables
 }
