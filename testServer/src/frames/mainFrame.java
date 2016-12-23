@@ -390,6 +390,7 @@ public class mainFrame extends javax.swing.JFrame {
         editInformation.students(true);
         int row = studentsTable.getSelectedRow();
         try {
+            frames.editInformation.idLabel.setText(studentsTable.getValueAt(row, 0).toString());
             dataBase.setDataEditInformation(Integer.parseInt(studentsTable.getValueAt(row, 0).toString()));
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_editStudentActionPerformed

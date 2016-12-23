@@ -338,11 +338,12 @@ public class dataBase {
         System.out.println("Определяю данные пользователя");
         while(rs.next()){
             int id_user = rs.getInt("id_user");
+            String login = rs.getString("login");
             if(id == id_user){
                 System.out.println("Пользователь найден");
                 String level = rs.getString("level");
                 System.out.println(level);   
-                if(rs.getString("level").equals("student")){
+                if(rs.getString("level").equals("student")){ //для студента
                     System.out.println("Пользователь студент, определяю ФИО и класс в котором он числится");
                     String FIO = "";
                     int id_class = 0;
@@ -369,8 +370,9 @@ public class dataBase {
                     if(level.equals("student")){
                         frames.editInformation.fioClassLabel.setText("Ученик " + FIO);
                         frames.editInformation.classLabel.setText("числится в " + Class + " классе.");
+                        frames.editInformation.loginLabel.setText("Логин: "+login);
                     }
-                }else if(rs.getString("level").equals("teacher")){
+                }else if(rs.getString("level").equals("teacher")){  //для учителя
                     System.out.println("Пользователь учитель, определяю ФИО");
                     Statement FIOst = conn.createStatement();
                     ResultSet FIOrs = FIOst.executeQuery("SELECT * FROM teachers;");
@@ -383,6 +385,7 @@ public class dataBase {
                     }
                     System.out.println("Данные определены, загружаю информацию на форму");
                     frames.editInformation.fioLabel.setText("ФИО "+FIO);
+                    frames.editInformation.loginLabel.setText("Логин: "+login);
                 }
             }else{
                 System.out.println("ОШИБКА null, такой пользователь в базе не найден!");                

@@ -28,6 +28,7 @@ public class editInformation extends javax.swing.JFrame {
         loginLabel = new javax.swing.JLabel();
         switchLoginText = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        idLabel = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -89,6 +90,8 @@ public class editInformation extends javax.swing.JFrame {
 
         jButton3.setText("Изменить");
 
+        idLabel.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,18 +104,22 @@ public class editInformation extends javax.swing.JFrame {
                     .addComponent(classToClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(switchLoginText)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fioLabel)
-                            .addComponent(loginLabel))
+                        .addComponent(loginLabel)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(fioLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(idLabel)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fioLabel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fioLabel)
+                    .addComponent(idLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(switchText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,6 +147,7 @@ public class editInformation extends javax.swing.JFrame {
         }else{
             try {
                 dataBase.editFIO("student");
+                dataBase.setDataEditInformation(Integer.parseInt(idLabel.getText()));
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -171,12 +179,13 @@ public class editInformation extends javax.swing.JFrame {
     public static javax.swing.JPanel classToClass;
     public static javax.swing.JLabel fioClassLabel;
     public static javax.swing.JLabel fioLabel;
+    public static javax.swing.JLabel idLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel loginLabel;
+    public static javax.swing.JLabel loginLabel;
     public static javax.swing.JComboBox<String> newClassSelect;
     private javax.swing.JTextField switchLoginText;
     public static javax.swing.JTextField switchText;
