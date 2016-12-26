@@ -55,6 +55,11 @@ public class editInformation extends javax.swing.JFrame {
         jLabel5.setText("Перевести в:");
 
         jButton2.setText("Перевести");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout classToClassLayout = new javax.swing.GroupLayout(classToClass);
         classToClass.setLayout(classToClassLayout);
@@ -180,6 +185,12 @@ public class editInformation extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         mainFrame.enableMainForm(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            dataBase.editClass();
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void students(boolean visible) {
         if(visible == true){

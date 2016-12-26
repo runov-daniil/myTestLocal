@@ -290,6 +290,21 @@ public class dataBase {
         }
         closeConnection();
     }
+    //Перевод из класса в класс
+    public static void editClass() throws ClassNotFoundException, SQLException {
+        Connection();
+        String Class = editInformation.newClassSelect.getSelectedItem().toString();
+        int length = Class.length();
+        char litera = Class.charAt(length - 1);
+        String number = Class.substring(0, length - 1);
+        rs = st.executeQuery("SELECT id_class FROM classes WHERE number = '"+number+"' AND litera = '"+litera+"';");
+        int id_class = rs.getInt("id_class");
+        Statement transClass = conn.createStatement();
+        transClass.execute("UPDATE students SET id_class = '"+id_class+"' WHERE id_user = '"+editInformation.idLabel.getText()+"';");
+        closeConnection();
+        refreshStudents();
+        setDataEditInformation(Integer.parseInt(editInformation.idLabel.getText()));
+    }
     
     //Вычисление ID
     private static int calculationID(String type) throws ClassNotFoundException, SQLException {
