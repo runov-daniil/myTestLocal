@@ -14,6 +14,7 @@ public class TestServer {
             case "admin":
                 dataBase.refreshStudents();
                 dataBase.refreshTeachers();
+                dataBase.refreshQuestion();
                 mainFrame.loginLabel.setText(level);
                 mainFrame.main(true);
                 break;

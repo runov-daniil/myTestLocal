@@ -305,6 +305,28 @@ public class dataBase {
         refreshStudents();
         setDataEditInformation(Integer.parseInt(editInformation.idLabel.getText()));
     }
+    //Добавление нового вопроса в БД
+    public static void createNewQuestion() throws ClassNotFoundException, SQLException {
+        
+    }
+    //Обновление вопросов на форму
+    public static void refreshQuestion() throws ClassNotFoundException, SQLException {
+        Connection();
+        rs = st.executeQuery("SELECT * FROM questions;");
+        Vector table = new Vector();
+        while(rs.next()){
+            Vector element = new Vector();
+            element.add(rs.getString("question_level"));
+            element.add(rs.getInt("id_user"));
+            element.add(rs.getString("question"));
+            table.add(element);
+        }
+        Vector header = new Vector();
+        header.add("Параллель");header.add("Автор");header.add("Вопрос");
+        DefaultTableModel dtm = (DefaultTableModel)mainFrame.questionTable.getModel();
+        dtm.setDataVector(table, header);
+        closeConnection();
+    }
     
     //Вычисление ID
     private static int calculationID(String type) throws ClassNotFoundException, SQLException {

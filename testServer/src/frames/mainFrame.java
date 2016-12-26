@@ -64,6 +64,11 @@ public class mainFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(questionTable);
 
         createQuestion.setText("Добавить");
+        createQuestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createQuestionActionPerformed(evt);
+            }
+        });
 
         deleteQuestion.setText("Удалить");
 
@@ -404,6 +409,10 @@ public class mainFrame extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_editTeacherActionPerformed
 
+    private void createQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createQuestionActionPerformed
+        newQuestion.main(true);
+    }//GEN-LAST:event_createQuestionActionPerformed
+
     public static void main(boolean visible) {
         if(visible == true){
             mainFrame.setResizable(false);
@@ -453,7 +462,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JButton logServerBtn;
     public static javax.swing.JLabel loginLabel;
     private javax.swing.JPanel questionPanel;
-    private javax.swing.JTable questionTable;
+    public static javax.swing.JTable questionTable;
     private javax.swing.JPanel servicePanel;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JButton startServerBtn;
