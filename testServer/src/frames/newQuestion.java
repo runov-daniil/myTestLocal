@@ -33,6 +33,11 @@ public class newQuestion extends javax.swing.JFrame {
         answerText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Введите вопрос");
 
@@ -255,9 +260,15 @@ public class newQuestion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_answer3ItemStateChanged
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        mainFrame.enableMainForm(true);
+    }//GEN-LAST:event_formWindowClosing
+
     public static void main(boolean visible) {
         if(visible == true){
+            newQuestion.setResizable(false);
             newQuestion.setVisible(true);
+            mainFrame.enableMainForm(false);
         }else{
             newQuestion.setVisible(false);
         }
