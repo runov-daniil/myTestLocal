@@ -306,8 +306,17 @@ public class dataBase {
         setDataEditInformation(Integer.parseInt(editInformation.idLabel.getText()));
     }
     //Добавление нового вопроса в БД
-    public static void createNewQuestion() throws ClassNotFoundException, SQLException {
-        
+    public static void createNewQuestion(int difficulty) throws ClassNotFoundException, SQLException {
+        System.out.println("Вычисляю новый ID");
+        int ID = calculationQuestionID();
+        System.out.println("Новый ID "+ID);
+//        Connection();
+//        if(difficulty == 1){
+//            st.execute("INSERT INTO ");
+//        }else if(difficulty == 2){
+//            
+//        }
+//        closeConnection();
     }
     //Обновление вопросов на форму
     public static void refreshQuestion() throws ClassNotFoundException, SQLException {
@@ -332,7 +341,6 @@ public class dataBase {
     private static int calculationID(String type) throws ClassNotFoundException, SQLException {
         int newRec = 0;
         Connection();
-        
         boolean flag = true;
         while(true){
             if(!(type.equals("class"))){
@@ -361,6 +369,40 @@ public class dataBase {
         System.out.println(newRec);
         closeConnection();
         return newRec;
+    }
+    //Вычисление ID нового вопроса
+    private static int calculationQuestionID() throws ClassNotFoundException, SQLException {
+        int newID = 0;
+        boolean flag = true;
+        int question_count = countQuestion();
+        if(question_count != 0){
+            Connection();
+            while(true){
+                System.out.println("Проверяю");
+                rs = st.executeQuery("SELECT * FROM questions;");
+                while(rs.next()){
+                    System.out.println("Беру ID для сравнения");
+                    int id_q = rs.getInt("id_question");
+                    if(newID == id_q){
+                        flag = true;
+                        System.out.println("ID существует");
+                        break;
+                    }else{
+                        System.out.println("ID не существует");
+                        flag = false;
+                    }
+                }
+            if(flag == true){
+                System.out.println("Плюсую");
+                newID++;
+            }else{
+                System.out.println("Новый ID сформирован");
+                break;
+            }
+        }
+        closeConnection();
+        }
+        return newID;
     }
     //Проверка на существование класса при добавлении(отсекаем существующие классы с формы)
     public static void sortClass(int check) throws ClassNotFoundException, SQLException {
@@ -451,5 +493,16 @@ public class dataBase {
             }
         }
         closeConnection();
+    }
+    //Подсчет количества вопросов в БД
+    public static int countQuestion() throws ClassNotFoundException, SQLException {
+        Connection();
+        rs = st.executeQuery("SELECT * FROM questions;");
+        int count = 0;
+        while(rs.next()){
+            count++;
+        }
+        closeConnection();
+        return count;
     }
 }
