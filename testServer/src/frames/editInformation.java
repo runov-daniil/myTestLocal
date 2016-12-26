@@ -89,6 +89,11 @@ public class editInformation extends javax.swing.JFrame {
         loginLabel.setText("jLabel1");
 
         jButton3.setText("Изменить");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         idLabel.setText("jLabel1");
 
@@ -143,6 +148,7 @@ public class editInformation extends javax.swing.JFrame {
         if(classToClass.isVisible() != true){
             try {
                 dataBase.editFIO("teacher");
+                dataBase.setDataEditInformation(Integer.parseInt(idLabel.getText()));
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         }else{
             try {
@@ -151,6 +157,20 @@ public class editInformation extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(classToClass.isVisible() != true){
+            try {
+                dataBase.editLogin("teacher");
+                dataBase.setDataEditInformation(Integer.parseInt(idLabel.getText()));
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        }else{
+            try {
+                dataBase.editLogin("student");
+                dataBase.setDataEditInformation(Integer.parseInt(idLabel.getText()));
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void students(boolean visible) {
         if(visible == true){
@@ -187,7 +207,7 @@ public class editInformation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     public static javax.swing.JLabel loginLabel;
     public static javax.swing.JComboBox<String> newClassSelect;
-    private javax.swing.JTextField switchLoginText;
+    public static javax.swing.JTextField switchLoginText;
     public static javax.swing.JTextField switchText;
     // End of variables declaration//GEN-END:variables
 }

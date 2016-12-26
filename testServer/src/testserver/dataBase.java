@@ -241,7 +241,7 @@ public class dataBase {
         frames.classesFrame.numberSelect.setSelectedItem(0);
         sortClass(1);
     }
-    //Редактирование данных пользователей
+    //Редактирование ФИО пользователей
     public static void editFIO(String level) throws ClassNotFoundException, SQLException {
         Connection();
         switch(level){
@@ -264,6 +264,28 @@ public class dataBase {
                 System.out.println("ФИО пользователя успешно изменено, обновляю данные на форме");
                 refreshTeachers();
                 editInformation.switchText.setText("");
+                break;
+        }
+        closeConnection();
+    }
+    //Редактирование логина пользователей
+    public static void editLogin(String level) throws ClassNotFoundException, SQLException {
+        Connection();
+        int id_user = 0;
+        switch(level){
+            case "student":
+                id_user = Integer.parseInt(frames.editInformation.idLabel.getText());
+                st.execute("UPDATE users SET login = '"+frames.editInformation.switchLoginText.getText()+"' WHERE id_user = '"+id_user+"';");
+                System.out.println("Логин пользователя успешно изменен, обновляю данные на форме");
+                refreshStudents();
+                editInformation.switchLoginText.setText("");
+                break;
+            case "teacher":
+                id_user = Integer.parseInt(frames.editInformation.idLabel.getText());
+                st.execute("UPDATE users SET login = '"+frames.editInformation.switchLoginText.getText()+"' WHERE id_user = '"+id_user+"';");
+                System.out.println("ФИО пользователя успешно изменено, обновляю данные на форме");
+                refreshTeachers();
+                editInformation.switchLoginText.setText("");
                 break;
         }
         closeConnection();
