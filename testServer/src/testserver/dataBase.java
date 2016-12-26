@@ -310,13 +310,13 @@ public class dataBase {
         System.out.println("Вычисляю новый ID");
         int ID = calculationQuestionID();
         System.out.println("Новый ID "+ID);
-//        Connection();
-//        if(difficulty == 1){
-//            st.execute("INSERT INTO ");
-//        }else if(difficulty == 2){
-//            
-//        }
-//        closeConnection();
+        Connection();
+        if(difficulty == 1){
+            st.execute("INSERT INTO ");
+        }else if(difficulty == 2){
+            
+        }
+        closeConnection();
     }
     //Обновление вопросов на форму
     public static void refreshQuestion() throws ClassNotFoundException, SQLException {
