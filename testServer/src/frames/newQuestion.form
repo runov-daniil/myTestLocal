@@ -257,7 +257,9 @@
             <Component class="javax.swing.JComboBox" name="selectParallel">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value=""/>
+                  </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
@@ -365,7 +367,9 @@
             <Component class="javax.swing.JComboBox" name="selectParallel1">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value=" "/>
+                  </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>

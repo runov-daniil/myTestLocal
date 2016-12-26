@@ -143,6 +143,7 @@ public class newQuestion extends javax.swing.JFrame {
 
         jLabel4.setText("Параллель");
 
+        selectParallel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
         selectParallel.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -198,6 +199,7 @@ public class newQuestion extends javax.swing.JFrame {
 
         jLabel3.setText("Ответ");
 
+        selectParallel1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         selectParallel1.setToolTipText("");
 
         jLabel5.setText("Параллель");
@@ -313,6 +315,12 @@ public class newQuestion extends javax.swing.JFrame {
     public static void main(boolean visible) {
         if(visible == true){
             newQuestion.setResizable(false);
+            try {
+                newQuestion.selectParallel.removeAllItems();
+                newQuestion.selectParallel1.removeAllItems();
+                String parallels = dataBase.refreshClasses();
+                
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
             newQuestion.setVisible(true);
             mainFrame.enableMainForm(false);
         }else{
