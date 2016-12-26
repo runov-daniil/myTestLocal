@@ -81,6 +81,7 @@ public class loginFrame extends javax.swing.JFrame {
             String authStatus = dataBase.autorization(loginText.getText(), passwordText.getText());
             if(!(authStatus.equals("0"))){
                 testserver.TestServer.userDetect(authStatus);
+                this.dispose();
             }else{
                 JOptionPane.showMessageDialog(rootPane, "Неверный логин и(или) пароль!");
             }
