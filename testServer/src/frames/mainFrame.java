@@ -451,7 +451,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton logServerBtn;
-    private javax.swing.JLabel loginLabel;
+    public static javax.swing.JLabel loginLabel;
     private javax.swing.JPanel questionPanel;
     private javax.swing.JTable questionTable;
     private javax.swing.JPanel servicePanel;
