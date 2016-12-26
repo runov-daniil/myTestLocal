@@ -33,6 +33,11 @@ public class editInformation extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         fioLabel.setText("jLabel1");
 
@@ -58,7 +63,7 @@ public class editInformation extends javax.swing.JFrame {
             .addGroup(classToClassLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(classToClassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                     .addGroup(classToClassLayout.createSequentialGroup()
                         .addGroup(classToClassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fioClassLabel)
@@ -66,8 +71,8 @@ public class editInformation extends javax.swing.JFrame {
                             .addGroup(classToClassLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(newClassSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 61, Short.MAX_VALUE)))
+                                .addComponent(newClassSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         classToClassLayout.setVerticalGroup(
@@ -172,12 +177,32 @@ public class editInformation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        mainFrame.enableMainForm(true);
+    }//GEN-LAST:event_formWindowClosing
+
     public static void students(boolean visible) {
         if(visible == true){
             editInformation.setResizable(false);
             classToClass.setVisible(true);
             editInformation.setSize(300, 340);
-            editInformation.setVisible(true); 
+            editInformation.setVisible(true);
+            newClassSelect.removeAllItems();
+            try {
+                String Classes = dataBase.refreshClasses();
+                int length = Classes.length();
+                String Class = "";
+                for(int i = 0; i < length; i++){
+                    char ch = Classes.charAt(i);
+                    if(ch != '|'){
+                        Class = Class + ch;
+                    }else{
+                        newClassSelect.addItem(Class);
+                        Class = "";
+                    }
+                }
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+            mainFrame.enableMainForm(false);
         }else{
             editInformation.setVisible(false);
         }
