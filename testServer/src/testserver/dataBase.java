@@ -2,6 +2,7 @@ package testserver;
 
 import frames.editInformation;
 import frames.mainFrame;
+import frames.newQuestion;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -309,10 +310,29 @@ public class dataBase {
     public static void createNewQuestion(int difficulty) throws ClassNotFoundException, SQLException {
         System.out.println("Вычисляю новый ID");
         int ID = calculationQuestionID();
-        System.out.println("Новый ID "+ID);
+        System.out.println("Новый ID "+ID);        
         Connection();
+        int idUser = 0;
+        Statement idUserSt = conn.createStatement();
+        ResultSet idUserRs = idUserSt.executeQuery("SELECT id_user FROM users WHERE login = '"+mainFrame.loginLabel.getText()+"';");
+        idUser = idUserRs.getInt("id_user");
         if(difficulty == 1){
-            st.execute("INSERT INTO ");
+            String trueQuestion = "";
+            if(newQuestion.answer0.isSelected() == true){
+                trueQuestion = newQuestion.answerText0.getText();
+            }else if(newQuestion.answer1.isSelected() == true){
+                trueQuestion = newQuestion.answerText1.getText();
+            }else if(newQuestion.answer2.isSelected() == true){
+                trueQuestion = newQuestion.answerText2.getText();
+            }else if(newQuestion.answer3.isSelected() == true){
+                trueQuestion = newQuestion.answerText3.getText();
+            }
+            st.execute("INSERT INTO questions"
+                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty)"
+                    + "VALUES('"+ID+"', '"+newQuestion.selectParallel.getSelectedItem()+"', '"+idUser+"', "
+                    + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"'), "
+                    + "'"+newQuestion.answerText1.getText()+"', '"+newQuestion.answerText2.getText()+"', "
+                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1';");
         }else if(difficulty == 2){
             
         }

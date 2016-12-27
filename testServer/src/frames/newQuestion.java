@@ -368,14 +368,14 @@ public class newQuestion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JRadioButton answer0;
-    private javax.swing.JRadioButton answer1;
-    private javax.swing.JRadioButton answer2;
-    private javax.swing.JRadioButton answer3;
+    public static javax.swing.JRadioButton answer1;
+    public static javax.swing.JRadioButton answer2;
+    public static javax.swing.JRadioButton answer3;
     private javax.swing.JTextField answerText;
-    private javax.swing.JTextField answerText0;
-    private javax.swing.JTextField answerText1;
-    private javax.swing.JTextField answerText2;
-    private javax.swing.JTextField answerText3;
+    public static javax.swing.JTextField answerText0;
+    public static javax.swing.JTextField answerText1;
+    public static javax.swing.JTextField answerText2;
+    public static javax.swing.JTextField answerText3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -391,7 +391,7 @@ public class newQuestion extends javax.swing.JFrame {
     private javax.swing.JTextArea questionText1;
     private javax.swing.JButton saveQuestion;
     private javax.swing.JButton saveQuestionCheck;
-    private javax.swing.JComboBox<String> selectParallel;
+    public static javax.swing.JComboBox<String> selectParallel;
     private javax.swing.JComboBox<String> selectParallel1;
     // End of variables declaration//GEN-END:variables
 }
