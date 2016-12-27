@@ -1,8 +1,6 @@
 package frames;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import testserver.dataBase;
 
 public class newQuestion extends javax.swing.JFrame {
@@ -345,17 +343,21 @@ public class newQuestion extends javax.swing.JFrame {
                             elements[j+1] = sw;
                         }
                     }
-                
-                for(int j = 0; j < count_parallels; j++){
-                    System.out.println(elements[j]);
-                }
-                
                 for(int i = 0; i < count_parallels-1; i++)
-                    for(int j = 0; j < count_parallels-1; j++){
-                        if(elements[i] == elements[j]){
-                            
+                    for(int j = i + 1; j < count_parallels; j++){
+                        if((elements[i] != -1) || (elements[j] != -1)){
+                            if(elements[i] == elements[j]){
+                                elements[j] = -1;
+                            }
                         }
                     }
+                newQuestion.selectParallel.removeAllItems();
+                for(int i = 0; i < count_parallels-1; i++){
+                    if(elements[i] != -1){
+                        newQuestion.selectParallel.addItem(String.valueOf(elements[i]));
+                        newQuestion.selectParallel1.addItem(String.valueOf(elements[i]));
+                    }
+                }
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
             newQuestion.setVisible(true);
             mainFrame.enableMainForm(false);
