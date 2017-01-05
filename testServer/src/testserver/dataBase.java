@@ -393,9 +393,27 @@ public class dataBase {
     //Добавление нового предмета в БД
     public static void createNewPredmet(String namePredmet) throws ClassNotFoundException, SQLException {
         int newID = calculationPredmetID();
-        System.out.println("Новый ID вопроса "+newID);
+        System.out.println("Новый ID предмета "+newID);
         Connection();
         st.execute("INSERT INTO predmets(id_predmet, namePredmet)VALUES('"+newID+"', '"+namePredmet+"');");
+        closeConnection();
+        refreshPredmets();
+    }
+    //Редактирование названия предмета
+    public static void editPredmet(String newName, String oldName) throws ClassNotFoundException, SQLException {
+        Connection();
+        Statement getIDst = conn.createStatement();
+        ResultSet getIDrs = getIDst.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+oldName+"';");
+        int idPredmet = getIDrs.getInt("id_predmet");
+        st.execute("UPDATE predmets SET namePredmet = '"+newName+"' WHERE id_predmet = '"+idPredmet+"';");
+        System.out.println("Предмет изменен!");
+        closeConnection();
+        refreshPredmets();
+    }
+    //Удаление предмета
+    public static void deletePredmet(String namePredmet) throws ClassNotFoundException, SQLException {
+        Connection();
+        st.execute("DELETE FROM predmets WHERE namePredmet = '"+namePredmet+"';");
         closeConnection();
         refreshPredmets();
     }
@@ -470,14 +488,17 @@ public class dataBase {
     //Вычисление ID нового предмета
     private static int calculationPredmetID() throws ClassNotFoundException, SQLException {
         int newID = 0;
+        boolean flag = true;
         Connection();
         while(true){
-            boolean flag = true;
             rs = st.executeQuery("SELECT * FROM predmets;");
             while (rs.next()){                
                 int id = rs.getInt("id_predmet");
                 if(id != newID){
                     flag = false;
+                }else{
+                    flag = true;
+                    break;
                 }
             }
             if(flag == true){

@@ -44,6 +44,11 @@ public class predmetsFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(predmetsTable);
 
         jButton2.setText("Удалить");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Редактировать");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -128,9 +133,18 @@ public class predmetsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        tempFrames.nameEditor.main(true);
+        int row = predmetsTable.getSelectedRow();
+        tempFrames.nameEditor.main(true, predmetsTable.getValueAt(row, 0).toString());
         setEnable(false);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int row = predmetsTable.getSelectedRow();
+        String namePredmet = predmetsTable.getValueAt(row, 0).toString();
+        try {
+            dataBase.deletePredmet(namePredmet);
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
