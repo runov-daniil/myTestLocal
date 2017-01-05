@@ -312,31 +312,48 @@ public class dataBase {
         int ID = calculationQuestionID();
         System.out.println("Новый ID "+ID);        
         Connection();
+        System.out.println("Соединение с базой установлено!\nИщу ID автора.");
         int idUser = 0;
         Statement idUserSt = conn.createStatement();
         ResultSet idUserRs = idUserSt.executeQuery("SELECT id_user FROM users WHERE login = '"+mainFrame.loginLabel.getText()+"';");
         idUser = idUserRs.getInt("id_user");
+        System.out.println("Автор найден, его ID "+idUser);
         if(difficulty == 1){
+            System.out.println("Уровень сложности вопроса 1, начинаю сохранение");
             String trueQuestion = "";
-            if(newQuestion.answer0.isSelected() == true){
+            if(newQuestion.answer0.isSelected()){
+                System.out.println("Первый ответ правильный");
                 trueQuestion = newQuestion.answerText0.getText();
-            }else if(newQuestion.answer1.isSelected() == true){
+            }else if(newQuestion.answer1.isSelected()){
+                System.out.println("Второй ответ правильный");
                 trueQuestion = newQuestion.answerText1.getText();
-            }else if(newQuestion.answer2.isSelected() == true){
+            }else if(newQuestion.answer2.isSelected()){
+                System.out.println("Третий ответ правильный");
                 trueQuestion = newQuestion.answerText2.getText();
-            }else if(newQuestion.answer3.isSelected() == true){
+            }else if(newQuestion.answer3.isSelected()){
+                System.out.println("Четвертый ответ правильный");
                 trueQuestion = newQuestion.answerText3.getText();
             }
-            st.execute("INSERT INTO questions"
+            Statement saveQuestion = conn.createStatement();
+            System.out.println("Сохраняю");
+            System.out.println("INSERT INTO questions"
                     + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty)"
                     + "VALUES('"+ID+"', '"+newQuestion.selectParallel.getSelectedItem()+"', '"+idUser+"', "
-                    + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"'), "
+                    + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"', "
                     + "'"+newQuestion.answerText1.getText()+"', '"+newQuestion.answerText2.getText()+"', "
-                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1';");
+                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1');");
+            saveQuestion.execute("INSERT INTO questions"
+                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty)"
+                    + "VALUES('"+ID+"', '"+newQuestion.selectParallel.getSelectedItem()+"', '"+idUser+"', "
+                    + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"', "
+                    + "'"+newQuestion.answerText1.getText()+"', '"+newQuestion.answerText2.getText()+"', "
+                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1');");
+            System.out.println("Сохранение завершено!");
         }else if(difficulty == 2){
             
         }
         closeConnection();
+        refreshQuestion();
     }
     //Обновление вопросов на форму
     public static void refreshQuestion() throws ClassNotFoundException, SQLException {
