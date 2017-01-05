@@ -30,6 +30,7 @@ public class mainFrame extends javax.swing.JFrame {
         startServerBtn = new javax.swing.JButton();
         logServerBtn = new javax.swing.JButton();
         classesBtn = new javax.swing.JButton();
+        predmetsButton = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         loginLabel = new javax.swing.JLabel();
@@ -119,7 +120,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         servicePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        startServerBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        startServerBtn.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         startServerBtn.setText("Старт сервер");
         startServerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,14 +128,22 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
-        logServerBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        logServerBtn.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         logServerBtn.setText("Открыть лог");
 
-        classesBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        classesBtn.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         classesBtn.setText("Классы");
         classesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 classesBtnActionPerformed(evt);
+            }
+        });
+
+        predmetsButton.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        predmetsButton.setText("Предметы");
+        predmetsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                predmetsButtonActionPerformed(evt);
             }
         });
 
@@ -147,7 +156,8 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGroup(servicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(startServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(classesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(classesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(predmetsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         servicePanelLayout.setVerticalGroup(
@@ -155,11 +165,13 @@ public class mainFrame extends javax.swing.JFrame {
             .addGroup(servicePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(startServerBtn)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(logServerBtn)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(classesBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(predmetsButton)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         settingsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -191,7 +203,7 @@ public class mainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(loginLabel)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         studentsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -341,7 +353,8 @@ public class mainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(servicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(servicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -413,6 +426,11 @@ public class mainFrame extends javax.swing.JFrame {
         newQuestion.main(true);
     }//GEN-LAST:event_createQuestionActionPerformed
 
+    private void predmetsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_predmetsButtonActionPerformed
+        predmetsFrame.main(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_predmetsButtonActionPerformed
+
     public static void main(boolean visible) {
         if(visible == true){
             mainFrame.setResizable(false);
@@ -461,6 +479,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton logServerBtn;
     public static javax.swing.JLabel loginLabel;
+    private javax.swing.JButton predmetsButton;
     private javax.swing.JPanel questionPanel;
     public static javax.swing.JTable questionTable;
     private javax.swing.JPanel servicePanel;
