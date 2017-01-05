@@ -1,5 +1,10 @@
 package frames;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import testserver.dataBase;
+
 public class predmetsFrame extends javax.swing.JFrame {
     private static predmetsFrame predmetsFrame = new predmetsFrame();
     public predmetsFrame() {
@@ -11,7 +16,7 @@ public class predmetsFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        predmetsTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         newPredmet = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -25,7 +30,7 @@ public class predmetsFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Предметы в базе:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        predmetsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -33,7 +38,7 @@ public class predmetsFrame extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(predmetsTable);
 
         jLabel2.setText("Введите название");
 
@@ -82,8 +87,11 @@ public class predmetsFrame extends javax.swing.JFrame {
 
     public static void main(boolean visible) {
         if(visible == true){
-            predmetsFrame.setResizable(false);
-            predmetsFrame.setVisible(true);
+            try {
+                predmetsFrame.setResizable(false);
+                dataBase.refreshPredmets();
+                predmetsFrame.setVisible(true);
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         }
     }
 
@@ -92,7 +100,7 @@ public class predmetsFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField newPredmet;
+    public static javax.swing.JTable predmetsTable;
     // End of variables declaration//GEN-END:variables
 }

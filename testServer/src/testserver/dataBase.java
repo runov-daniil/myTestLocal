@@ -3,6 +3,7 @@ package testserver;
 import frames.editInformation;
 import frames.mainFrame;
 import frames.newQuestion;
+import frames.predmetsFrame;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -121,6 +122,22 @@ public class dataBase {
         }
         closeConnection();
         return classes;
+    }
+    //Обновление предметов
+    public static void refreshPredmets() throws ClassNotFoundException, SQLException {
+        Connection();
+        rs = st.executeQuery("SELECT * FROM predmets");
+        Vector table = new Vector();
+        while(rs.next()){
+            Vector element = new Vector();
+            element.add(rs.getString("namePredmet"));
+            table.add(element);
+        }
+        Vector header = new Vector();
+        header.add("Название");
+        DefaultTableModel dtm = (DefaultTableModel)predmetsFrame.predmetsTable.getModel();
+        dtm.setDataVector(table, header);
+        closeConnection();
     }
     //Добавление пользователей в базу данных, создание нового пользователя
     public static void createNewUser(String level, String FIO, String login, String password, String Class)throws ClassNotFoundException, SQLException {
