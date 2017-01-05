@@ -422,6 +422,8 @@
                   <Component id="jScrollPane3" alignment="0" pref="503" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="setPredmetsButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="createTeacher" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="deleteTeacher" min="-2" max="-2" attributes="0"/>
@@ -440,6 +442,7 @@
                           <Component id="editTeacher" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="deleteTeacher" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="createTeacher" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="setPredmetsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -489,6 +492,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createTeacherActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="setPredmetsButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#x41d;&#x430;&#x437;&#x43d;&#x430;&#x447;&#x435;&#x43d;&#x438;&#x435; &#x43f;&#x440;&#x435;&#x434;&#x43c;&#x435;&#x442;&#x43e;&#x432;"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

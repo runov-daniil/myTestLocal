@@ -49,6 +49,7 @@ public class mainFrame extends javax.swing.JFrame {
         editTeacher = new javax.swing.JButton();
         deleteTeacher = new javax.swing.JButton();
         createTeacher = new javax.swing.JButton();
+        setPredmetsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -303,6 +304,8 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        setPredmetsButton.setText("Назначение предметов");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -310,6 +313,8 @@ public class mainFrame extends javax.swing.JFrame {
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(setPredmetsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(createTeacher)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteTeacher)
@@ -325,7 +330,8 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editTeacher)
                     .addComponent(deleteTeacher)
-                    .addComponent(createTeacher))
+                    .addComponent(createTeacher)
+                    .addComponent(setPredmetsButton))
                 .addContainerGap())
         );
 
@@ -483,6 +489,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel questionPanel;
     public static javax.swing.JTable questionTable;
     private javax.swing.JPanel servicePanel;
+    private javax.swing.JButton setPredmetsButton;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.JButton startServerBtn;
     private javax.swing.JButton statisticsStudent;
