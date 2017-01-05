@@ -390,6 +390,15 @@ public class dataBase {
         dtm.setDataVector(table, header);
         closeConnection();
     }
+    //Добавление нового предмета в БД
+    public static void createNewPredmet(String namePredmet) throws ClassNotFoundException, SQLException {
+        int newID = calculationPredmetID();
+        System.out.println("Новый ID вопроса "+newID);
+        Connection();
+        st.execute("INSERT INTO predmets(id_predmet, namePredmet)VALUES('"+newID+"', '"+namePredmet+"');");
+        closeConnection();
+        refreshPredmets();
+    }
     
     //Вычисление ID
     private static int calculationID(String type) throws ClassNotFoundException, SQLException {
@@ -456,6 +465,28 @@ public class dataBase {
         }
         closeConnection();
         }
+        return newID;
+    }
+    //Вычисление ID нового предмета
+    private static int calculationPredmetID() throws ClassNotFoundException, SQLException {
+        int newID = 0;
+        Connection();
+        while(true){
+            boolean flag = true;
+            rs = st.executeQuery("SELECT * FROM predmets;");
+            while (rs.next()){                
+                int id = rs.getInt("id_predmet");
+                if(id != newID){
+                    flag = false;
+                }
+            }
+            if(flag == true){
+                newID++;
+            }else{
+                break;
+            }
+        }
+        closeConnection();
         return newID;
     }
     //Проверка на существование класса при добавлении(отсекаем существующие классы с формы)

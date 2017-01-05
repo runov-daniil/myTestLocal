@@ -43,6 +43,11 @@ public class predmetsFrame extends javax.swing.JFrame {
         jLabel2.setText("Введите название");
 
         jButton1.setText("Добавить");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,6 +89,13 @@ public class predmetsFrame extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         frames.mainFrame.enableMainForm(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            dataBase.createNewPredmet(newPredmet.getText());
+            newPredmet.setText("");
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
