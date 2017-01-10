@@ -1,5 +1,6 @@
 package tempFrames;
 
+import frames.predmetsFrame;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,11 @@ public class nameEditor extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButton1.setText("Изменить");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -59,6 +65,10 @@ public class nameEditor extends javax.swing.JFrame {
             this.dispose();
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        predmetsFrame.setEnable(true);
+    }//GEN-LAST:event_formWindowClosing
     
     public static void main(boolean visible, String edit) {
         nameEditor.setResizable(false);
