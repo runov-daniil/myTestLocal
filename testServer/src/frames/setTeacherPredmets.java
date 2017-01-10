@@ -7,6 +7,7 @@ import testserver.dataBase;
 
 public class setTeacherPredmets extends javax.swing.JFrame {
     private static setTeacherPredmets setTeacherPredmets = new setTeacherPredmets();
+    public static String thisFIO = "";
     public setTeacherPredmets() {
         initComponents();
     }
@@ -50,6 +51,11 @@ public class setTeacherPredmets extends javax.swing.JFrame {
 
         setButton.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         setButton.setText("--->");
+        setButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setButtonActionPerformed(evt);
+            }
+        });
 
         unSetButton.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         unSetButton.setText("<---");
@@ -94,8 +100,17 @@ public class setTeacherPredmets extends javax.swing.JFrame {
         mainFrame.enableMainForm(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void setButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setButtonActionPerformed
+        System.out.println("Вызываю процедуру сохранения");
+        int row = dbPredmetsTable.getSelectedRow();
+        try {
+            dataBase.setPredmetsTeacher("add", dbPredmetsTable.getValueAt(row, 0).toString(), thisFIO);
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_setButtonActionPerformed
+
     public static void main(boolean visible, String fio) {
         setTeacherPredmets.setResizable(false);
+        thisFIO = fio;
         try {
             dataBase.setPredmetsToForm(fio);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}

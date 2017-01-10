@@ -675,7 +675,28 @@ public class dataBase {
         return count;
     }
     //Добалвение или удаление нового предмета учителю
-    public static void setPredmetsTeacher(boolean set) throws ClassNotFoundException, SQLException {
-        
+    public static void setPredmetsTeacher(String set, String predmet, String fio) throws ClassNotFoundException, SQLException {
+        Connection();
+        System.out.println("Связь с базой данных успешно установлена");
+        Statement IDst = conn.createStatement();
+        ResultSet IDrs = IDst.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+predmet+"';");
+        int ID = IDrs.getInt("id_predmet");
+        System.out.println("ID предмета найдено");
+        Statement predmetsST = conn.createStatement();
+        ResultSet predmetsRS = predmetsST.executeQuery("SELECT predmets FROM teachers WHERE fio = '"+fio+"';");
+        String predmets = predmetsRS.getString("predmets");
+        System.out.println("Список предметов найден");
+        switch(set){
+            case "delete":
+                
+                break;
+            case "add":
+                System.out.println("Инициализирована процедура добавления предмета");
+                predmets = predmets + ID + ",";
+                st.execute("UPDATE teachers SET predmets = '"+predmets+"' WHERE fio = '"+fio+"';");
+                closeConnection();
+                setPredmetsToForm(fio);
+                break;
+        }
     }
 }
