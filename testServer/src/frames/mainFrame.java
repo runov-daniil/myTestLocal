@@ -305,6 +305,11 @@ public class mainFrame extends javax.swing.JFrame {
         });
 
         setPredmetsButton.setText("Назначение предметов");
+        setPredmetsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setPredmetsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -437,6 +442,12 @@ public class mainFrame extends javax.swing.JFrame {
         this.setEnabled(false);
     }//GEN-LAST:event_predmetsButtonActionPerformed
 
+    private void setPredmetsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setPredmetsButtonActionPerformed
+        int row = teacherTable.getSelectedRow();
+        setTeacherPredmets.main(true, teacherTable.getValueAt(row, 2).toString());
+        enableMainForm(false);
+    }//GEN-LAST:event_setPredmetsButtonActionPerformed
+
     public static void main(boolean visible) {
         if(visible == true){
             mainFrame.setResizable(false);
@@ -456,11 +467,7 @@ public class mainFrame extends javax.swing.JFrame {
     }
     
     public static void enableMainForm(boolean enable) {
-        if(enable == true){
-            mainFrame.setEnabled(true);
-        }else{
-            mainFrame.setEnabled(false);
-        }
+        mainFrame.setEnabled(enable);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

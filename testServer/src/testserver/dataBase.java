@@ -139,6 +139,69 @@ public class dataBase {
         dtm.setDataVector(table, header);
         closeConnection();
     }
+    //Добавление предметов на форму назначения предметов(с отсевом предметов уже назначенных учителю)
+    public static void setPredmetsToForm(String fio) throws ClassNotFoundException, SQLException {
+        Connection();
+        //Вывод предметов из таблицы предметы
+        rs = st.executeQuery("SELECT * FROM predmets;");
+        Vector table = new Vector();
+        while(rs.next()) {
+            Vector element = new Vector();
+            element.add(rs.getString("namePredmet"));
+            table.add(element);
+        }
+        Vector header = new Vector();
+        header.add("Предметы:");
+        DefaultTableModel dtm = (DefaultTableModel)frames.setTeacherPredmets.dbPredmetsTable.getModel();
+        dtm.setDataVector(table, header);
+        //Вывод уже назначенных предметов
+        Statement teacherPredmetsSt = conn.createStatement();
+        ResultSet teacherPredmetsRs = teacherPredmetsSt.executeQuery("SELECT predmets FROM teachers WHERE fio = '"+fio+"';");
+        String predmets = teacherPredmetsRs.getString("predmets");
+        int length = 0;
+        if(predmets != null){
+            length = predmets.length();
+        }
+        System.out.println(length);
+        String ID = "";
+        header.removeAllElements();
+        Vector tableTeacher = new Vector();
+        for(int i = 0; i < length; i++){
+            char ch = predmets.charAt(i);
+            if(ch != ','){
+                ID = ID + ch;
+            }else{
+                Statement predmetIDst = conn.createStatement();
+                ResultSet predmetIDrs = predmetIDst.executeQuery("SELECT namePredmet FROM predmets WHERE id_predmet = '"+ID+"';");
+                Vector element = new Vector();
+                element.add(predmetIDrs.getString("namePredmet"));
+                tableTeacher.add(element);
+                ID = "";
+            }
+        }
+        header.add(fio + " ведет:");
+        DefaultTableModel dtm1 = (DefaultTableModel)frames.setTeacherPredmets.teacherPredmetsTable.getModel();
+        dtm1.setDataVector(tableTeacher, header);
+        //отсечение назначенных предметов
+        int countTecher = frames.setTeacherPredmets.teacherPredmetsTable.getRowCount();
+        int countPredmets = frames.setTeacherPredmets.dbPredmetsTable.getRowCount();
+        for(int i = 0; i < countTecher; i++){
+            String getPredmet = frames.setTeacherPredmets.teacherPredmetsTable.getValueAt(i, 0).toString();
+            System.out.println("Учитель ведет "+getPredmet);
+            int j = 0;
+            while(j != countPredmets){
+                String dbPredmet = frames.setTeacherPredmets.dbPredmetsTable.getValueAt(j, 0).toString();
+                System.out.println(dbPredmet);
+                if(getPredmet.equals(dbPredmet)){
+                    System.out.println("Совпадение, удаляю!");
+                    dtm.removeRow(j);
+                    countPredmets--;
+                }
+                j++;
+            }
+        }
+        closeConnection();
+    }
     //Добавление пользователей в базу данных, создание нового пользователя
     public static void createNewUser(String level, String FIO, String login, String password, String Class)throws ClassNotFoundException, SQLException {
         Connection();
@@ -610,5 +673,9 @@ public class dataBase {
         }
         closeConnection();
         return count;
+    }
+    //Добалвение или удаление нового предмета учителю
+    public static void setPredmetsTeacher(boolean set) throws ClassNotFoundException, SQLException {
+        
     }
 }
