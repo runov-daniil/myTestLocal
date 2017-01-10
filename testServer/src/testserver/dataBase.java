@@ -683,7 +683,13 @@ public class dataBase {
         System.out.println("Список предметов найден");
         switch(set){
             case "delete":
-                
+                int length = predmets.length();
+                int i = 0;
+                String IDp = "";
+                while(i < length){
+                    char ch = predmets.charAt(i);
+//                    if
+                }
                 break;
             case "add":
                 System.out.println("Инициализирована процедура добавления предмета");

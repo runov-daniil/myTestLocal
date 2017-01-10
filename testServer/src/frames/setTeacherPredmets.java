@@ -59,6 +59,11 @@ public class setTeacherPredmets extends javax.swing.JFrame {
 
         unSetButton.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         unSetButton.setText("<---");
+        unSetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unSetButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,6 +112,13 @@ public class setTeacherPredmets extends javax.swing.JFrame {
             dataBase.setPredmetsTeacher("add", dbPredmetsTable.getValueAt(row, 0).toString(), thisFIO);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_setButtonActionPerformed
+
+    private void unSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unSetButtonActionPerformed
+        int row = dbPredmetsTable.getSelectedRow();
+        try {
+            dataBase.setPredmetsTeacher("delete", teacherPredmetsTable.getValueAt(row, 0).toString(), thisFIO);
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_unSetButtonActionPerformed
 
     public static void main(boolean visible, String fio) {
         setTeacherPredmets.setResizable(false);
