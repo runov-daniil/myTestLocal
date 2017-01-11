@@ -428,7 +428,14 @@ public class dataBase {
                     + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1', '"+IDrs.getInt("id_predmet")+"');");
             System.out.println("Сохранение завершено!");
         }else if(difficulty == 2){
-            
+            System.out.println("Уровень сложности вопроса 2, начинаю сохранение");
+            Statement hardQuestionSave = conn.createStatement();
+            Statement IDst = conn.createStatement();
+            ResultSet IDrs = IDst.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+newQuestion.predmetsCB1.getSelectedItem().toString()+"';");
+            hardQuestionSave.execute("INSERT INTO questions"
+                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
+                    + "VALUES('"+ID+"', '"+newQuestion.selectParallel1.getSelectedItem()+"', '"+idUser+"', "
+                    + "'"+newQuestion.questionText1.getText()+"', 'null', 'null', 'null', 'null', '"+newQuestion.answerText.getText()+"', '2', '"+IDrs.getInt("id_predmet")+"');");
         }
         closeConnection();
         refreshQuestion();

@@ -1,6 +1,8 @@
 package frames;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import testserver.dataBase;
 
 public class newQuestion extends javax.swing.JFrame {
@@ -40,6 +42,8 @@ public class newQuestion extends javax.swing.JFrame {
         answerText = new javax.swing.JTextField();
         selectParallel1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        predmetsCB1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -204,6 +208,11 @@ public class newQuestion extends javax.swing.JFrame {
         jScrollPane2.setViewportView(questionText1);
 
         saveQuestion.setText("Сохранить");
+        saveQuestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveQuestionActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Ответ");
 
@@ -211,6 +220,8 @@ public class newQuestion extends javax.swing.JFrame {
         selectParallel1.setToolTipText("");
 
         jLabel5.setText("Параллель");
+
+        jLabel7.setText("Предмет:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -232,6 +243,10 @@ public class newQuestion extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(selectParallel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(predmetsCB1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -249,7 +264,10 @@ public class newQuestion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(selectParallel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(selectParallel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(predmetsCB1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(saveQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
@@ -329,6 +347,14 @@ public class newQuestion extends javax.swing.JFrame {
         answer3.setSelected(false);
     }//GEN-LAST:event_saveQuestionCheckActionPerformed
 
+    private void saveQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionActionPerformed
+        try {
+            dataBase.createNewQuestion(2);
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        questionText1.setText("");
+        answerText.setText("");        
+    }//GEN-LAST:event_saveQuestionActionPerformed
+
     public static void main(boolean visible) {
         if(visible == true){
             newQuestion.setResizable(false);
@@ -388,6 +414,7 @@ public class newQuestion extends javax.swing.JFrame {
                         predmet = predmet + ch;
                     }else{
                         predmetsCB.addItem(predmet);
+                        predmetsCB1.addItem(predmet);
                         predmet = "";
                     }
                 }
@@ -404,7 +431,7 @@ public class newQuestion extends javax.swing.JFrame {
     public static javax.swing.JRadioButton answer1;
     public static javax.swing.JRadioButton answer2;
     public static javax.swing.JRadioButton answer3;
-    private javax.swing.JTextField answerText;
+    public static javax.swing.JTextField answerText;
     public static javax.swing.JTextField answerText0;
     public static javax.swing.JTextField answerText1;
     public static javax.swing.JTextField answerText2;
@@ -415,6 +442,7 @@ public class newQuestion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -422,11 +450,12 @@ public class newQuestion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JComboBox<String> predmetsCB;
+    public static javax.swing.JComboBox<String> predmetsCB1;
     public static javax.swing.JTextArea questionText;
-    private javax.swing.JTextArea questionText1;
+    public static javax.swing.JTextArea questionText1;
     private javax.swing.JButton saveQuestion;
     private javax.swing.JButton saveQuestionCheck;
     public static javax.swing.JComboBox<String> selectParallel;
-    private javax.swing.JComboBox<String> selectParallel1;
+    public static javax.swing.JComboBox<String> selectParallel1;
     // End of variables declaration//GEN-END:variables
 }
