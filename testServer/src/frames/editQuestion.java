@@ -355,7 +355,70 @@ public class editQuestion extends javax.swing.JFrame {
     }//GEN-LAST:event_saveQuestionActionPerformed
 
     public static void main(boolean visible) {
+        try {
+                editQuestion.selectParallel.removeAllItems();
+                editQuestion.selectParallel1.removeAllItems();
+                String parallels = dataBase.refreshClasses();
+                String buf = "";
+                int length_parallels = parallels.length();
+                for(int i = 0; i < length_parallels; i++){
+                    char ch = parallels.charAt(i);
+                    if(ch != '|'){
+                        buf = buf + ch;
+                    }else{
+                        int length_buf = buf.length();
+                        editQuestion.selectParallel.addItem(buf.substring(0, length_buf - 1));
+                        buf = "";
+                    }
+                }
+                int count_parallels = editQuestion.selectParallel.getItemCount();
+                int[] elements;
+                elements = new int[count_parallels];
+                for(int i = 0; i < count_parallels; i++){
+                    elements[i] = Integer.parseInt(editQuestion.selectParallel.getItemAt(i));
+                }
+                for(int i = 0; i < count_parallels-1; i++)
+                    for(int j = 0; j < count_parallels-1; j++){
+                        if(elements[j] > elements[j+1]){
+                            int sw = elements[j];
+                            elements[j] = elements[j+1];
+                            elements[j+1] = sw;
+                        }
+                    }
+                for(int i = 0; i < count_parallels-1; i++)
+                    for(int j = i + 1; j < count_parallels; j++){
+                        if((elements[i] != -1) || (elements[j] != -1)){
+                            if(elements[i] == elements[j]){
+                                elements[j] = -1;
+                            }
+                        }
+                    }
+                editQuestion.selectParallel.removeAllItems();
+                for(int i = 0; i < count_parallels-1; i++){
+                    if(elements[i] != -1){
+                        editQuestion.selectParallel.addItem(String.valueOf(elements[i]));
+                        editQuestion.selectParallel1.addItem(String.valueOf(elements[i]));
+                    }
+                }
+                //Устанавливаем предметы на форму
+                predmetsCB.removeAllItems();
+                String listPredmet = dataBase.getPredmetsList();
+                int lengthList = listPredmet.length();
+                String predmet = "";
+                for(int i = 0; i < lengthList; i++){
+                    char ch = listPredmet.charAt(i);
+                    if(ch != ','){
+                        predmet = predmet + ch;
+                    }else{
+                        predmetsCB.addItem(predmet);
+                        predmetsCB1.addItem(predmet);
+                        predmet = "";
+                    }
+                }
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         
+        editQuestion.setResizable(false);
+        editQuestion.setVisible(visible);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -380,7 +443,7 @@ public class editQuestion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    public static javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JComboBox<String> predmetsCB;
     public static javax.swing.JComboBox<String> predmetsCB1;
     public static javax.swing.JTextArea questionText;

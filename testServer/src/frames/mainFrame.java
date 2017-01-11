@@ -80,6 +80,11 @@ public class mainFrame extends javax.swing.JFrame {
         });
 
         editQuestion.setText("Редактировать");
+        editQuestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editQuestionActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Вопросы");
 
@@ -441,6 +446,25 @@ public class mainFrame extends javax.swing.JFrame {
             dataBase.deleteQuestion(Integer.parseInt(questionTable.getValueAt(row, 1).toString()));
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_deleteQuestionActionPerformed
+
+    private void editQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editQuestionActionPerformed
+        int selectedRow = questionTable.getSelectedRow();
+        String flag = questionTable.getValueAt(selectedRow, 0).toString();
+        switch (flag) {
+            case "С выбором ответа":
+                frames.editQuestion.jTabbedPane1.setEnabledAt(1, false);
+                frames.editQuestion.jTabbedPane1.setEnabledAt(0, true);
+                frames.editQuestion.jTabbedPane1.setSelectedIndex(0);
+                break;
+            case "Без выбора ответа":
+                frames.editQuestion.jTabbedPane1.setEnabledAt(0, false);
+                frames.editQuestion.jTabbedPane1.setEnabledAt(1, true);
+                frames.editQuestion.jTabbedPane1.setSelectedIndex(1);
+                break;
+        }
+        frames.editQuestion.main(true);
+        this.enable(false);
+    }//GEN-LAST:event_editQuestionActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){

@@ -752,4 +752,10 @@ public class dataBase {
         closeConnection();
         return  predmetList;
     }
+    //Формирование данных формы редактирования вопроса
+    public static void setEditQuestion(int idQuestion) throws ClassNotFoundException, SQLException {
+        Connection();
+        
+        closeConnection();
+    }
 }
