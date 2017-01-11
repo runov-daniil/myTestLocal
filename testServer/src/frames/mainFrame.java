@@ -73,6 +73,11 @@ public class mainFrame extends javax.swing.JFrame {
         });
 
         deleteQuestion.setText("Удалить");
+        deleteQuestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteQuestionActionPerformed(evt);
+            }
+        });
 
         editQuestion.setText("Редактировать");
 
@@ -447,6 +452,10 @@ public class mainFrame extends javax.swing.JFrame {
         setTeacherPredmets.main(true, teacherTable.getValueAt(row, 2).toString());
         enableMainForm(false);
     }//GEN-LAST:event_setPredmetsButtonActionPerformed
+
+    private void deleteQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteQuestionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteQuestionActionPerformed
 
     public static void main(boolean visible) {
         if(visible == true){
