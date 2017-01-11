@@ -448,6 +448,7 @@ public class dataBase {
         Vector table = new Vector();
         while(rs.next()){
             Vector element = new Vector();
+            element.add(rs.getString("id_question"));
             element.add(rs.getString("question_level"));
             int idUser = rs.getInt("id_user");
             System.out.println("ID автора определен " + idUser);
@@ -465,7 +466,7 @@ public class dataBase {
             table.add(element);
         }
         Vector header = new Vector();
-        header.add("Параллель");header.add("Автор");header.add("Вопрос");header.add("Предмет");
+        header.add("ID");header.add("Параллель");header.add("Автор");header.add("Вопрос");header.add("Предмет");
         DefaultTableModel dtm = (DefaultTableModel)mainFrame.questionTable.getModel();
         dtm.setDataVector(table, header);
         closeConnection();
@@ -496,6 +497,13 @@ public class dataBase {
         st.execute("DELETE FROM predmets WHERE namePredmet = '"+namePredmet+"';");
         closeConnection();
         refreshPredmets();
+    }
+    //Удаление вопроса из БД
+    public static void deleteQuestion(int ID) throws ClassNotFoundException, SQLException {
+        Connection();
+        st.execute("DELETE FROM questions WHERE id_question = '"+ID+"';");
+        closeConnection();
+        refreshQuestion();
     }
     
     //Вычисление ID

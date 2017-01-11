@@ -454,7 +454,10 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_setPredmetsButtonActionPerformed
 
     private void deleteQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteQuestionActionPerformed
-        // TODO add your handling code here:
+        int row = questionTable.getSelectedRow();
+        try {
+            dataBase.deleteQuestion(Integer.parseInt(questionTable.getValueAt(row, 0).toString()));
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_deleteQuestionActionPerformed
 
     public static void main(boolean visible) {
