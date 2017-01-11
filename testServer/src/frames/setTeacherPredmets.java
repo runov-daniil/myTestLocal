@@ -114,7 +114,8 @@ public class setTeacherPredmets extends javax.swing.JFrame {
     }//GEN-LAST:event_setButtonActionPerformed
 
     private void unSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unSetButtonActionPerformed
-        int row = dbPredmetsTable.getSelectedRow();
+        int row = teacherPredmetsTable.getSelectedRow();
+        System.out.println("Удаление");
         try {
             dataBase.setPredmetsTeacher("delete", teacherPredmetsTable.getValueAt(row, 0).toString(), thisFIO);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}

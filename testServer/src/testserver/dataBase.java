@@ -683,13 +683,17 @@ public class dataBase {
         System.out.println("Список предметов найден");
         switch(set){
             case "delete":
-                int length = predmets.length();
-                int i = 0;
-                String IDp = "";
-                while(i < length){
-                    char ch = predmets.charAt(i);
-//                    if
-                }
+                System.out.println("Инициализирована процедура удаления предмета!");
+                String parsID = String.valueOf(ID);
+                parsID = parsID + ",";
+                System.out.println("Замена "+parsID+" на пустоту");
+                String newPredmets = predmets.replace(parsID, "");
+                System.out.println(newPredmets);
+                System.out.println("Предмет удален, сохраняю изменения в БД");
+                st.execute("UPDATE teachers SET predmets = '"+newPredmets+"' WHERE fio = '"+fio+"';");
+                closeConnection();
+                System.out.println("Обновляю данные на форме");
+                setPredmetsToForm(fio);
                 break;
             case "add":
                 System.out.println("Инициализирована процедура добавления предмета");
