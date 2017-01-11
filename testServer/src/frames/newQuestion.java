@@ -29,6 +29,8 @@ public class newQuestion extends javax.swing.JFrame {
         saveQuestionCheck = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         selectParallel = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        predmetsCB = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -144,6 +146,8 @@ public class newQuestion extends javax.swing.JFrame {
         selectParallel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
         selectParallel.setToolTipText("");
 
+        jLabel6.setText("Предмет:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -164,6 +168,10 @@ public class newQuestion extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(selectParallel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(predmetsCB, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -179,7 +187,9 @@ public class newQuestion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(selectParallel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(selectParallel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(predmetsCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(saveQuestionCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -308,6 +318,15 @@ public class newQuestion extends javax.swing.JFrame {
         try {
             dataBase.createNewQuestion(1);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        questionText.setText("");
+        answerText0.setText("");
+        answerText1.setText("");
+        answerText2.setText("");
+        answerText3.setText("");
+        answer0.setSelected(false);
+        answer1.setSelected(false);
+        answer2.setSelected(false);
+        answer3.setSelected(false);
     }//GEN-LAST:event_saveQuestionCheckActionPerformed
 
     public static void main(boolean visible) {
@@ -358,6 +377,20 @@ public class newQuestion extends javax.swing.JFrame {
                         newQuestion.selectParallel1.addItem(String.valueOf(elements[i]));
                     }
                 }
+                //Устанавливаем предметы на форму
+                predmetsCB.removeAllItems();
+                String listPredmet = dataBase.getPredmetsList();
+                int lengthList = listPredmet.length();
+                String predmet = "";
+                for(int i = 0; i < lengthList; i++){
+                    char ch = listPredmet.charAt(i);
+                    if(ch != ','){
+                        predmet = predmet + ch;
+                    }else{
+                        predmetsCB.addItem(predmet);
+                        predmet = "";
+                    }
+                }
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
             newQuestion.setVisible(true);
             mainFrame.enableMainForm(false);
@@ -381,12 +414,14 @@ public class newQuestion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    public static javax.swing.JComboBox<String> predmetsCB;
     public static javax.swing.JTextArea questionText;
     private javax.swing.JTextArea questionText1;
     private javax.swing.JButton saveQuestion;

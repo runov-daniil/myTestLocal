@@ -410,19 +410,22 @@ public class dataBase {
                 trueQuestion = newQuestion.answerText3.getText();
             }
             Statement saveQuestion = conn.createStatement();
+            System.out.println("Определяю ID предмета");
+            Statement IDst = conn.createStatement();
+            ResultSet IDrs = IDst.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+newQuestion.predmetsCB.getSelectedItem().toString()+"';");
             System.out.println("Сохраняю");
             System.out.println("INSERT INTO questions"
-                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty)"
+                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
                     + "VALUES('"+ID+"', '"+newQuestion.selectParallel.getSelectedItem()+"', '"+idUser+"', "
                     + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"', "
                     + "'"+newQuestion.answerText1.getText()+"', '"+newQuestion.answerText2.getText()+"', "
-                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1');");
+                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1', '"+IDrs.getInt("id_predmet")+"');");
             saveQuestion.execute("INSERT INTO questions"
-                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty)"
+                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
                     + "VALUES('"+ID+"', '"+newQuestion.selectParallel.getSelectedItem()+"', '"+idUser+"', "
                     + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"', "
                     + "'"+newQuestion.answerText1.getText()+"', '"+newQuestion.answerText2.getText()+"', "
-                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1');");
+                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1', '"+IDrs.getInt("id_predmet")+"');");
             System.out.println("Сохранение завершено!");
         }else if(difficulty == 2){
             
@@ -433,17 +436,29 @@ public class dataBase {
     //Обновление вопросов на форму
     public static void refreshQuestion() throws ClassNotFoundException, SQLException {
         Connection();
+        System.out.println("Обновляю вопросы");
         rs = st.executeQuery("SELECT * FROM questions;");
         Vector table = new Vector();
         while(rs.next()){
             Vector element = new Vector();
             element.add(rs.getString("question_level"));
-            element.add(rs.getInt("id_user"));
+            int idUser = rs.getInt("id_user");
+            System.out.println("ID автора определен " + idUser);
+            Statement userST = conn.createStatement();
+            ResultSet userRS = userST.executeQuery("SELECT fio FROM teachers WHERE id_user = '"+idUser+"';");
+            element.add(userRS.getString("fio"));
+            System.out.println("ФИО автора определено");
             element.add(rs.getString("question"));
+            int idPredmet = rs.getInt("predmet");
+            System.out.println("ID предемета определено");
+            Statement predmetST = conn.createStatement();
+            ResultSet predmetRS = predmetST.executeQuery("SELECT namePredmet FROM predmets WHERE id_predmet = '"+idPredmet+"';");
+            element.add(predmetRS.getString("namePredmet"));
+            System.out.println("Название предмета определено");
             table.add(element);
         }
         Vector header = new Vector();
-        header.add("Параллель");header.add("Автор");header.add("Вопрос");
+        header.add("Параллель");header.add("Автор");header.add("Вопрос");header.add("Предмет");
         DefaultTableModel dtm = (DefaultTableModel)mainFrame.questionTable.getModel();
         dtm.setDataVector(table, header);
         closeConnection();
@@ -703,5 +718,17 @@ public class dataBase {
                 setPredmetsToForm(fio);
                 break;
         }
+    }
+    //ПОлучение списка предметов из базы
+    public static String getPredmetsList() throws ClassNotFoundException, SQLException {
+        String predmetList = "";
+        Connection();
+        rs = st.executeQuery("SELECT * FROM predmets;");
+        while(rs.next()){
+            String predmet = rs.getString("namePredmet");
+            predmetList = predmetList + predmet + ",";
+        }
+        closeConnection();
+        return  predmetList;
     }
 }
