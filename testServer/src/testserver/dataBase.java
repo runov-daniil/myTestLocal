@@ -448,6 +448,12 @@ public class dataBase {
         Vector table = new Vector();
         while(rs.next()){
             Vector element = new Vector();
+            int level = rs.getInt("difficulty");
+            if(level == 1){
+                element.add("С выбором ответа");
+            }else if(level == 2){
+                element.add("Без выбора ответа");
+            }
             element.add(rs.getString("id_question"));
             element.add(rs.getString("question_level"));
             int idUser = rs.getInt("id_user");
@@ -466,7 +472,7 @@ public class dataBase {
             table.add(element);
         }
         Vector header = new Vector();
-        header.add("ID");header.add("Параллель");header.add("Автор");header.add("Вопрос");header.add("Предмет");
+        header.add("Тип");header.add("ID");header.add("Параллель");header.add("Автор");header.add("Вопрос");header.add("Предмет");
         DefaultTableModel dtm = (DefaultTableModel)mainFrame.questionTable.getModel();
         dtm.setDataVector(table, header);
         closeConnection();
