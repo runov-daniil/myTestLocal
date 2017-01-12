@@ -1,6 +1,7 @@
 package frames;
 
 import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 import testserver.dataBase;
 
 public class editQuestion extends javax.swing.JFrame {
@@ -354,7 +355,7 @@ public class editQuestion extends javax.swing.JFrame {
         answerText.setText("");
     }//GEN-LAST:event_saveQuestionActionPerformed
 
-    public static void main(boolean visible) {
+    public static void main(boolean visible, int type, int idQuestion) {
         try {
                 editQuestion.selectParallel.removeAllItems();
                 editQuestion.selectParallel1.removeAllItems();
@@ -416,7 +417,15 @@ public class editQuestion extends javax.swing.JFrame {
                     }
                 }
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-        
+        DefaultTableModel dtm = dataBase.setEditQuestion(PROPERTIES);
+        switch (type) {
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+        }
         editQuestion.setResizable(false);
         editQuestion.setVisible(visible);
     }

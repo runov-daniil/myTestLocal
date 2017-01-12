@@ -455,14 +455,15 @@ public class mainFrame extends javax.swing.JFrame {
                 frames.editQuestion.jTabbedPane1.setEnabledAt(1, false);
                 frames.editQuestion.jTabbedPane1.setEnabledAt(0, true);
                 frames.editQuestion.jTabbedPane1.setSelectedIndex(0);
+                frames.editQuestion.main(true, 1);
                 break;
             case "Без выбора ответа":
                 frames.editQuestion.jTabbedPane1.setEnabledAt(0, false);
                 frames.editQuestion.jTabbedPane1.setEnabledAt(1, true);
                 frames.editQuestion.jTabbedPane1.setSelectedIndex(1);
+                frames.editQuestion.main(true, 2);
                 break;
         }
-        frames.editQuestion.main(true);
         this.enable(false);
     }//GEN-LAST:event_editQuestionActionPerformed
 

@@ -753,9 +753,28 @@ public class dataBase {
         return  predmetList;
     }
     //Формирование данных формы редактирования вопроса
-    public static void setEditQuestion(int idQuestion) throws ClassNotFoundException, SQLException {
+    public static DefaultTableModel setEditQuestion(int idQuestion) throws ClassNotFoundException, SQLException {
+        DefaultTableModel dtm = new DefaultTableModel();
         Connection();
-        
+        rs = st.executeQuery("SELECT * FROM questions;");
+        Vector table = new Vector();
+        while(rs.next()){
+            Vector element = new Vector();
+            element.add(rs.getInt("question_level"));
+            element.add(rs.getString("question"));
+            element.add(rs.getString("answer_0"));
+            element.add(rs.getString("answer_1"));
+            element.add(rs.getString("answer_2"));
+            element.add(rs.getString("answer_3"));
+            element.add(rs.getString("true_answer"));
+            element.add(rs.getInt("predmet"));
+            table.add(element);
+        }
+        Vector header = new Vector();
+        header.add("Уровень вопроса");header.add("Вопрос");header.add("Ответ1");header.add("Ответ2");
+        header.add("Ответ3");header.add("Ответ4");header.add("Правильный ответ");header.add("Предмет");
+        dtm.setDataVector(table, header);
         closeConnection();
+        return dtm;
     }
 }
