@@ -416,16 +416,17 @@ public class editQuestion extends javax.swing.JFrame {
                         predmet = "";
                     }
                 }
-            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-        DefaultTableModel dtm = dataBase.setEditQuestion(PROPERTIES);
-        switch (type) {
+            //Заполняем форму данными
+            DefaultTableModel dtm = dataBase.setEditQuestion(idQuestion);
+            switch (type) {
             case 1:
-                
+                questionText.setText(dtm.getValueAt(0, 1).toString());
                 break;
             case 2:
                 
                 break;
         }
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}         
         editQuestion.setResizable(false);
         editQuestion.setVisible(visible);
     }

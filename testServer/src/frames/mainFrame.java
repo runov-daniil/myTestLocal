@@ -450,18 +450,19 @@ public class mainFrame extends javax.swing.JFrame {
     private void editQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editQuestionActionPerformed
         int selectedRow = questionTable.getSelectedRow();
         String flag = questionTable.getValueAt(selectedRow, 0).toString();
+        int idQuestion = Integer.parseInt(questionTable.getValueAt(selectedRow, 1).toString());
         switch (flag) {
             case "С выбором ответа":
                 frames.editQuestion.jTabbedPane1.setEnabledAt(1, false);
                 frames.editQuestion.jTabbedPane1.setEnabledAt(0, true);
                 frames.editQuestion.jTabbedPane1.setSelectedIndex(0);
-                frames.editQuestion.main(true, 1);
+                frames.editQuestion.main(true, 1, idQuestion);
                 break;
             case "Без выбора ответа":
                 frames.editQuestion.jTabbedPane1.setEnabledAt(0, false);
                 frames.editQuestion.jTabbedPane1.setEnabledAt(1, true);
                 frames.editQuestion.jTabbedPane1.setSelectedIndex(1);
-                frames.editQuestion.main(true, 2);
+                frames.editQuestion.main(true, 2, idQuestion);
                 break;
         }
         this.enable(false);
