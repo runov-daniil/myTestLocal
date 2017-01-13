@@ -417,13 +417,79 @@ public class editQuestion extends javax.swing.JFrame {
                     }
                 }
             //Заполняем форму данными
+            System.out.println("Запрашиваем вопрос "+idQuestion);
             DefaultTableModel dtm = dataBase.setEditQuestion(idQuestion);
             switch (type) {
             case 1:
                 questionText.setText(dtm.getValueAt(0, 1).toString());
+                answerText0.setText(dtm.getValueAt(0, 2).toString());
+                answerText1.setText(dtm.getValueAt(0, 3).toString());
+                answerText2.setText(dtm.getValueAt(0, 4).toString());
+                answerText3.setText(dtm.getValueAt(0, 5).toString());
+                String trueAnswer = dtm.getValueAt(0, 6).toString();
+                int flag = 0;
+                for(int i = 2; i < 6; i++){
+                    String answer = dtm.getValueAt(0, i).toString();
+                    if(answer.equals(trueAnswer)){
+                        flag = i;
+                    }
+                }
+                switch(flag){
+                    case 2:
+                        answer0.setSelected(true);
+                        break;
+                    case 3:
+                        answer1.setSelected(true);
+                        break;
+                    case 4:
+                        answer2.setSelected(true);
+                        break;
+                    case 5:
+                        answer3.setSelected(true);
+                        break;
+                }
+                int countParallel = selectParallel.getItemCount();
+                int level = Integer.parseInt(dtm.getValueAt(0, 0).toString());
+                for(int i = 0; i < countParallel; i++){
+                    String value = selectParallel.getItemAt(i).toString();
+                    if(Integer.parseInt(value) == level){
+                        selectParallel.setSelectedIndex(i);
+                    }
+                }
+                int countPredmets = predmetsCB.getItemCount();
+                String detectPredmet = dataBase.detectPredmetID(Integer.parseInt(dtm.getValueAt(0, 7).toString()));
+                System.out.println(detectPredmet);
+                for(int i = 0; i < countPredmets; i++){
+                    String value = predmetsCB.getItemAt(i);
+                    System.out.println(value);
+                    if(detectPredmet.equals(value)){
+                        System.out.println("Равны");
+                        predmetsCB.setSelectedIndex(i);
+                    }
+                }
                 break;
             case 2:
-                
+                questionText1.setText(dtm.getValueAt(0, 1).toString());
+                answerText.setText(dtm.getValueAt(0, 6).toString());
+                int countParallel1 = selectParallel1.getItemCount();
+                int level1 = Integer.parseInt(dtm.getValueAt(0, 0).toString());
+                for(int i = 0; i < countParallel1; i++){
+                    String value = selectParallel1.getItemAt(i).toString();
+                    if(Integer.parseInt(value) == level1){
+                        selectParallel1.setSelectedIndex(i);
+                    }
+                }
+                int countPredmets1 = predmetsCB.getItemCount();
+                String detectPredmet1 = dataBase.detectPredmetID(Integer.parseInt(dtm.getValueAt(0, 7).toString()));
+                System.out.println(detectPredmet1);
+                for(int i = 0; i < countPredmets1; i++){
+                    String value = predmetsCB1.getItemAt(i);
+                    System.out.println(value);
+                    if(detectPredmet1.equals(value)){
+                        System.out.println("Равны");
+                        predmetsCB1.setSelectedIndex(i);
+                    }
+                }
                 break;
         }
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}         

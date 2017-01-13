@@ -705,7 +705,7 @@ public class dataBase {
         closeConnection();
         return count;
     }
-    //Добалвение или удаление нового предмета учителю
+    //Добавление или удаление нового предмета учителю
     public static void setPredmetsTeacher(String set, String predmet, String fio) throws ClassNotFoundException, SQLException {
         Connection();
         System.out.println("Связь с базой данных успешно установлена");
@@ -756,7 +756,7 @@ public class dataBase {
     public static DefaultTableModel setEditQuestion(int idQuestion) throws ClassNotFoundException, SQLException {
         DefaultTableModel dtm = new DefaultTableModel();
         Connection();
-        rs = st.executeQuery("SELECT * FROM questions;");
+        rs = st.executeQuery("SELECT * FROM questions WHERE id_question = '"+idQuestion+"';");
         Vector table = new Vector();
         while(rs.next()){
             Vector element = new Vector();
@@ -776,5 +776,14 @@ public class dataBase {
         dtm.setDataVector(table, header);
         closeConnection();
         return dtm;
+    }
+    //Определение предмета по ID
+    public static String detectPredmetID(int ID) throws ClassNotFoundException, SQLException {
+        String predmet = "";
+        Connection();
+        rs = st.executeQuery("SELECT namePredmet FROM predmets WHERE id_predmet = '"+ID+"';");
+        predmet = rs.getString("namePredmet");
+        closeConnection();
+        return predmet;
     }
 }
