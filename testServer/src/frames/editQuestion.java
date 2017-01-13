@@ -6,6 +6,7 @@ import testserver.dataBase;
 
 public class editQuestion extends javax.swing.JFrame {
     private static editQuestion editQuestion = new editQuestion();
+    private static int idQ = 0;
     public editQuestion() {
         initComponents();
     }
@@ -334,17 +335,11 @@ public class editQuestion extends javax.swing.JFrame {
 
     private void saveQuestionCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionCheckActionPerformed
         try {
-            dataBase.createNewQuestion(1);
+            
+            dataBase.updateQuestion(1, idQ);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-        questionText.setText("");
-        answerText0.setText("");
-        answerText1.setText("");
-        answerText2.setText("");
-        answerText3.setText("");
-        answer0.setSelected(false);
-        answer1.setSelected(false);
-        answer2.setSelected(false);
-        answer3.setSelected(false);
+        this.dispose();
+        mainFrame.enableMainForm(true);
     }//GEN-LAST:event_saveQuestionCheckActionPerformed
 
     private void saveQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionActionPerformed
@@ -492,7 +487,8 @@ public class editQuestion extends javax.swing.JFrame {
                 }
                 break;
         }
-            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}         
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {} 
+        idQ = idQuestion;
         editQuestion.setResizable(false);
         editQuestion.setVisible(visible);
     }

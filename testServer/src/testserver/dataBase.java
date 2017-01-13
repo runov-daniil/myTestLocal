@@ -1,6 +1,7 @@
 package testserver;
 
 import frames.editInformation;
+import frames.editQuestion;
 import frames.mainFrame;
 import frames.newQuestion;
 import frames.predmetsFrame;
@@ -508,6 +509,50 @@ public class dataBase {
     public static void deleteQuestion(int ID) throws ClassNotFoundException, SQLException {
         Connection();
         st.execute("DELETE FROM questions WHERE id_question = '"+ID+"';");
+        closeConnection();
+        refreshQuestion();
+    }
+    //Редактирование вопроса
+    public static void updateQuestion(int difficulty, int idQuestion) throws ClassNotFoundException, SQLException {
+        Connection();
+        switch(difficulty){
+            case 1:
+                //ID предмета
+                Statement getIDpredmet = conn.createStatement();
+                ResultSet getIDpredmetRS = getIDpredmet.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+editQuestion.predmetsCB.getSelectedItem().toString()+"';");
+                //Правильный ответ
+                String trueQuestion = "";
+                if(newQuestion.answer0.isSelected()){
+                    trueQuestion = newQuestion.answerText0.getText();
+                }else if(newQuestion.answer1.isSelected()){
+                    trueQuestion = newQuestion.answerText1.getText();
+                }else if(newQuestion.answer2.isSelected()){
+                    trueQuestion = newQuestion.answerText2.getText();
+                }else if(newQuestion.answer3.isSelected()){
+                    trueQuestion = newQuestion.answerText3.getText();
+                }
+                //Сохранение изменений
+                Statement 
+                Statement 
+                Statement 
+                Statement 
+                Statement 
+                Statement        
+                Statement 
+                Statement         
+                st.executeQuery("UPDATE questions SET question_level = '"+editQuestion.selectParallel.getSelectedItem().toString()+"' WHERE id_question = '"+idQuestion+"';");
+                st.executeQuery("UPDATE questions SET question = '"+editQuestion.questionText.getText()+"' WHERE id_question = '"+idQuestion+"';");
+                st.executeQuery("UPDATE questions SET answer_0 = '"+editQuestion.answerText0.getText()+"' WHERE id_question = '"+idQuestion+"';");
+                st.executeQuery("UPDATE questions SET answer_1 = '"+editQuestion.answerText1.getText()+"' WHERE id_question = '"+idQuestion+"';");
+                st.executeQuery("UPDATE questions SET answer_2 = '"+editQuestion.answerText2.getText()+"' WHERE id_question = '"+idQuestion+"';");
+                st.executeQuery("UPDATE questions SET answer_3 = '"+editQuestion.answerText3.getText()+"' WHERE id_question = '"+idQuestion+"';");
+                st.executeQuery("UPDATE questions SET predmet = '"+getIDpredmetRS.getInt("id_predmet")+"' WHERE id_question = '"+idQuestion+"';");
+                st.executeQuery("UPDATE questions SET true_answer = '"+trueQuestion+"' WHERE id_question = '"+idQuestion+"';");                
+                break;
+            case 2:
+                
+                break;
+        }
         closeConnection();
         refreshQuestion();
     }
