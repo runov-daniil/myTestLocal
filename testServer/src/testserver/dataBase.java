@@ -837,11 +837,30 @@ public class dataBase {
     }
     
     //Обновление онлайна пользователей системы
-    public static DefaultTableModel refreshOnline() throws ClassNotFoundException, SQLException {
-        DefaultTableModel dtm = new DefaultTableModel();
+    public static Vector refreshOnline() throws ClassNotFoundException, SQLException {
         Connection();
-        
+        rs = st.executeQuery("SELECT * FROM online;");
+        Vector table = new Vector();
+        while(rs.next()){
+            Vector element = new Vector();
+            element.add(rs.getString("name"));
+            table.add(element);
+        }
         closeConnection();
-        return dtm;
+        return table;
     }
-}
+    //Добавление пользователя в онлайн
+    public static void newOnline(String login) throws ClassNotFoundException, SQLException {
+        Connection();
+        st.execute("INSERT INTO online(name)VALUES('"+login+"');");
+        closeConnection();
+        serverConsole.serverConsole.refreshOnline();
+    }
+    //Удаление пользователя из онлайн
+    public static void dropOnline(String login) throws ClassNotFoundException, SQLException {
+        Connection();
+        st.execute("DELETE FROM online WHERE name = '"+login+"';");
+        closeConnection();
+        serverConsole.serverConsole.refreshOnline();
+    }
+} 

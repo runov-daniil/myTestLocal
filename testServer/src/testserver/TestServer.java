@@ -16,6 +16,7 @@ public class TestServer {
                 dataBase.refreshTeachers();
                 dataBase.refreshQuestion();
                 mainFrame.loginLabel.setText(level);
+                dataBase.newOnline(level);
                 mainFrame.main(true);
                 break;
             case "teacher":

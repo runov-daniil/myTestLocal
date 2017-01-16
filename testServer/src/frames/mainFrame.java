@@ -51,6 +51,11 @@ public class mainFrame extends javax.swing.JFrame {
         setPredmetsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         questionPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -467,6 +472,12 @@ public class mainFrame extends javax.swing.JFrame {
         }
         this.enable(false);
     }//GEN-LAST:event_editQuestionActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            dataBase.dropOnline(loginLabel.getText());
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(boolean visible) {
         if(visible == true){

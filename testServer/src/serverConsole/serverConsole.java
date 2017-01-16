@@ -1,5 +1,12 @@
 package serverConsole;
 
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import testserver.dataBase;
+
 public class serverConsole extends javax.swing.JFrame {
     private static serverConsole serverConsole = new serverConsole();
     public serverConsole() {
@@ -84,12 +91,21 @@ public class serverConsole extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ssServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ssServerActionPerformed
-        //Запуск серверного сокета
-        
-        //Инициализация консоли сервера
-        
+        try {
+            //Запуск серверного сокета
+            
+            //Инициализация консоли сервера
+            refreshOnline();
+        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_ssServerActionPerformed
 
+    public static void refreshOnline() throws ClassNotFoundException, SQLException {
+        Vector online = dataBase.refreshOnline();
+        Vector header = new Vector();
+        header.add("Пользователи онлайн: ");
+        DefaultTableModel dtm = (DefaultTableModel)onlineTable.getModel();
+        dtm.setDataVector(online, header);
+    }
     public static void main(boolean visible) {
         serverConsole.setResizable(false);
         serverConsole.setVisible(visible);
@@ -98,7 +114,7 @@ public class serverConsole extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable onlineTable;
+    public static javax.swing.JTable onlineTable;
     private javax.swing.JButton ssServer;
     private javax.swing.JButton startTest;
     private javax.swing.JTable startsTest;
