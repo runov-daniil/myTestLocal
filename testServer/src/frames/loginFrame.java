@@ -91,7 +91,7 @@ public class loginFrame extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         }else{
             try {
-                getAutorization.getConnection();
+                getAutorization.getConnection(loginText.getText(), passwordText.getText());
             } catch (IOException ex) {}
         }
     }//GEN-LAST:event_jButton1ActionPerformed

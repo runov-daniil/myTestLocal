@@ -22,7 +22,6 @@ public class TestServer {
                 break;
             case "teacher":
                 dataBase.newOnline(userName);
-                
                 break;
             case "student":
                 

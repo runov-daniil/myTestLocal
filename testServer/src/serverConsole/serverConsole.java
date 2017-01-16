@@ -107,7 +107,7 @@ public class serverConsole extends javax.swing.JFrame {
     private void ssServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ssServerActionPerformed
         try {
             systemServer.main();
-        } catch (IOException ex) {}
+        } catch (IOException ex) {} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_ssServerActionPerformed
 
     private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
