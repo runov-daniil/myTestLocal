@@ -835,4 +835,13 @@ public class dataBase {
         closeConnection();
         return predmet;
     }
+    
+    //Обновление онлайна пользователей системы
+    public static DefaultTableModel refreshOnline() throws ClassNotFoundException, SQLException {
+        DefaultTableModel dtm = new DefaultTableModel();
+        Connection();
+        
+        closeConnection();
+        return dtm;
+    }
 }
