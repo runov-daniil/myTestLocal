@@ -511,12 +511,12 @@ public class dataBase {
     public static void updateQuestion(int difficulty, int idQuestion) throws ClassNotFoundException, SQLException {
         System.out.println(idQuestion);
         Connection();
+        //ID предмета
+        Statement getIDpredmet = conn.createStatement();
+        ResultSet getIDpredmetRS = getIDpredmet.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+editQuestion.predmetsCB.getSelectedItem().toString()+"';");
+        System.out.println("ID предмета "+getIDpredmetRS.getString("id_predmet"));
         switch(difficulty){
             case 1:
-                //ID предмета
-                Statement getIDpredmet = conn.createStatement();
-                ResultSet getIDpredmetRS = getIDpredmet.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+editQuestion.predmetsCB.getSelectedItem().toString()+"';");
-                System.out.println("ID предмета "+getIDpredmetRS.getString("id_predmet"));
                 //Правильный ответ
                 String trueQuestion = "";
                 if(editQuestion.answer0.isSelected()){
@@ -550,7 +550,11 @@ public class dataBase {
                          + "predmet = '"+getIDpredmetRS.getString("id_predmet")+"' WHERE id_question = '"+idQuestion+"';");              
                 break;
             case 2:
-                
+                st.execute("UPDATE questions SET "
+                         + "question_level = '"+editQuestion.selectParallel1.getSelectedItem().toString()+"', "
+                         + "question = '"+editQuestion.questionText1.getText()+"', "
+                         + "true_answer = '"+editQuestion.answerText.getText()+"', "
+                         + "predmet = '"+getIDpredmetRS.getString("id_predmet")+"' WHERE id_question = '"+idQuestion+"';");
                 break;
         }
         closeConnection();

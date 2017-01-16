@@ -343,10 +343,10 @@ public class editQuestion extends javax.swing.JFrame {
 
     private void saveQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionActionPerformed
         try {
-            dataBase.createNewQuestion(2);
+            dataBase.updateQuestion(2, idQ);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-        questionText1.setText("");
-        answerText.setText("");
+        this.dispose();
+        mainFrame.enableMainForm(true);
     }//GEN-LAST:event_saveQuestionActionPerformed
 
     public static void main(boolean visible, int type, int idQuestion) {
