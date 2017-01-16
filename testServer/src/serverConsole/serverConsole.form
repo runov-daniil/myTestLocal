@@ -124,6 +124,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x41e;&#x442;&#x43a;&#x440;&#x44b;&#x442;&#x44c; &#x43b;&#x43e;&#x433; &#x43a;&#x43e;&#x43c;&#x430;&#x43d;&#x434;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="consoleOpenActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

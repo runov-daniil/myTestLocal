@@ -61,6 +61,11 @@ public class serverConsole extends javax.swing.JFrame {
 
         consoleOpen.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         consoleOpen.setText("Открыть лог команд");
+        consoleOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consoleOpenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,6 +112,10 @@ public class serverConsole extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
     }//GEN-LAST:event_ssServerActionPerformed
 
+    private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
+        logServer.main(true);
+    }//GEN-LAST:event_consoleOpenActionPerformed
+
     public static void refreshOnline() throws ClassNotFoundException, SQLException {
         Vector online = dataBase.refreshOnline();
         Vector header = new Vector();
@@ -117,6 +126,7 @@ public class serverConsole extends javax.swing.JFrame {
     public static void main(boolean visible) {
         serverConsole.setResizable(false);
         serverConsole.setVisible(visible);
+        logServer.main(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
