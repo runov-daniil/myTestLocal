@@ -77,15 +77,19 @@ public class loginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String authStatus = dataBase.autorization(loginText.getText(), passwordText.getText());
-            if(!(authStatus.equals("0"))){
-                testserver.TestServer.userDetect(authStatus, loginText.getText());
-                this.dispose();
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Неверный логин и(или) пароль!");
-            }
-        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        if(loginText.getText().equals("admin")){
+            try {
+                String authStatus = dataBase.autorization(loginText.getText(), passwordText.getText());
+                if(!(authStatus.equals("0"))){
+                    testserver.TestServer.userDetect(authStatus, loginText.getText());
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Неверный логин и(или) пароль!");
+                }
+            } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        }else{
+            
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(boolean visible) {

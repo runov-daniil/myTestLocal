@@ -22,8 +22,7 @@ public class TestServer {
                 break;
             case "teacher":
                 dataBase.newOnline(userName);
-                teacherClient.teacherClient.main(true);
-                teacherClient.teacherClient.loginLabel.setText(userName);
+                
                 break;
             case "student":
                 
