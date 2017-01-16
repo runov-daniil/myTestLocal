@@ -80,7 +80,7 @@ public class loginFrame extends javax.swing.JFrame {
         try {
             String authStatus = dataBase.autorization(loginText.getText(), passwordText.getText());
             if(!(authStatus.equals("0"))){
-                testserver.TestServer.userDetect(authStatus);
+                testserver.TestServer.userDetect(authStatus, loginText.getText());
                 this.dispose();
             }else{
                 JOptionPane.showMessageDialog(rootPane, "Неверный логин и(или) пароль!");
@@ -101,7 +101,7 @@ public class loginFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField loginText;
+    public static javax.swing.JTextField loginText;
     private javax.swing.JPasswordField passwordText;
     // End of variables declaration//GEN-END:variables
 }

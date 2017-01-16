@@ -9,7 +9,8 @@ public class TestServer {
         frames.loginFrame.main(true);
     }
     
-    public static void userDetect(String level) throws ClassNotFoundException, SQLException {
+    public static void userDetect(String level, String userName) throws ClassNotFoundException, SQLException {
+        System.out.println("Имя пользователя " + userName);
         switch(level){
             case "admin":
                 dataBase.refreshStudents();
@@ -20,7 +21,9 @@ public class TestServer {
                 mainFrame.main(true);
                 break;
             case "teacher":
-                
+                dataBase.newOnline(userName);
+                teacherClient.teacherClient.main(true);
+                teacherClient.teacherClient.loginLabel.setText(userName);
                 break;
             case "student":
                 
