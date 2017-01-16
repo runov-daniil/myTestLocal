@@ -1,9 +1,11 @@
 package frames;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import tempClasses.getAutorization;
 import testserver.dataBase;
 
 public class loginFrame extends javax.swing.JFrame {
@@ -88,7 +90,9 @@ public class loginFrame extends javax.swing.JFrame {
                 }
             } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         }else{
-            
+            try {
+                getAutorization.getConnection();
+            } catch (IOException ex) {}
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -106,6 +110,6 @@ public class loginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     public static javax.swing.JTextField loginText;
-    private javax.swing.JPasswordField passwordText;
+    public static javax.swing.JPasswordField passwordText;
     // End of variables declaration//GEN-END:variables
 }

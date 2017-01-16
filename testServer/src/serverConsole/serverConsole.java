@@ -1,5 +1,6 @@
 package serverConsole;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -105,11 +106,8 @@ public class serverConsole extends javax.swing.JFrame {
 
     private void ssServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ssServerActionPerformed
         try {
-            //Запуск серверного сокета
-            
-            //Инициализация консоли сервера
-            refreshOnline();
-        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+            systemServer.main();
+        } catch (IOException ex) {}
     }//GEN-LAST:event_ssServerActionPerformed
 
     private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
@@ -126,7 +124,7 @@ public class serverConsole extends javax.swing.JFrame {
     public static void main(boolean visible) {
         serverConsole.setResizable(false);
         serverConsole.setVisible(visible);
-        logServer.main(false);
+        logServer.main(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

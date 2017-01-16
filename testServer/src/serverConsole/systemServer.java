@@ -14,10 +14,11 @@ public class systemServer {
         
         InputStream getIn = get.getInputStream();
         DataInputStream in = new DataInputStream(getIn);
-        String getLine = null;
-        while (true) {            
-            getLine = in.readUTF();
-            logServer.logText.setText(logServer.logText.getText() + "\n" + getLine);
-        }
+        String getLine = null;    
+        
+        getLine = in.readUTF();
+        logServer.logText.setText(logServer.logText.getText() + "\n" + getLine);
+        
+        systemServer.main();
     }
 }
