@@ -335,7 +335,6 @@ public class editQuestion extends javax.swing.JFrame {
 
     private void saveQuestionCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionCheckActionPerformed
         try {
-            
             dataBase.updateQuestion(1, idQ);
         } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
         this.dispose();
@@ -412,7 +411,6 @@ public class editQuestion extends javax.swing.JFrame {
                     }
                 }
             //Заполняем форму данными
-            System.out.println("Запрашиваем вопрос "+idQuestion);
             DefaultTableModel dtm = dataBase.setEditQuestion(idQuestion);
             switch (type) {
             case 1:
@@ -453,12 +451,9 @@ public class editQuestion extends javax.swing.JFrame {
                 }
                 int countPredmets = predmetsCB.getItemCount();
                 String detectPredmet = dataBase.detectPredmetID(Integer.parseInt(dtm.getValueAt(0, 7).toString()));
-                System.out.println(detectPredmet);
                 for(int i = 0; i < countPredmets; i++){
                     String value = predmetsCB.getItemAt(i);
-                    System.out.println(value);
                     if(detectPredmet.equals(value)){
-                        System.out.println("Равны");
                         predmetsCB.setSelectedIndex(i);
                     }
                 }
@@ -476,12 +471,9 @@ public class editQuestion extends javax.swing.JFrame {
                 }
                 int countPredmets1 = predmetsCB.getItemCount();
                 String detectPredmet1 = dataBase.detectPredmetID(Integer.parseInt(dtm.getValueAt(0, 7).toString()));
-                System.out.println(detectPredmet1);
                 for(int i = 0; i < countPredmets1; i++){
                     String value = predmetsCB1.getItemAt(i);
-                    System.out.println(value);
                     if(detectPredmet1.equals(value)){
-                        System.out.println("Равны");
                         predmetsCB1.setSelectedIndex(i);
                     }
                 }

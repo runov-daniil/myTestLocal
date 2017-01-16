@@ -444,7 +444,6 @@ public class dataBase {
     //Обновление вопросов на форму
     public static void refreshQuestion() throws ClassNotFoundException, SQLException {
         Connection();
-        System.out.println("Обновляю вопросы");
         rs = st.executeQuery("SELECT * FROM questions;");
         Vector table = new Vector();
         while(rs.next()){
@@ -458,18 +457,14 @@ public class dataBase {
             element.add(rs.getString("id_question"));
             element.add(rs.getString("question_level"));
             int idUser = rs.getInt("id_user");
-            System.out.println("ID автора определен " + idUser);
             Statement userST = conn.createStatement();
             ResultSet userRS = userST.executeQuery("SELECT fio FROM teachers WHERE id_user = '"+idUser+"';");
             element.add(userRS.getString("fio"));
-            System.out.println("ФИО автора определено");
             element.add(rs.getString("question"));
             int idPredmet = rs.getInt("predmet");
-            System.out.println("ID предемета определено");
             Statement predmetST = conn.createStatement();
             ResultSet predmetRS = predmetST.executeQuery("SELECT namePredmet FROM predmets WHERE id_predmet = '"+idPredmet+"';");
             element.add(predmetRS.getString("namePredmet"));
-            System.out.println("Название предмета определено");
             table.add(element);
         }
         Vector header = new Vector();
@@ -514,40 +509,45 @@ public class dataBase {
     }
     //Редактирование вопроса
     public static void updateQuestion(int difficulty, int idQuestion) throws ClassNotFoundException, SQLException {
+        System.out.println(idQuestion);
         Connection();
         switch(difficulty){
             case 1:
                 //ID предмета
                 Statement getIDpredmet = conn.createStatement();
                 ResultSet getIDpredmetRS = getIDpredmet.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+editQuestion.predmetsCB.getSelectedItem().toString()+"';");
+                System.out.println("ID предмета "+getIDpredmetRS.getString("id_predmet"));
                 //Правильный ответ
                 String trueQuestion = "";
-                if(newQuestion.answer0.isSelected()){
-                    trueQuestion = newQuestion.answerText0.getText();
-                }else if(newQuestion.answer1.isSelected()){
-                    trueQuestion = newQuestion.answerText1.getText();
-                }else if(newQuestion.answer2.isSelected()){
-                    trueQuestion = newQuestion.answerText2.getText();
-                }else if(newQuestion.answer3.isSelected()){
-                    trueQuestion = newQuestion.answerText3.getText();
+                if(editQuestion.answer0.isSelected()){
+                    trueQuestion = editQuestion.answerText0.getText();
+                }else if(editQuestion.answer1.isSelected()){
+                    trueQuestion = editQuestion.answerText1.getText();
+                }else if(editQuestion.answer2.isSelected()){
+                    trueQuestion = editQuestion.answerText2.getText();
+                }else if(editQuestion.answer3.isSelected()){
+                    trueQuestion = editQuestion.answerText3.getText();
                 }
+                System.out.println("Правильный ответ: "+trueQuestion);
                 //Сохранение изменений
-                Statement 
-                Statement 
-                Statement 
-                Statement 
-                Statement 
-                Statement        
-                Statement 
-                Statement         
-                st.executeQuery("UPDATE questions SET question_level = '"+editQuestion.selectParallel.getSelectedItem().toString()+"' WHERE id_question = '"+idQuestion+"';");
-                st.executeQuery("UPDATE questions SET question = '"+editQuestion.questionText.getText()+"' WHERE id_question = '"+idQuestion+"';");
-                st.executeQuery("UPDATE questions SET answer_0 = '"+editQuestion.answerText0.getText()+"' WHERE id_question = '"+idQuestion+"';");
-                st.executeQuery("UPDATE questions SET answer_1 = '"+editQuestion.answerText1.getText()+"' WHERE id_question = '"+idQuestion+"';");
-                st.executeQuery("UPDATE questions SET answer_2 = '"+editQuestion.answerText2.getText()+"' WHERE id_question = '"+idQuestion+"';");
-                st.executeQuery("UPDATE questions SET answer_3 = '"+editQuestion.answerText3.getText()+"' WHERE id_question = '"+idQuestion+"';");
-                st.executeQuery("UPDATE questions SET predmet = '"+getIDpredmetRS.getInt("id_predmet")+"' WHERE id_question = '"+idQuestion+"';");
-                st.executeQuery("UPDATE questions SET true_answer = '"+trueQuestion+"' WHERE id_question = '"+idQuestion+"';");                
+                System.out.println("UPDATE questions SET "
+                         + "question_level = '"+editQuestion.selectParallel.getSelectedItem().toString()+"', "
+                         + "question = '"+editQuestion.questionText.getText()+"', "
+                         + "answer_0 = '"+editQuestion.answerText0.getText()+"', "
+                         + "answer_1 = '"+editQuestion.answerText1.getText()+"', "
+                         + "answer_2 = '"+editQuestion.answerText2.getText()+"', "
+                         + "answer_3 = '"+editQuestion.answerText3.getText()+"', "
+                         + "true_answer = '"+trueQuestion+"', "
+                         + "predmet = '"+getIDpredmetRS.getString("id_predmet")+"' WHERE id_question = '"+idQuestion+"';");  
+                st.execute("UPDATE questions SET "
+                         + "question_level = '"+editQuestion.selectParallel.getSelectedItem().toString()+"', "
+                         + "question = '"+editQuestion.questionText.getText()+"', "
+                         + "answer_0 = '"+editQuestion.answerText0.getText()+"', "
+                         + "answer_1 = '"+editQuestion.answerText1.getText()+"', "
+                         + "answer_2 = '"+editQuestion.answerText2.getText()+"', "
+                         + "answer_3 = '"+editQuestion.answerText3.getText()+"', "
+                         + "true_answer = '"+trueQuestion+"', "
+                         + "predmet = '"+getIDpredmetRS.getString("id_predmet")+"' WHERE id_question = '"+idQuestion+"';");              
                 break;
             case 2:
                 
