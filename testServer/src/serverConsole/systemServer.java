@@ -38,12 +38,13 @@ public class systemServer {
                     } catch (IOException ex) {}
                     listeningThread.stop();
                 }
+                
             });
         
-            if(!(listeningThread.isAlive())){
-                listeningThread.start();
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "Запуск слушающего потока");
-            }
+            while(serverConsole.serverConsole.status = true){
+                System.out.println("\n 123");
+               listeningThread.start();
+            } 
         }
     }
     

@@ -9,8 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import testserver.dataBase;
 
 public class serverConsole extends javax.swing.JFrame {
-    private static Thread status;
-    private static serverConsole serverConsole = new serverConsole();
+    public static boolean status = false;
+    public static serverConsole serverConsole = new serverConsole();
     public static boolean statusServer = false;
     public serverConsole() {
         initComponents();
@@ -51,7 +51,7 @@ public class serverConsole extends javax.swing.JFrame {
         jScrollPane2.setViewportView(startsTest);
 
         ssServer.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ssServer.setText("Запустить сервер");
+        ssServer.setText(" Остановить сервер");
         ssServer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ssServerActionPerformed(evt);
@@ -60,7 +60,6 @@ public class serverConsole extends javax.swing.JFrame {
 
         startTest.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         startTest.setText("Запустить тест");
-        startTest.setEnabled(false);
 
         consoleOpen.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         consoleOpen.setText("Открыть лог команд");
@@ -107,20 +106,7 @@ public class serverConsole extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ssServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ssServerActionPerformed
-        String txt = ssServer.getText();
-        switch (txt) {
-            case "Запустить сервер":
-                startTest.setEnabled(true);
-                ssServer.setText("Остановить сервер");
-                statusServer = true;
-                systemServer.listen();
-                break;
-            case "Остановить сервер":
-                startTest.setEnabled(false);
-                ssServer.setText("Запустить сервер");
-                statusServer = false;
-                break;
-        }
+        
     }//GEN-LAST:event_ssServerActionPerformed
 
     private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
