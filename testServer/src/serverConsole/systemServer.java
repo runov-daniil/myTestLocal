@@ -13,70 +13,50 @@ import java.sql.SQLException;
 import testserver.dataBase;
 
 public class systemServer {
-    public static void main() throws IOException, ClassNotFoundException, SQLException {
-        ServerSocket server = new ServerSocket(4444);
-        Socket get = null;
-        get = server.accept();
-        
-        InputStream getIn = get.getInputStream();
-        DataInputStream in = new DataInputStream(getIn);
-        String getLine = null;    
-        
-        getLine = in.readUTF();
-        if(logServer.logText.getText().length() > 0){
-            logServer.logText.setText(logServer.logText.getText() + "\n" + getLine);
-        }else{
-            logServer.logText.setText(getLine);
-        }
-        checkCommand(getLine);
-    }
-        
-    private static void checkCommand(String getLine) throws ClassNotFoundException, SQLException, IOException{
-        int length = getLine.length();
-        String cmd = "";
-        int i = 0;
-        while(true){
-            char ch = getLine.charAt(i);
-            if(ch != '|'){
-                cmd = cmd + ch;
-                i++;
-            }else{
-                break;
+    private static Thread listeningThread;
+    private static Thread answerThread;
+    public static void main(String status) {
+        listeningThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logServer.serverLog.setText(logServer.serverLog.getText() + "Слушающий поток запущен");
+                listeningThread.stop();
+                checkListeningThread();
             }
-        }
-        getLine = getLine.substring(i+1, length);
+        });
+        answerThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logServer.serverLog.setText(logServer.serverLog.getText() + "Отвечающий поток запущен");
+                answerThread.stop();
+                checkAnswerThread();
+            }
+        });
         
-        switch(cmd){
-            case "authorization":
-                length = getLine.length();
-                i = 0;
-                String login = "";
-                while(true){
-                    char ch = getLine.charAt(i);
-                    if(ch != '|'){
-                        login = login + ch;
-                        i++;
-                    }else{
-                        break;
-                    }
-                }
-                String password = getLine.substring(i+1, length);
-                String level = dataBase.autorization(login, password);
-                sendMessage("authorization|" + level + "|" + login);
-                break;
+        switch (status){
+                case "start":
+                    listeningThread.start();
+                    answerThread.start();
+                    break;
+                case "stop":
+                    listeningThread.stop();
+                    answerThread.stop();
+                    break;
+        }            
+    }
+    
+    private static void checkListeningThread(){
+        boolean check = listeningThread.isAlive();
+        if(check != true){
+            logServer.serverLog.setText(logServer.serverLog.getText() + "Рестарт слушающего потока");
+            listeningThread.start();
         }
     }
     
-    private static void sendMessage(String message) throws UnknownHostException, IOException{
-        int serverPort = 6464;
-        String address = "127.0.0.1";
-        
-        InetAddress ipAddr = InetAddress.getByName(address);
-        Socket send = new Socket(ipAddr, serverPort);
-        
-        OutputStream out = send.getOutputStream();
-        DataOutputStream sOut = new DataOutputStream(out);
-        sOut.writeUTF(message);
-        out.flush();
+    private static void checkAnswerThread(){
+        if(answerThread.isAlive() != true){
+            logServer.serverLog.setText(logServer.serverLog.getText() + "Рестарт отвечающего потока");
+            answerThread.start();
+        }
     }
 }

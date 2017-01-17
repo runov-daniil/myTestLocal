@@ -105,9 +105,19 @@ public class serverConsole extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ssServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ssServerActionPerformed
-        try {
-            systemServer.main();
-        } catch (IOException ex) {} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        String txt = ssServer.getText();
+        switch (txt) {
+            case "Запустить сервер":
+                startTest.setEnabled(true);
+                ssServer.setText("Остановить сервер");
+                systemServer.main("start");
+                break;
+            case "Остановить сервер":
+                startTest.setEnabled(false);
+                ssServer.setText("Запустить сервер");
+                systemServer.main("stop");
+                break;
+        }
     }//GEN-LAST:event_ssServerActionPerformed
 
     private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
@@ -124,7 +134,7 @@ public class serverConsole extends javax.swing.JFrame {
     public static void main(boolean visible) {
         serverConsole.setResizable(false);
         serverConsole.setVisible(visible);
-        logServer.main(true);
+        logServer.main(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
