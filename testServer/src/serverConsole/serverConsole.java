@@ -9,7 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import testserver.dataBase;
 
 public class serverConsole extends javax.swing.JFrame {
+    private static Thread status;
     private static serverConsole serverConsole = new serverConsole();
+    public static boolean statusServer = false;
     public serverConsole() {
         initComponents();
     }
@@ -110,12 +112,13 @@ public class serverConsole extends javax.swing.JFrame {
             case "Запустить сервер":
                 startTest.setEnabled(true);
                 ssServer.setText("Остановить сервер");
-                systemServer.main("start");
+                statusServer = true;
+                systemServer.listen();
                 break;
             case "Остановить сервер":
                 startTest.setEnabled(false);
                 ssServer.setText("Запустить сервер");
-                systemServer.main("stop");
+                statusServer = false;
                 break;
         }
     }//GEN-LAST:event_ssServerActionPerformed
@@ -136,7 +139,6 @@ public class serverConsole extends javax.swing.JFrame {
         serverConsole.setVisible(visible);
         logServer.main(false);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton consoleOpen;
     private javax.swing.JScrollPane jScrollPane1;
