@@ -11,7 +11,6 @@ import testserver.dataBase;
 public class serverConsole extends javax.swing.JFrame {
     public static boolean status = false;
     public static serverConsole serverConsole = new serverConsole();
-    public static boolean statusServer = false;
     public serverConsole() {
         initComponents();
     }
@@ -51,7 +50,7 @@ public class serverConsole extends javax.swing.JFrame {
         jScrollPane2.setViewportView(startsTest);
 
         ssServer.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        ssServer.setText(" Остановить сервер");
+        ssServer.setText("Старт сервер");
         ssServer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ssServerActionPerformed(evt);
@@ -75,9 +74,9 @@ public class serverConsole extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ssServer))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                    .addComponent(ssServer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -106,7 +105,15 @@ public class serverConsole extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ssServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ssServerActionPerformed
-        
+        String label = serverConsole.ssServer.getText();
+        switch(label) {
+            case "Старт сервер":
+                listenSocket.main(true);
+                ssServer.setEnabled(false);
+                break;
+            case "Стоп сервер":
+                ssServer.setText("Старт сервер");
+        }
     }//GEN-LAST:event_ssServerActionPerformed
 
     private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
@@ -120,17 +127,22 @@ public class serverConsole extends javax.swing.JFrame {
         DefaultTableModel dtm = (DefaultTableModel)onlineTable.getModel();
         dtm.setDataVector(online, header);
     }
+    
     public static void main(boolean visible) {
         serverConsole.setResizable(false);
         serverConsole.setVisible(visible);
         logServer.main(false);
+    }
+    
+    public static void enabled(boolean enabled){
+        serverConsole.setEnabled(enabled);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton consoleOpen;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTable onlineTable;
-    private javax.swing.JButton ssServer;
+    public static javax.swing.JButton ssServer;
     private javax.swing.JButton startTest;
     private javax.swing.JTable startsTest;
     // End of variables declaration//GEN-END:variables

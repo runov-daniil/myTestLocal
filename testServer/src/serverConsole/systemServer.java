@@ -17,36 +17,6 @@ import testserver.dataBase;
 public class systemServer {
     private static Thread listeningThread;
     private static Thread answerThread;
-    public static void listen() {
-        while(serverConsole.statusServer == true){
-            listeningThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                    logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "Слушающий поток запущен");
-                    try {
-                        ServerSocket serverSocket = new ServerSocket(4444);
-                        Socket listen = serverSocket.accept();
-                    
-                        InputStream in = listen.getInputStream();
-                        DataInputStream data = new DataInputStream(in);
-                    
-                        String message = data.readUTF();                   
-                        logServer.logText.setText(logServer.logText.getText() + "\n" + ">>> " + message);
-                    
-                        listen.close();
-                        serverSocket.close();                  
-                    } catch (IOException ex) {}
-                    listeningThread.stop();
-                }
-                
-            });
-        
-            while(serverConsole.serverConsole.status = true){
-                System.out.println("\n 123");
-               listeningThread.start();
-            } 
-        }
-    }
     
     public static void answer() {
         answerThread = new Thread(new Runnable() {

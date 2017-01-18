@@ -6,14 +6,14 @@ import java.net.*;
 public class getAutorization {
     public static void getConnection(String login, String password) throws UnknownHostException, IOException {
         int serverPort = 4444;
-        String address = "127.0.0.1";
+        String address = "192.168.0.103";
         
         InetAddress ipAddr = InetAddress.getByName(address);
         Socket send = new Socket(ipAddr, serverPort);
         
         OutputStream out = send.getOutputStream();
         DataOutputStream sOut = new DataOutputStream(out);
-        sOut.writeUTF("authorization|"+login+"|"+password);
+        sOut.writeUTF("authorization*"+login+"|"+password+"*"+send.getLocalAddress());
         out.flush();
         pendingMessage();
     }

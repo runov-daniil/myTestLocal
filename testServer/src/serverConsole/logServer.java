@@ -1,5 +1,8 @@
 package serverConsole;
 
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 public class logServer extends javax.swing.JFrame {
     private static logServer logServer = new logServer();
     public logServer() {
@@ -65,12 +68,11 @@ public class logServer extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jLabel3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -107,6 +109,9 @@ public class logServer extends javax.swing.JFrame {
 
     public static void main(boolean visible) {
         logServer.setResizable(false);
+        Vector Table = new Vector();
+        Vector haeder = new Vector();
+        DefaultTableModel dtm = (DefaultTableModel)logServer.pendingTable.getModel();
         logServer.setVisible(visible);
     }
 

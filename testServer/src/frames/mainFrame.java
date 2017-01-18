@@ -137,7 +137,7 @@ public class mainFrame extends javax.swing.JFrame {
         servicePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         startServerBtn.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        startServerBtn.setText("Старт сервер");
+        startServerBtn.setText("Консоль сервера");
         startServerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startServerBtnActionPerformed(evt);
@@ -372,7 +372,6 @@ public class mainFrame extends javax.swing.JFrame {
     private void startServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerBtnActionPerformed
         serverConsole.serverConsole.main(true);
         serverConsole.serverConsole.status = true;
-        serverConsole.systemServer.listen();
     }//GEN-LAST:event_startServerBtnActionPerformed
 
     private void createStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createStudentActionPerformed
