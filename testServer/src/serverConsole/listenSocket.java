@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import testserver.dataBase;
 
 public class listenSocket extends javax.swing.JFrame {
     private static Thread listeningThread;
@@ -119,12 +120,7 @@ public class listenSocket extends javax.swing.JFrame {
             sOut.writeUTF(answer);
             out.flush();
             
-            logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
-            Vector element = new Vector();
-            element.add(ip);
-            logServer.ipRows.add(element);
-            DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();            
-            newDTM.setDataVector(logServer.ipRows, logServer.headerIP);
+            logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);            
         }        
     }
     
@@ -206,7 +202,12 @@ public class listenSocket extends javax.swing.JFrame {
                     logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    авторизация отклонена");
                 }else{
                     logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    авторизация успешно принята");
-                                        
+                    Vector element = new Vector();
+                    element.add(ip);
+                    logServer.ipRows.add(element);
+                    DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();            
+                    newDTM.setDataVector(logServer.ipRows, logServer.headerIP);  
+                    try {dataBase.newOnline(login);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
                 }
                 answer = level;
             break;
