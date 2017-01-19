@@ -120,9 +120,11 @@ public class listenSocket extends javax.swing.JFrame {
             out.flush();
             
             logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
-//            logServer.ipRows.add(ip);
-//            DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();            
-//            newDTM.setDataVector(logServer.ipRows, logServer.headerIP);
+            Vector element = new Vector();
+            element.add(ip);
+            logServer.ipRows.add(element);
+            DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();            
+            newDTM.setDataVector(logServer.ipRows, logServer.headerIP);
         }        
     }
     
