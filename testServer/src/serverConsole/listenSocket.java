@@ -120,7 +120,8 @@ public class listenSocket extends javax.swing.JFrame {
             sOut.writeUTF(answer);
             out.flush();
             
-            logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);            
+            logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
+            lastRow++;
         }        
     }
     
