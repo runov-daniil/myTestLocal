@@ -109,19 +109,24 @@ public class listenSocket extends javax.swing.JFrame {
             String ip = logServer.pendingTable.getValueAt(lastRow, 2).toString();
             String answer = buildAnswer(cmd, data, ip);
             
-            int serverPort = 6464;
-            String address = ip;
+            if(!(answer.equals("logout"))){
+                int serverPort = 6464;
+                String address = ip;
         
-            InetAddress ipAddr = InetAddress.getByName(address);
-            Socket send = new Socket(ipAddr, serverPort);
+                InetAddress ipAddr = InetAddress.getByName(address);
+                Socket send = new Socket(ipAddr, serverPort);
         
-            OutputStream out = send.getOutputStream();
-            DataOutputStream sOut = new DataOutputStream(out);
-            sOut.writeUTF(answer);
-            out.flush();
+                OutputStream out = send.getOutputStream();
+                DataOutputStream sOut = new DataOutputStream(out);
+                sOut.writeUTF(answer);
             
-            logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
-            lastRow++;
+                out.flush();
+                logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
+                lastRow++;
+                send.close();
+            }else{
+                lastRow++;
+            }
         }        
     }
     
@@ -211,7 +216,31 @@ public class listenSocket extends javax.swing.JFrame {
                     try {dataBase.newOnline(login);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
                 }
                 answer = level;
-            break;
+                break;
+            case "logout":
+                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    получен оповещение о выходе пользователя");        
+                try {dataBase.dropOnline(data);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "        пользователь удален из онлайн");
+                int countRow = logServer.ipRows.size();
+                boolean flagDelete = false;
+                for(int j = 0; j < countRow; j++){
+                    String element = logServer.ipRows.get(j).toString();
+                    int lengthElement = element.length();
+                    element = element.substring(1, lengthElement-1);
+                    System.out.println(element);
+                    if(element.equals(ip)){
+                        logServer.ipRows.remove(j);
+                        flagDelete = true;
+                    }
+                }
+                if(flagDelete == true){
+                    DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();
+                    newDTM.setDataVector(logServer.ipRows, logServer.headerIP);
+                }
+                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "        IP осовобожден");
+                logServer.logText.setText(logServer.logText.getText() + "\n" + "!!! пользователь " + data + " вышел из системы");
+                answer = "logout";
+                break;
         }
         return answer;
     }

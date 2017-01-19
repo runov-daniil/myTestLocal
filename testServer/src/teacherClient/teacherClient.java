@@ -1,5 +1,6 @@
 package teacherClient;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,7 +153,7 @@ public class teacherClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
+        try {teacherSocket.send("logout*" + teacherClient.loginLabel.getText() + "*");} catch (IOException ex) {}
     }//GEN-LAST:event_formWindowClosing
 
     public static void main(boolean visible) {
