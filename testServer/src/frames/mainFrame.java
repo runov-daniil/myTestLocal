@@ -371,7 +371,6 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void startServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerBtnActionPerformed
         serverConsole.serverConsole.main(true);
-        serverConsole.serverConsole.status = true;
     }//GEN-LAST:event_startServerBtnActionPerformed
 
     private void createStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createStudentActionPerformed

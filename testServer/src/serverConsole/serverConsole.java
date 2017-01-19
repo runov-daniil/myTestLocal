@@ -6,10 +6,11 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import static serverConsole.logServer.headerIP;
+import static serverConsole.logServer.headerPending;
 import testserver.dataBase;
 
 public class serverConsole extends javax.swing.JFrame {
-    public static boolean status = false;
     public static serverConsole serverConsole = new serverConsole();
     public serverConsole() {
         initComponents();
@@ -118,6 +119,8 @@ public class serverConsole extends javax.swing.JFrame {
 
     private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
         logServer.main(true);
+        headerPending.add("Команда");headerPending.add("Данные");headerPending.add("ip");
+        headerIP.add("IP");
     }//GEN-LAST:event_consoleOpenActionPerformed
 
     public static void refreshOnline() throws ClassNotFoundException, SQLException {

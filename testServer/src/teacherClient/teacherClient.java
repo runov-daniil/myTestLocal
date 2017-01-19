@@ -152,9 +152,7 @@ public class teacherClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        try {
-            dataBase.dropOnline(loginLabel.getText());
-        } catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+        
     }//GEN-LAST:event_formWindowClosing
 
     public static void main(boolean visible) {

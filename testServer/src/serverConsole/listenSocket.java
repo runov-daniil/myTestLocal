@@ -1,17 +1,25 @@
 package serverConsole;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
 public class listenSocket extends javax.swing.JFrame {
     private static Thread listeningThread;
+    private static int lastRow = 0;
+    private static int lastRowCount = 0;
     private static listenSocket listenSocket = new listenSocket();
     public listenSocket() {
         initComponents();
@@ -79,6 +87,7 @@ public class listenSocket extends javax.swing.JFrame {
                     
                     reCryptLine(message);
                     
+                    answer();
                     listeningThread.interrupt();
                     if(serverConsole.ssServer.getText().equals("Стоп сервер")){
                         jButton1.doClick();
@@ -87,6 +96,34 @@ public class listenSocket extends javax.swing.JFrame {
             } 
         });
         listeningThread.start();
+    }
+    
+    public static void answer() throws UnknownHostException, IOException {
+        logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "Сервер готов отвечать");
+        int rowCount = logServer.pendingTable.getRowCount();
+        if(lastRowCount < rowCount){
+            lastRowCount = rowCount;
+            String cmd = logServer.pendingTable.getValueAt(lastRow, 0).toString();
+            String data = logServer.pendingTable.getValueAt(lastRow, 1).toString();
+            String ip = logServer.pendingTable.getValueAt(lastRow, 2).toString();
+            String answer = buildAnswer(cmd, data, ip);
+            
+            int serverPort = 6464;
+            String address = ip;
+        
+            InetAddress ipAddr = InetAddress.getByName(address);
+            Socket send = new Socket(ipAddr, serverPort);
+        
+            OutputStream out = send.getOutputStream();
+            DataOutputStream sOut = new DataOutputStream(out);
+            sOut.writeUTF(answer);
+            out.flush();
+            
+            logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
+//            logServer.ipRows.add(ip);
+//            DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();            
+//            newDTM.setDataVector(logServer.ipRows, logServer.headerIP);
+        }        
     }
     
     public static void main(boolean visible) {
@@ -132,13 +169,47 @@ public class listenSocket extends javax.swing.JFrame {
                 break;
             }
         }
-        Vector table = new Vector();
-        table.add(element);
-        Vector header = new Vector();
-        header.add("Команда");header.add("Данные");header.add("ip");
-        DefaultTableModel dtm = (DefaultTableModel)logServer.pendingTable.getModel();
-        dtm.setDataVector(table, header);
+        logServer.pendingRows.add(element);
+        DefaultTableModel newModel = (DefaultTableModel)logServer.pendingTable.getModel();
+        newModel.setDataVector(logServer.pendingRows, logServer.headerPending);
         logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    формирование завершено");
+    }
+    
+    private static String buildAnswer(String cmd, String data, String ip) {
+        String answer = "";
+        int length = 0;
+        switch(cmd){
+            case "authorization":
+                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    получен запрос авторизации");
+                length = data.length();
+                int i = 0;
+                String login = "";
+                String password = "";
+                String level = "";
+                while(i < length){
+                    char ch = data.charAt(i);
+                    if(ch != '|'){
+                        login = login + ch;
+                        i++;
+                    }else{
+                        password = data.substring(i+1, length);
+                        break;
+                    }
+                }
+                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    логин/пароль определен");
+                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    запрос к базе данных отправлен");
+                try {level = testserver.dataBase.autorization(login, password);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "        ответ на запрос получен");
+                if(level.equals("0")){
+                    logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    авторизация отклонена");
+                }else{
+                    logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    авторизация успешно принята");
+                                        
+                }
+                answer = level;
+            break;
+        }
+        return answer;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
