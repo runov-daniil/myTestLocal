@@ -1,6 +1,7 @@
 package tempClasses;
 
 import frames.loginFrame;
+import teacherClient.*;
 import java.io.*;
 import java.net.*;
 
@@ -32,12 +33,13 @@ public class getAutorization {
         
         switch(getLine){
             case "teacher":
+                teacherClient.loginLabel.setText(loginFrame.loginText.getText());
                 teacherClient.teacherClient.main(true);
-                teacherClient.teacherClient.loginLabel.setText(loginFrame.loginText.getText());
                 loginFrame.main(false);
                 break;
         }
         get.close();
         server.close();
+        in.close();
     }
 }

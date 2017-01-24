@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -23,6 +24,7 @@ public class listenSocket extends javax.swing.JFrame {
     private static Thread listeningThread;
     private static int lastRow = 0;
     private static int lastRowCount = 0;
+    private static int firstStart = 1;
     private static listenSocket listenSocket = new listenSocket();
     public listenSocket() {
         initComponents();
@@ -68,8 +70,11 @@ public class listenSocket extends javax.swing.JFrame {
         serverConsole.ssServer.setEnabled(true);    
         this.hide();
         logServer.main(true);
-        headerPending.add("Команда");headerPending.add("Данные");headerPending.add("ip");
-        headerIP.add("IP");
+        if(firstStart == 1){
+            headerPending.add("Команда");headerPending.add("Данные");headerPending.add("ip");
+            headerIP.add("IP");
+            firstStart++;
+        }
         backgroundThread();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -112,9 +117,26 @@ public class listenSocket extends javax.swing.JFrame {
             String cmd = logServer.pendingTable.getValueAt(lastRow, 0).toString();
             String data = logServer.pendingTable.getValueAt(lastRow, 1).toString();
             String ip = logServer.pendingTable.getValueAt(lastRow, 2).toString();
-            String answer = buildAnswer(cmd, data, ip);
+            String answer = "";
+            if(cmd.equals("getQuestions")){
+                Vector questions = new Vector();
+                try {questions = dataBase.userQuestion(data);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                int serverPort = 7474;
+                String address = ip;
+        
+                InetAddress ipAddr = InetAddress.getByName(address);
+                Socket send = new Socket(ipAddr, serverPort);
+        
+                ObjectOutputStream out = new ObjectOutputStream(send.getOutputStream());
+                out.writeObject(questions);
+                out.flush();
+                logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< отправлены вопросы на IP " + ip);
+                send.close();
+            }else{
+                answer = buildAnswer(cmd, data, ip);
+            }
             
-            if(!(answer.equals("logout"))){
+            if((!(answer.equals("logout"))) && (!(cmd.equals("getQuestions")))){
                 int serverPort = 6464;
                 String address = ip;
         
@@ -245,6 +267,9 @@ public class listenSocket extends javax.swing.JFrame {
                 logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "        IP осовобожден");
                 logServer.logText.setText(logServer.logText.getText() + "\n" + "!!! пользователь " + data + " вышел из системы");
                 answer = "logout";
+                break;
+            case "":
+                answer = "Разрабатываю";
                 break;
         }
         return answer;

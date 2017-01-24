@@ -863,4 +863,30 @@ public class dataBase {
         closeConnection();
         serverConsole.serverConsole.refreshOnline();
     }
+    
+    //Работа с клиентами сервера
+    //Вопросы пользователя
+    public static Vector userQuestion(String login) throws ClassNotFoundException, SQLException {
+        Vector questions = new Vector();
+        Connection();
+        Statement IDst = conn.createStatement();
+        ResultSet IDrs = IDst.executeQuery("SELECT id_user FROM users WHERE login = '"+login+"';");
+        int id = IDrs.getInt("id_user");
+        rs = st.executeQuery("SELECT * FROM questions WHERE id_user = '"+id+"';");
+        while(rs.next()){
+            Vector element = new Vector();
+            element.add(rs.getString("question_level"));
+            element.add(rs.getString("question"));
+            element.add(rs.getString("answer_0"));
+            element.add(rs.getString("answer_1"));
+            element.add(rs.getString("answer_2"));
+            element.add(rs.getString("answer_3"));
+            element.add(rs.getString("true_answer"));
+            element.add(rs.getString("difficulty"));
+            element.add(rs.getString("predmet"));
+            questions.add(element);
+        }
+        closeConnection();
+        return questions;
+    }
 } 
