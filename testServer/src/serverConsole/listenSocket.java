@@ -118,42 +118,48 @@ public class listenSocket extends javax.swing.JFrame {
             String data = logServer.pendingTable.getValueAt(lastRow, 1).toString();
             String ip = logServer.pendingTable.getValueAt(lastRow, 2).toString();
             String answer = "";
-            if(cmd.equals("getQuestions")){
-                Vector questions = new Vector();
-                try {questions = dataBase.userQuestion(data);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-                int serverPort = 7474;
-                String address = ip;
+            switch(cmd){
+                case "getQuestions":
+                    Vector questions = new Vector();
+                    try {questions = dataBase.userQuestion(data);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                    int serverPort = 7474;
+                    String address = ip;
         
-                InetAddress ipAddr = InetAddress.getByName(address);
-                Socket send = new Socket(ipAddr, serverPort);
+                    InetAddress ipAddr = InetAddress.getByName(address);
+                    Socket send = new Socket(ipAddr, serverPort);
         
-                ObjectOutputStream out = new ObjectOutputStream(send.getOutputStream());
-                out.writeObject(questions);
-                out.flush();
-                logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< отправлены вопросы на IP " + ip);
-                send.close();
-            }else{
-                answer = buildAnswer(cmd, data, ip);
-            }
+                    ObjectOutputStream out = new ObjectOutputStream(send.getOutputStream());
+                    out.writeObject(questions);
+                    out.flush();
+                    logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< отправлены вопросы на IP " + ip);
+                    send.close();
+                    lastRow++;
+                    break;
+                case "authorization":
+                    answer = buildAnswer(cmd, data, ip);
+                    if(!(answer.equals("logout"))){
+                    int serverPortAuth = 6464;
+                    String addressAuth = ip;
+        
+                    InetAddress ipAddrAuth = InetAddress.getByName(addressAuth);
+                    Socket sendAuth = new Socket(ipAddrAuth, serverPortAuth);
+        
+                    OutputStream outAuth = sendAuth.getOutputStream();
+                    DataOutputStream sOut = new DataOutputStream(outAuth);
+                    sOut.writeUTF(answer);
             
-            if((!(answer.equals("logout"))) && (!(cmd.equals("getQuestions")))){
-                int serverPort = 6464;
-                String address = ip;
-        
-                InetAddress ipAddr = InetAddress.getByName(address);
-                Socket send = new Socket(ipAddr, serverPort);
-        
-                OutputStream out = send.getOutputStream();
-                DataOutputStream sOut = new DataOutputStream(out);
-                sOut.writeUTF(answer);
-            
-                out.flush();
-                logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
-                lastRow++;
-                send.close();
-            }else{
-                lastRow++;
-            }
+                    outAuth.flush();
+                    logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
+                    lastRow++;
+                    sendAuth.close();
+                    }else{
+                        lastRow++;
+                    }
+                    break;
+                case "parallelsPredmets":
+                    Vector toSend = new Vector();
+                    break;
+            }      
         }        
     }
     

@@ -32,14 +32,11 @@ public class teacherSocket {
     //обновление вопрос пользователя
     public static void getQuestions() throws IOException, ClassNotFoundException {
         send("getQuestions*" + teacherClient.loginLabel.getText() + "*");
-        System.out.println("ЗАпрсоил вопросы");
         
         ServerSocket serverSocket = new ServerSocket(7474);
         Socket listen = serverSocket.accept();
-        System.out.println("Жду ответа");
         
         ObjectInputStream in = new ObjectInputStream(listen.getInputStream());
-        System.out.println("Вопрсы получены");
         
         Object getQ = in.readObject();
         
@@ -60,5 +57,32 @@ public class teacherSocket {
         
         listen.close();
         serverSocket.close();
+    }
+    
+    //Добавление нового вопроса в БД
+    public static void saveQuestion() throws  IOException, ClassNotFoundException {
+        
+    }
+    
+    //Запрос параллелей системы и предметов
+    public static void getPP() throws IOException, ClassNotFoundException {
+        send("parallelsPredmets*"+teacherClient.loginLabel.getText()+"*");
+        
+        ServerSocket server = new ServerSocket(6464);
+        Socket get = null;
+        get = server.accept();
+        
+        InputStream getIn = get.getInputStream();
+        DataInputStream in = new DataInputStream(getIn);
+        String getLine = null;    
+        
+        getLine = in.readUTF();
+        
+        System.out.println(getLine);
+        
+        server.close();
+        get.close();
+        getIn.close();
+        in.close();
     }
 }

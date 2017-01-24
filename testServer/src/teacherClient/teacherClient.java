@@ -49,6 +49,11 @@ public class teacherClient extends javax.swing.JFrame {
         jScrollPane1.setViewportView(myQuestionTable);
 
         createButton.setText("Добавить");
+        createButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Удалить");
 
@@ -154,6 +159,10 @@ public class teacherClient extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         try {teacherSocket.send("logout*" + teacherClient.loginLabel.getText() + "*");} catch (IOException ex) {}
     }//GEN-LAST:event_formWindowClosing
+
+    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        createQuestion.main(true);
+    }//GEN-LAST:event_createButtonActionPerformed
 
     public static void main(boolean visible) {
         try {

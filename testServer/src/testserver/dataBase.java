@@ -889,4 +889,5 @@ public class dataBase {
         closeConnection();
         return questions;
     }
+    //Ответ на запрос параллелей системы и какие предметы может преподавать учитель
 } 
