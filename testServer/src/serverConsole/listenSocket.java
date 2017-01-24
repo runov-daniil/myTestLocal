@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import static serverConsole.logServer.headerIP;
+import static serverConsole.logServer.headerPending;
 import testserver.dataBase;
 
 public class listenSocket extends javax.swing.JFrame {
@@ -45,14 +47,14 @@ public class listenSocket extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -65,6 +67,9 @@ public class listenSocket extends javax.swing.JFrame {
         serverConsole.ssServer.setText("Стоп сервер");
         serverConsole.ssServer.setEnabled(true);    
         this.hide();
+        logServer.main(true);
+        headerPending.add("Команда");headerPending.add("Данные");headerPending.add("ip");
+        headerIP.add("IP");
         backgroundThread();
     }//GEN-LAST:event_jButton1ActionPerformed
 

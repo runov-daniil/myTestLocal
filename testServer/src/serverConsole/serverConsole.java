@@ -26,7 +26,6 @@ public class serverConsole extends javax.swing.JFrame {
         startsTest = new javax.swing.JTable();
         ssServer = new javax.swing.JButton();
         startTest = new javax.swing.JButton();
-        consoleOpen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -61,14 +60,6 @@ public class serverConsole extends javax.swing.JFrame {
         startTest.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         startTest.setText("Запустить тест");
 
-        consoleOpen.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        consoleOpen.setText("Открыть лог команд");
-        consoleOpen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consoleOpenActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,14 +69,15 @@ public class serverConsole extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                     .addComponent(ssServer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(startTest)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(consoleOpen))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(startTest)
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,8 +89,7 @@ public class serverConsole extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ssServer)
-                    .addComponent(startTest)
-                    .addComponent(consoleOpen))
+                    .addComponent(startTest))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -116,12 +107,6 @@ public class serverConsole extends javax.swing.JFrame {
                 ssServer.setText("Старт сервер");
         }
     }//GEN-LAST:event_ssServerActionPerformed
-
-    private void consoleOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consoleOpenActionPerformed
-        logServer.main(true);
-        headerPending.add("Команда");headerPending.add("Данные");headerPending.add("ip");
-        headerIP.add("IP");
-    }//GEN-LAST:event_consoleOpenActionPerformed
 
     public static void refreshOnline() throws ClassNotFoundException, SQLException {
         Vector online = dataBase.refreshOnline();
@@ -141,7 +126,6 @@ public class serverConsole extends javax.swing.JFrame {
         serverConsole.setEnabled(enabled);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton consoleOpen;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTable onlineTable;
