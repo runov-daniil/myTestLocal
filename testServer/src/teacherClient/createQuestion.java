@@ -336,7 +336,6 @@ public class createQuestion extends javax.swing.JFrame {
     public static void main(boolean visible) {
         createQuestion.setResizable(false);
         createQuestion.setVisible(visible);
-        try {teacherSocket.getPP();} catch (IOException ex) {} catch (ClassNotFoundException ex) {}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

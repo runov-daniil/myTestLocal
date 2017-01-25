@@ -2,6 +2,7 @@ package teacherClient;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import testserver.dataBase;
@@ -157,7 +158,7 @@ public class teacherClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        try {teacherSocket.send("logout*" + teacherClient.loginLabel.getText() + "*");} catch (IOException ex) {}
+        try {teacherSocket.send("logout", "exit");} catch (IOException ex) {}
     }//GEN-LAST:event_formWindowClosing
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
@@ -165,12 +166,9 @@ public class teacherClient extends javax.swing.JFrame {
     }//GEN-LAST:event_createButtonActionPerformed
 
     public static void main(boolean visible) {
-        try {
-            teacherClient.setResizable(false);
-            teacherClient.setVisible(true);
-            teacherSocket.getQuestions();
-            System.out.println(loginLabel.getText());
-        } catch (IOException ex) {} catch (ClassNotFoundException ex) {}
+        teacherClient.setResizable(false);
+        teacherClient.setVisible(true);
+        System.out.println(loginLabel.getText());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -154,6 +154,9 @@ public class listenSocket extends javax.swing.JFrame {
                     lastRow++;
                 }
                 break;
+            case "logout":
+                logger(">>> Получено оповещение о выходе из системы с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
+                break;
         }
     }
     
