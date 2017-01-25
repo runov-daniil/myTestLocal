@@ -97,15 +97,8 @@ public class serverConsole extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ssServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ssServerActionPerformed
-        String label = serverConsole.ssServer.getText();
-        switch(label) {
-            case "Старт сервер":
-                listenSocket.main(true);
-                ssServer.setEnabled(false);
-                break;
-            case "Стоп сервер":
-                ssServer.setText("Старт сервер");
-        }
+        listenSocket.main(true);
+        ssServer.setEnabled(false);
     }//GEN-LAST:event_ssServerActionPerformed
 
     public static void refreshOnline() throws ClassNotFoundException, SQLException {

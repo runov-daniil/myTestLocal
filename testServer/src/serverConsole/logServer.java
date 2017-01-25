@@ -30,6 +30,12 @@ public class logServer extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         ipTable = new javax.swing.JTable();
 
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+
         pendingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -48,10 +54,12 @@ public class logServer extends javax.swing.JFrame {
 
         logText.setColumns(20);
         logText.setRows(5);
+        logText.setText("Сервер ожидает сообщения!");
         jScrollPane1.setViewportView(logText);
 
         serverLog.setColumns(20);
         serverLog.setRows(5);
+        serverLog.setText("Сервер успешно запущен!");
         jScrollPane4.setViewportView(serverLog);
 
         jLabel4.setText("Внутренний лог сервера");
@@ -111,7 +119,14 @@ public class logServer extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        serverConsole.ssServer.setEnabled(true);
+        serverConsole.ssServer.setText("Старт сервер");
+        serverConsole.ssServer.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(boolean visible) {
         logServer.setResizable(false);
