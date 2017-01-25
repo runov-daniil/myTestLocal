@@ -4,19 +4,27 @@ import frames.loginFrame;
 import teacherClient.*;
 import java.io.*;
 import java.net.*;
+import java.util.Vector;
 
 public class getAutorization {
     public static void getConnection(String login, String password) throws UnknownHostException, IOException {
         int serverPort = 4444;
-        String address = "192.168.0.109";
+        String address = "192.168.0.112";
         
         InetAddress ipAddr = InetAddress.getByName(address);
         Socket send = new Socket(ipAddr, serverPort);
         
-        OutputStream out = send.getOutputStream();
-        DataOutputStream sOut = new DataOutputStream(out);
-        sOut.writeUTF("authorization*"+login+"|"+password+"*"+send.getLocalAddress());
+        Vector data = new Vector();
+        data.add("authorization");
+        data.add(loginFrame.loginText.getText() + "|" + loginFrame.passwordText.getText());
+        data.add(send.getLocalAddress().toString());
+        
+        ObjectOutputStream out = new ObjectOutputStream(send.getOutputStream());
+        out.writeObject(data);
         out.flush();
+        
+        out.close();
+        send.close();
         pendingMessage();
     }
     

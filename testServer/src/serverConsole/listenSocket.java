@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
@@ -23,9 +24,10 @@ import testserver.dataBase;
 public class listenSocket extends javax.swing.JFrame {
     private static Thread listeningThread;
     private static int lastRow = 0;
-    private static int lastRowCount = 0;
     private static int firstStart = 1;
     private static listenSocket listenSocket = new listenSocket();
+    private static Vector temp = new Vector();
+    private static Vector IP = new Vector();
     public listenSocket() {
         initComponents();
     }
@@ -48,17 +50,11 @@ public class listenSocket extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jButton1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jButton1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -95,203 +91,101 @@ public class listenSocket extends javax.swing.JFrame {
         listeningThread = new Thread(new Runnable() {
         @Override
         public void run() {
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "Сервер слушает");
                 try {
                     ServerSocket serverSocket = new ServerSocket(4444);
                     Socket listen = serverSocket.accept();
         
-                    InputStream in = listen.getInputStream();
-                    DataInputStream data = new DataInputStream(in);
+                    ObjectInputStream in = new ObjectInputStream(listen.getInputStream());
+                    Object getMessage = new Object();
+                    getMessage = in.readObject();
                     
-                    String message = data.readUTF();                   
-                    logServer.logText.setText(logServer.logText.getText() + "\n" + ">>> " + message);
-                                        
+                    temp.add(getMessage);
+                    
+                    DefaultTableModel dtm = (DefaultTableModel)logServer.pendingTable.getModel();
+                    dtm.setDataVector(temp, headerPending);
+                    
+                    answer();
+                    
                     listen.close();
                     serverSocket.close(); 
                     
-                    reCryptLine(message);
-                    
-                    answer();
                     listeningThread.interrupt();
                     if(serverConsole.ssServer.isVisible() == false){
                         jButton1.doClick();
                     }
-                } catch (IOException ex) {}
+                } catch (IOException ex) {System.out.println("error");} catch (ClassNotFoundException ex) {System.out.println("error");}
             } 
         });
         listeningThread.start();
     }
-    
-    public static void answer() throws UnknownHostException, IOException {
-        logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "Сервер готов отвечать");
-        int rowCount = logServer.pendingTable.getRowCount();
-        if(lastRowCount < rowCount){
-            lastRowCount = rowCount;
-            String cmd = logServer.pendingTable.getValueAt(lastRow, 0).toString();
-            String data = logServer.pendingTable.getValueAt(lastRow, 1).toString();
-            String ip = logServer.pendingTable.getValueAt(lastRow, 2).toString();
-            String answer = "";
-            switch(cmd){
-                case "getQuestions":
-                    Vector questions = new Vector();
-                    try {questions = dataBase.userQuestion(data);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-                    int serverPort = 7474;
-                    String address = ip;
-        
-                    InetAddress ipAddr = InetAddress.getByName(address);
-                    Socket send = new Socket(ipAddr, serverPort);
-        
-                    ObjectOutputStream out = new ObjectOutputStream(send.getOutputStream());
-                    out.writeObject(questions);
-                    out.flush();
-                    logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< отправлены вопросы на IP " + ip);
-                    send.close();
-                    lastRow++;
-                    break;
-                case "authorization":
-                    answer = buildAnswer(cmd, data, ip);
-                    if(!(answer.equals("logout"))){
-                    int serverPortAuth = 6464;
-                    String addressAuth = ip;
-        
-                    InetAddress ipAddrAuth = InetAddress.getByName(addressAuth);
-                    Socket sendAuth = new Socket(ipAddrAuth, serverPortAuth);
-        
-                    OutputStream outAuth = sendAuth.getOutputStream();
-                    DataOutputStream sOut = new DataOutputStream(outAuth);
-                    sOut.writeUTF(answer);
-            
-                    outAuth.flush();
-                    logServer.logText.setText(logServer.logText.getText() + "\n" + "<<< " + answer + " на IP " + ip);
-                    lastRow++;
-                    sendAuth.close();
-                    }else{
-                        lastRow++;
-                    }
-                    break;
-                case "parallelsPredmets":
-                    Vector toSend = new Vector();
-                    break;
-            }      
-        }        
-    }
-    
-    public static void main(boolean visible) {
-        listenSocket.setResizable(false);
-        listenSocket.setVisible(visible);
-    }
-    
-    private static void reCryptLine(String message){
-        logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "Получено сообщение");
-        int length = message.length();
-        String cmd = "";
-        String data = "";
-        String ip = "";
-        int i = 0;
-        logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    Первоначальные данные установлены");
-        Vector element = new Vector();
-        while(i < length){
-            char ch = message.charAt(i);
-            if(ch != '*'){
-                cmd = cmd + ch;
-                i++;
-            }else{
-                message = message.substring(i+1, length);
-                element.add(cmd);
-                break;
-            }
-        }
-        logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    определена команда");
-        length = message.length();
-        i = 0;
-        while(i < length){
-            char ch = message.charAt(i);
-            if(ch != '*'){
-                data = data + ch;
-                i++;
-            }else{
-                element.add(data);
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    определены входные данные");
-                int lengthData = data.length();
-                ip = message.substring(lengthData+2, length);
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    определен IP");
-                element.add(ip);
-                break;
-            }
-        }
-        logServer.pendingRows.add(element);
-        DefaultTableModel newModel = (DefaultTableModel)logServer.pendingTable.getModel();
-        newModel.setDataVector(logServer.pendingRows, logServer.headerPending);
-        logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    формирование завершено");
-    }
-    
-    private static String buildAnswer(String cmd, String data, String ip) {
-        String answer = "";
-        int length = 0;
-        switch(cmd){
+    //Формирование ответа сервера
+    private static void answer() throws UnknownHostException, IOException {
+        String cmd = logServer.pendingTable.getValueAt(lastRow, 0).toString();
+        switch (cmd) {
             case "authorization":
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    получен запрос авторизации");
-                length = data.length();
-                int i = 0;
+                logger(">>> Получен запрос авторизации с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
                 String login = "";
                 String password = "";
-                String level = "";
+                String data = logServer.pendingTable.getValueAt(lastRow, 1).toString();
+                int length = data.length();
+                int i = 0;
                 while(i < length){
                     char ch = data.charAt(i);
                     if(ch != '|'){
                         login = login + ch;
                         i++;
                     }else{
-                        password = data.substring(i+1, length);
+                        password = data.substring(i+1);
                         break;
                     }
                 }
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    логин/пароль определен");
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    запрос к базе данных отправлен");
-                try {level = testserver.dataBase.autorization(login, password);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "        ответ на запрос получен");
-                if(level.equals("0")){
-                    logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    авторизация отклонена");
-                }else{
-                    logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    авторизация успешно принята");
-                    Vector element = new Vector();
-                    element.add(ip);
-                    logServer.ipRows.add(element);
-                    DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();            
-                    newDTM.setDataVector(logServer.ipRows, logServer.headerIP);  
-                    try {dataBase.newOnline(login);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                
+                String authStatus = "";
+                try {authStatus = dataBase.autorization(login, password);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                
+                if((authStatus.equals("teacher")) || (authStatus.equals("student"))){
+                    Vector newIP = new Vector();
+                    newIP.add(logServer.pendingTable.getValueAt(lastRow, 2).toString());
+                    IP.add(newIP);
+                    DefaultTableModel dtm = (DefaultTableModel)logServer.ipTable.getModel();
+                    dtm.setDataVector(IP, headerIP);
+                    logger("        авторизация успешна, уровень доступа пользователя " + authStatus);
+                    sendText(authStatus, logServer.pendingTable.getValueAt(lastRow, 2).toString());
+                    lastRow++;
                 }
-                answer = level;
-                break;
-            case "logout":
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "    получен оповещение о выходе пользователя");        
-                try {dataBase.dropOnline(data);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "        пользователь удален из онлайн");
-                int countRow = logServer.ipRows.size();
-                boolean flagDelete = false;
-                for(int j = 0; j < countRow; j++){
-                    String element = logServer.ipRows.get(j).toString();
-                    int lengthElement = element.length();
-                    element = element.substring(1, lengthElement-1);
-                    System.out.println(element);
-                    if(element.equals(ip)){
-                        logServer.ipRows.remove(j);
-                        flagDelete = true;
-                    }
-                }
-                if(flagDelete == true){
-                    DefaultTableModel newDTM = (DefaultTableModel)logServer.ipTable.getModel();
-                    newDTM.setDataVector(logServer.ipRows, logServer.headerIP);
-                }
-                logServer.serverLog.setText(logServer.serverLog.getText() + "\n" + "        IP осовобожден");
-                logServer.logText.setText(logServer.logText.getText() + "\n" + "!!! пользователь " + data + " вышел из системы");
-                answer = "logout";
-                break;
-            case "":
-                answer = "Разрабатываю";
                 break;
         }
-        return answer;
+    }
+    
+    //Отправление текстового сообщения
+    private static void sendText(String toSend, String IP) throws UnknownHostException, IOException{
+        IP = IP.substring(1);
+        
+        int ClientPort = 6464;
+        InetAddress ipAdress = InetAddress.getByName(IP);
+        
+        Socket send = new Socket(ipAdress, ClientPort);
+        OutputStream out = send.getOutputStream();
+        DataOutputStream outS = new DataOutputStream(out);
+        outS.writeUTF(toSend);
+        out.flush();
+        out.close();
+        send.close();
+        
+        logger("        <<< Отправлено сообщение '" + toSend +"' пользователю с IP " + IP);
+    }
+    //Отправление вектора
+    private static void sendVector(Vector toSend, String IP){
+        
+    }
+    //Осуществеление записей в лог
+    private static void logger(String newLine) {
+        logServer.logText.setText(logServer.logText.getText() + "\n" + newLine);
+    }
+    
+    public static void main(boolean visible) {
+        listenSocket.setResizable(false);
+        listenSocket.setVisible(visible);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
