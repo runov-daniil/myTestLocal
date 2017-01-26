@@ -19,7 +19,7 @@ public class teacherSocket {
     //Отпрпавка запроса на сервер
     public static void send(String cmd, String data) throws UnknownHostException, IOException{
         int serverPort = 4444;
-        String serverIP = "192.168.0.112";
+        String serverIP = "192.168.0.109";
         
         InetAddress IP = InetAddress.getByName(serverIP);
         Socket send = new Socket(IP, serverPort);
@@ -29,10 +29,8 @@ public class teacherSocket {
         dataToSend.add(cmd);
         dataToSend.add(data);
         dataToSend.add(send.getInetAddress().toString());
-        Vector toSend = new Vector();
-        toSend.add(dataToSend);
         
-        out.writeObject(out);
+        out.writeObject(dataToSend);
         out.flush();
         
         out.close();

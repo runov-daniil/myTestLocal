@@ -9,7 +9,7 @@ import java.util.Vector;
 public class getAutorization {
     public static void getConnection(String login, String password) throws UnknownHostException, IOException {
         int serverPort = 4444;
-        String address = "192.168.0.112";
+        String address = "192.168.0.109";
         
         InetAddress ipAddr = InetAddress.getByName(address);
         Socket send = new Socket(ipAddr, serverPort);

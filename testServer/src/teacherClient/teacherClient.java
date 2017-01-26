@@ -158,7 +158,7 @@ public class teacherClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        try {teacherSocket.send("logout", "exit");} catch (IOException ex) {}
+        try {teacherSocket.send("logout", loginLabel.getText());} catch (IOException ex) {}
     }//GEN-LAST:event_formWindowClosing
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed

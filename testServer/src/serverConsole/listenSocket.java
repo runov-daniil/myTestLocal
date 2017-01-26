@@ -150,12 +150,33 @@ public class listenSocket extends javax.swing.JFrame {
                     DefaultTableModel dtm = (DefaultTableModel)logServer.ipTable.getModel();
                     dtm.setDataVector(IP, headerIP);
                     logger("        авторизация успешна, уровень доступа пользователя " + authStatus);
+                    try {dataBase.newOnline(login);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                    try {serverConsole.refreshOnline();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
                     sendText(authStatus, logServer.pendingTable.getValueAt(lastRow, 2).toString());
                     lastRow++;
                 }
                 break;
             case "logout":
                 logger(">>> Получено оповещение о выходе из системы с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
+                try {dataBase.dropOnline(logServer.pendingTable.getValueAt(lastRow, 1).toString());} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                try {serverConsole.refreshOnline();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                int countIP = IP.size();
+                String detectIP = logServer.pendingTable.getValueAt(lastRow, 2).toString();
+                int j = 0;
+                while(j < countIP){
+                    String ipOnline = IP.elementAt(j).toString();
+                    ipOnline = ipOnline.substring(1, ipOnline.length() - 1);
+                    if(detectIP.equals(ipOnline)){
+                        IP.remove(j);
+                        DefaultTableModel dtm = (DefaultTableModel)logServer.ipTable.getModel();
+                        dtm.setDataVector(IP, headerIP);
+                        break;
+                    }else{
+                        j++;
+                    }
+                }
+                logger("        Пользователь "+ logServer.pendingTable.getValueAt(lastRow, 2) +" вышел из системы с IP " + logServer.pendingTable.getValueAt(lastRow, 2));                
+                lastRow++;
                 break;
         }
     }
