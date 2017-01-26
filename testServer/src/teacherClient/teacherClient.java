@@ -183,7 +183,6 @@ public class teacherClient extends javax.swing.JFrame {
         Vector header = new Vector();
         header.add("Параллель");header.add("Вопрос");header.add("Ответ 1");header.add("Ответ 2");header.add("Ответ 3");header.add("Ответ 4");
         header.add("Правильный ответ");header.add("Сложность");header.add("Предмет");
-        System.out.println(questions);
         
         DefaultTableModel dtm = (DefaultTableModel)myQuestionTable.getModel();
         dtm.setDataVector(questions, header);

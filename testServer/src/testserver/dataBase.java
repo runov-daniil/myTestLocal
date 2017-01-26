@@ -37,7 +37,6 @@ public class dataBase {
         while(rs.next()){
             String getLogin = rs.getString("login");
             String getPassword = rs.getString("password");
-            System.out.println(login + " " + password);
             if((getLogin.equals(login))&&(getPassword.equals(password))){
                 flag = true;
                 break;
@@ -46,7 +45,6 @@ public class dataBase {
         if(flag == true){
             rs = st.executeQuery("SELECT level FROM users WHERE login = '" + login + "';");
             authStatus = rs.getString("level");
-            System.out.println(rs.getString("level"));
         }
         closeConnection();
         return authStatus;
@@ -789,7 +787,7 @@ public class dataBase {
                 break;
         }
     }
-    //ПОлучение списка предметов из базы
+    //Получение списка предметов из базы
     public static String getPredmetsList() throws ClassNotFoundException, SQLException {
         String predmetList = "";
         Connection();
@@ -889,5 +887,31 @@ public class dataBase {
         closeConnection();
         return questions;
     }
-    //Ответ на запрос параллелей системы и какие предметы может преподавать учитель
+    //Отсечение параллелей базы данных
+    public static Vector takeParallels() throws ClassNotFoundException, SQLException {
+        Vector toSend = new Vector();
+        Connection();
+        rs = st.executeQuery("SELECT * FROM classes");
+        while(rs.next()){
+            Vector element = new Vector();
+            element.add(rs.getString("number"));
+            toSend.add(element);
+        }
+        int countSet = toSend.size();
+        for(int k = 0; k < countSet; k++){
+            int count = toSend.size();
+            for(int i = 0; i < count; i++){
+                String iE = toSend.elementAt(i).toString();
+                for(int j = i+1; j < count; j++){
+                    String jE = toSend.elementAt(j).toString();
+                    if(iE.equals(jE)){
+                        toSend.remove(j);
+                        count--;
+                    }
+                }
+            }
+        }
+        closeConnection();
+        return toSend;
+    }
 } 

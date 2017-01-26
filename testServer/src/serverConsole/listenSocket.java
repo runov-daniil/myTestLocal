@@ -101,7 +101,6 @@ public class listenSocket extends javax.swing.JFrame {
                     
                     DefaultTableModel dtm = (DefaultTableModel)logServer.pendingTable.getModel();
                     dtm.setDataVector(temp, headerPending);
-                    System.out.println(temp);
                     
                     answer();
                     
@@ -121,6 +120,7 @@ public class listenSocket extends javax.swing.JFrame {
     private static void answer() throws UnknownHostException, IOException {
         String cmd = logServer.pendingTable.getValueAt(lastRow, 0).toString();
         switch (cmd) {
+            //<editor-fold defaultstate="collapsed" desc="Авторизация пользователя">
             case "authorization":
                 logger(">>> Получен запрос авторизации с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
                 String login = "";
@@ -155,6 +155,8 @@ public class listenSocket extends javax.swing.JFrame {
                     lastRow++;
                 }
                 break;
+                //</editor-fold>
+            //<editor-fold defaultstate="collapsed" desc="logout пользователя">    
             case "logout":
                 logger(">>> Получено оповещение о выходе из системы с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
                 try {dataBase.dropOnline(logServer.pendingTable.getValueAt(lastRow, 1).toString());} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
@@ -177,6 +179,8 @@ public class listenSocket extends javax.swing.JFrame {
                 logger("        Пользователь "+ logServer.pendingTable.getValueAt(lastRow, 1) +" вышел из системы с IP " + logServer.pendingTable.getValueAt(lastRow, 2));                
                 lastRow++;
                 break;
+                //</editor-fold>
+            //<editor-fold defaultstate="collapsed" desc="Запрос вопросов">
             case "getQuestions":
                 logger(">>> Получен запрос вопросов учителя с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
                 Vector toSend = new Vector();
@@ -184,6 +188,16 @@ public class listenSocket extends javax.swing.JFrame {
                 sendVector(toSend, logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 lastRow++;
                 break;
+                //</editor-fold>
+            //<editor-fold defaultstate="collapsed" desc="Запрос параллелей">  
+            case "parallels":
+                logger(">>> Получен запрос параллелей с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
+                Vector parallels = new Vector();
+                try {parallels = dataBase.takeParallels();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}   
+                sendVector(parallels, logServer.pendingTable.getValueAt(lastRow, 2).toString());
+                lastRow++;
+                break;
+                //</editor-fold>
         }
     }
     

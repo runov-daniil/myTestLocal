@@ -1,8 +1,10 @@
 package teacherClient;
 
 import java.io.IOException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 public class createQuestion extends javax.swing.JFrame {
     public static createQuestion createQuestion = new createQuestion();
@@ -336,6 +338,17 @@ public class createQuestion extends javax.swing.JFrame {
     public static void main(boolean visible) {
         createQuestion.setResizable(false);
         createQuestion.setVisible(visible);
+    }
+    //Запрос параллелей
+    private static void parallels() throws IOException, ClassNotFoundException{
+        teacherSocket.send("parallels", "null");
+        
+        Object ob = new Object();
+        ob = teacherSocket.getVector();
+        Vector get = (Vector) ob;
+        
+        selectParallel.removeAllItems();
+        DefaultListModel dlm = (DefaultListModel)selectParallel.getModel();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
