@@ -101,6 +101,7 @@ public class listenSocket extends javax.swing.JFrame {
                     
                     DefaultTableModel dtm = (DefaultTableModel)logServer.pendingTable.getModel();
                     dtm.setDataVector(temp, headerPending);
+                    System.out.println(temp);
                     
                     answer();
                     
@@ -173,7 +174,14 @@ public class listenSocket extends javax.swing.JFrame {
                         j++;
                     }
                 }
-                logger("        Пользователь "+ logServer.pendingTable.getValueAt(lastRow, 2) +" вышел из системы с IP " + logServer.pendingTable.getValueAt(lastRow, 2));                
+                logger("        Пользователь "+ logServer.pendingTable.getValueAt(lastRow, 1) +" вышел из системы с IP " + logServer.pendingTable.getValueAt(lastRow, 2));                
+                lastRow++;
+                break;
+            case "getQuestions":
+                logger(">>> Получен запрос вопросов учителя с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
+                Vector toSend = new Vector();
+                try {toSend = dataBase.userQuestion(logServer.pendingTable.getValueAt(lastRow, 1).toString());} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                sendVector(toSend, logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 lastRow++;
                 break;
         }
@@ -197,8 +205,21 @@ public class listenSocket extends javax.swing.JFrame {
         logger("        <<< Отправлено сообщение '" + toSend +"' пользователю с IP " + IP);
     }
     //Отправление вектора
-    private static void sendVector(Vector toSend, String IP){
+    private static void sendVector(Vector toSend, String IP) throws UnknownHostException, IOException{
+        IP = IP.substring(1);
+        int port = 7474;
         
+        InetAddress ipAdress = InetAddress.getByName(IP);
+        Socket send = new Socket(ipAdress, port);
+        ObjectOutputStream out = new ObjectOutputStream(send.getOutputStream());
+        
+        out.writeObject(toSend);
+        out.flush();
+        
+        out.close();
+        send.close();
+        
+        logger("        <<< Отправлены вопросы пользователю на IP " + IP);
     }
     //Осуществеление записей в лог
     private static void logger(String newLine) {

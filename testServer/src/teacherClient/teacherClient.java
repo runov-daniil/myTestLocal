@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import testserver.dataBase;
 
 public class teacherClient extends javax.swing.JFrame {
@@ -165,10 +166,27 @@ public class teacherClient extends javax.swing.JFrame {
         createQuestion.main(true);
     }//GEN-LAST:event_createButtonActionPerformed
 
-    public static void main(boolean visible) {
+    public static void main(boolean visible) throws ClassNotFoundException {
         teacherClient.setResizable(false);
-        teacherClient.setVisible(true);
-        System.out.println(loginLabel.getText());
+        teacherClient.setVisible(true);  
+        try {refreshQuestion();} catch (IOException ex) {}
+    }
+    
+    //Обновление вопросов учителя
+    private static void refreshQuestion() throws IOException, ClassNotFoundException{
+        teacherSocket.send("getQuestions", loginLabel.getText());
+        
+        Object get = new Object();
+        get = teacherSocket.getVector();
+        Vector questions = (Vector) get;
+        
+        Vector header = new Vector();
+        header.add("Параллель");header.add("Вопрос");header.add("Ответ 1");header.add("Ответ 2");header.add("Ответ 3");header.add("Ответ 4");
+        header.add("Правильный ответ");header.add("Сложность");header.add("Предмет");
+        System.out.println(questions);
+        
+        DefaultTableModel dtm = (DefaultTableModel)myQuestionTable.getModel();
+        dtm.setDataVector(questions, header);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -36,4 +36,18 @@ public class teacherSocket {
         out.close();
         send.close();
     }
+    //Получение вектора с сервера
+    public static Object getVector() throws IOException, ClassNotFoundException {
+        ServerSocket client = new ServerSocket(7474);
+        Socket getVector = client.accept();
+        
+        ObjectInputStream in = new ObjectInputStream(getVector.getInputStream());
+        Object ob = new Object();
+        
+        ob = in.readObject();
+        
+        getVector.close();
+        client.close();
+        return ob;
+    }
 }
