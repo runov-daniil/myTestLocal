@@ -914,4 +914,36 @@ public class dataBase {
         closeConnection();
         return toSend;
     }
+    //Определение преподаваемых учителем предметов
+    public static Vector myPredmets(String login) throws ClassNotFoundException, SQLException {
+        Vector toSend = new Vector();
+        Connection();
+        Statement idUserST = conn.createStatement();
+        ResultSet idUserRS = idUserST.executeQuery("SELECT id_user FROM users WHERE login = '"+login+"';");
+        String idUser = idUserRS.getString("id_user");
+        
+        Statement predmetsST = conn.createStatement();
+        ResultSet predmetsRS = predmetsST.executeQuery("SELECT predmets FROM teachers WHERE id_user = '"+idUser+"';");
+        String predmets = predmetsRS.getString("predmets");
+        
+        int count = predmets.length();
+        String predmet = "";
+        for(int i = 0; i < count; i++){
+            char ch = predmets.charAt(i);
+            if(ch != ','){
+                predmet = predmet + ch;
+            }else{
+                Vector element = new Vector();
+                Statement namePredmetST = conn.createStatement();
+                ResultSet namePredmetRS = namePredmetST.executeQuery("SELECT namePredmet FROM predmets WHERE id_predmet = '"+predmet+"';");
+                element.add(namePredmetRS.getString("namePredmet"));
+                toSend.add(element);
+                predmet = "";
+                namePredmetRS.close();
+                namePredmetST.close();
+            }
+        }
+        closeConnection();
+        return toSend;
+    }
 } 

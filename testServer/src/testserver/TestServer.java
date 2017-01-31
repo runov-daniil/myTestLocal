@@ -9,7 +9,6 @@ public class TestServer {
     }
     
     public static void userDetect(String level, String userName) throws ClassNotFoundException, SQLException {
-        System.out.println("Имя пользователя " + userName);
         switch(level){
             case "admin":
                 dataBase.refreshStudents();

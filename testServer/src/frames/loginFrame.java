@@ -1,6 +1,7 @@
 package frames;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +93,7 @@ public class loginFrame extends javax.swing.JFrame {
         }else{
             try {
                 getAutorization.getConnection(loginText.getText(), passwordText.getText());
-            } catch (IOException ex) {}
+            } catch (IOException ex) {} catch (ClassNotFoundException ex) {}
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

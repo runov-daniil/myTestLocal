@@ -199,6 +199,16 @@ public class listenSocket extends javax.swing.JFrame {
                 logger("        <<< Отправлены параллели пользователю на IP " + IP);
                 break;
                 //</editor-fold>
+            //<editor-fold defaultstate="collapsed" desc="Запрос преподаваемых предметов">  
+            case "myPredmets":
+                logger(">>> Получен запрос преподаваемых предметов с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
+                Vector predmets = new Vector();
+                try {predmets = dataBase.myPredmets(logServer.pendingTable.getValueAt(lastRow, 1).toString());} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
+                sendVector(predmets, logServer.pendingTable.getValueAt(lastRow, 2).toString());
+                lastRow++;
+                logger("        <<< Отправлены преподаваемые предметы пользователю на IP " + IP);
+                break;
+                //</editor-fold>
         }
     }
     

@@ -339,6 +339,7 @@ public class createQuestion extends javax.swing.JFrame {
         createQuestion.setResizable(false);
         createQuestion.setVisible(visible);
         try {parallels();} catch (IOException ex) {} catch (ClassNotFoundException ex) {}
+        try {myPredmets();} catch (IOException ex) {} catch (ClassNotFoundException ex) {}
     }
     //Запрос параллелей
     private static void parallels() throws IOException, ClassNotFoundException{
@@ -354,7 +355,24 @@ public class createQuestion extends javax.swing.JFrame {
             element = element.substring(1, element.length()-1);
             if(!(element.equals("0"))){
                 selectParallel.addItem(element);
+                selectParallel1.addItem(element);
             }
+        }
+    }
+    //Запрос преподаваемых предметов
+    private static void myPredmets() throws IOException, ClassNotFoundException {
+        teacherSocket.send("myPredmets", teacherClient.loginLabel.getText());
+        
+        Object ob = new Object();
+        ob = teacherSocket.getVector();
+        Vector get = (Vector) ob;
+        
+        int count = get.size();
+        for(int i = 0; i < count; i++){
+            String element = get.elementAt(i).toString();
+            element = element.substring(1, element.length()-1);
+            predmetsCB.addItem(element);
+            predmetsCB1.addItem(element);
         }
     }
 
