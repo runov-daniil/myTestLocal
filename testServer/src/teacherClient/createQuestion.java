@@ -327,13 +327,14 @@ public class createQuestion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_answer2ItemStateChanged
 
-    private void saveQuestionCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionCheckActionPerformed
-        
-    }//GEN-LAST:event_saveQuestionCheckActionPerformed
-
     private void saveQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionActionPerformed
-
+        
     }//GEN-LAST:event_saveQuestionActionPerformed
+
+    private void saveQuestionCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionCheckActionPerformed
+        try {teacherSocket.send("saveQuestion", teacherClient.loginLabel.getText());} catch (IOException ex) {}
+        try {sendQuestion();} catch (IOException ex) {} catch (ClassNotFoundException ex) {}
+    }//GEN-LAST:event_saveQuestionCheckActionPerformed
 
     public static void main(boolean visible) {
         createQuestion.setResizable(false);
@@ -373,6 +374,23 @@ public class createQuestion extends javax.swing.JFrame {
             element = element.substring(1, element.length()-1);
             predmetsCB.addItem(element);
             predmetsCB1.addItem(element);
+        }
+    }
+    //Формирование вопроса и отправка на сервер
+    private static void sendQuestion() throws IOException, ClassNotFoundException {
+        Vector toSend = new Vector();
+        boolean pending = teacherSocket.serverPending();
+        if(pending = true){
+            toSend.add(teacherClient.loginLabel.getText());
+            toSend.add(questionText.getText());
+            toSend.add(answerText0.getText());
+            toSend.add(answerText1.getText());
+            toSend.add(answerText2.getText());
+            toSend.add(answerText3.getText());
+            toSend.add("123");
+            toSend.add("1");
+            toSend.add(selectParallel.getSelectedItem().toString());
+            toSend.add(predmetsCB.getSelectedItem().toString());
         }
     }
 

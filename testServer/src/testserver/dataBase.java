@@ -946,4 +946,25 @@ public class dataBase {
         closeConnection();
         return toSend;
     }
+    
+    //Проверки и блокировки
+    //Првоерка на существование вопроса
+    public static boolean questionExist(String question, String predmet, String level) throws ClassNotFoundException, SQLException {
+        boolean exist = false;
+        Connection();
+        Statement idPredmetST = conn.createStatement();
+        ResultSet idPredmetRS = idPredmetST.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+predmet+"';");
+        String idPredmet = idPredmetRS.getString("id_predmet");
+        
+        rs = st.executeQuery("SELECT * FROM questions WHERE question = '"+question+"';");
+        String getQuestion = rs.getString("question");
+        String getPredmet = rs.getString("predmet");
+        String getLevel = rs.getString("question_level");
+        
+        if(question.equals(getQuestion)&&(idPredmet.equals(getPredmet))&&(level.equals(getLevel))){
+            exist = true;
+        }
+        closeConnection();
+        return exist;
+    }
 } 

@@ -117,7 +117,7 @@ public class listenSocket extends javax.swing.JFrame {
         listeningThread.start();
     }
     //Формирование ответа сервера
-    private static void answer() throws UnknownHostException, IOException {
+    private static void answer() throws UnknownHostException, IOException, ClassNotFoundException {
         String cmd = logServer.pendingTable.getValueAt(lastRow, 0).toString();
         switch (cmd) {
             //<editor-fold defaultstate="collapsed" desc="Авторизация пользователя">
@@ -209,6 +209,20 @@ public class listenSocket extends javax.swing.JFrame {
                 logger("        <<< Отправлены преподаваемые предметы пользователю на IP " + IP);
                 break;
                 //</editor-fold>
+            //<editor-fold defaultstate="collapsed" desc="Добавление нового вопроса">  
+            case "saveQuestion":
+                logger(">>> Получен запрос добавления нового вопроса с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
+                boolean flag = false;
+                logger("    сервер заблокирован, ожидает вектор вопроса");
+                getQuestion();
+                lastRow++;
+                if(flag == false){
+                    logger("    отказ сохранения вопроса!");
+                }else{
+                    logger("    вопрос успешно сохранен!");
+                }
+                break;
+                //</editor-fold>
         }
     }
     
@@ -243,8 +257,41 @@ public class listenSocket extends javax.swing.JFrame {
         
         out.close();
         send.close();
+    }
+    //Получение вопроса
+    private static void getQuestion() throws UnknownHostException, IOException, ClassNotFoundException {
+        ServerSocket server = new ServerSocket(1234);
+        Socket getVector = server.accept();
         
+        ObjectInputStream in = new ObjectInputStream(getVector.getInputStream());
+        Object ob = new Object();
         
+        ob = in.readObject();
+        
+        getVector.close();
+        server.close();
+        logger("    вопрос получен!");
+        
+        Vector crypt = (Vector) ob;
+        String user_login = crypt.elementAt(0).toString(); String question = crypt.elementAt(1).toString();
+        String answer_0 = crypt.elementAt(2).toString(); String answer_1 = crypt.elementAt(3).toString();
+        String answer_2 = crypt.elementAt(4).toString(); String answer_3 = crypt.elementAt(5).toString();
+        String true_answer = crypt.elementAt(6).toString(); String difficulty = crypt.elementAt(7).toString();
+        String question_level = crypt.elementAt(8).toString(); String predmet = crypt.elementAt(9).toString();
+        logger("    вопрос расшифрован! Проверяю на существование!");
+        
+        System.out.println(user_login);
+        System.out.println(question);
+        System.out.println(answer_0);
+        System.out.println(answer_1);
+        System.out.println(answer_2);
+        System.out.println(answer_3);
+        System.out.println(true_answer);
+        System.out.println(difficulty);
+        System.out.println(question_level);
+        System.out.println(predmet);
+//        boolean exist = false;
+//        try {exist = dataBase.questionExist(question, predmet, question_level);} catch (SQLException ex) {}
     }
     //Осуществеление записей в лог
     private static void logger(String newLine) {

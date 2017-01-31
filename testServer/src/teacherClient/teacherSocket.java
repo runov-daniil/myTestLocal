@@ -50,4 +50,37 @@ public class teacherSocket {
         client.close();
         return ob;
     }
+    //Ожидание сервера на прием вопроса
+    public static boolean serverPending() throws IOException, ClassNotFoundException {
+        boolean pending = false;
+        
+        ServerSocket client = new ServerSocket(7474);
+        Socket get = client.accept();
+        
+        InputStream getIn = get.getInputStream();
+        DataInputStream in = new DataInputStream(getIn);
+        String getLine = null;    
+        
+        getLine = in.readUTF();
+        
+        if(getLine.equals("1")){
+            pending = true;
+        }
+        return pending;
+    }
+    //Отправка вектора
+    public static void sendVector(Vector toSend) throws IOException, ClassNotFoundException {
+        String IP = "127.0.0.1";
+        int port = 1234;
+        
+        InetAddress ipAdress = InetAddress.getByName(IP);
+        Socket send = new Socket(ipAdress, port);
+        ObjectOutputStream out = new ObjectOutputStream(send.getOutputStream());
+        
+        out.writeObject(toSend);
+        out.flush();
+        
+        out.close();
+        send.close();
+    }
 }
