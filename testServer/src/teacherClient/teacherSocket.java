@@ -19,7 +19,7 @@ public class teacherSocket {
     //Отпрпавка запроса на сервер
     public static void send(String cmd, String data) throws UnknownHostException, IOException{
         int serverPort = 4444;
-        String serverIP = "192.168.0.109";
+        String serverIP = "127.0.0.1";
         
         InetAddress IP = InetAddress.getByName(serverIP);
         Socket send = new Socket(IP, serverPort);

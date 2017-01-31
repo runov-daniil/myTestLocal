@@ -7,9 +7,9 @@ import java.net.*;
 import java.util.Vector;
 
 public class getAutorization {
-    public static void getConnection(String login, String password) throws UnknownHostException, IOException {
+    public static void getConnection(String login, String password) throws UnknownHostException, IOException, ClassNotFoundException {
         int serverPort = 4444;
-        String address = "192.168.0.109";
+        String address = "127.0.0.1";
         
         InetAddress ipAddr = InetAddress.getByName(address);
         Socket send = new Socket(ipAddr, serverPort);
@@ -28,7 +28,7 @@ public class getAutorization {
         pendingMessage();
     }
     
-    public static void pendingMessage() throws IOException{
+    public static void pendingMessage() throws IOException, ClassNotFoundException{
         ServerSocket server = new ServerSocket(6464);
         Socket get = null;
         get = server.accept();

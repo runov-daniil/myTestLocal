@@ -196,6 +196,7 @@ public class listenSocket extends javax.swing.JFrame {
                 try {parallels = dataBase.takeParallels();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}   
                 sendVector(parallels, logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 lastRow++;
+                logger("        <<< Отправлены параллели пользователю на IP " + IP);
                 break;
                 //</editor-fold>
         }
@@ -233,7 +234,7 @@ public class listenSocket extends javax.swing.JFrame {
         out.close();
         send.close();
         
-        logger("        <<< Отправлены вопросы пользователю на IP " + IP);
+        
     }
     //Осуществеление записей в лог
     private static void logger(String newLine) {

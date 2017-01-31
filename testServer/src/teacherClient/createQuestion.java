@@ -338,6 +338,7 @@ public class createQuestion extends javax.swing.JFrame {
     public static void main(boolean visible) {
         createQuestion.setResizable(false);
         createQuestion.setVisible(visible);
+        try {parallels();} catch (IOException ex) {} catch (ClassNotFoundException ex) {}
     }
     //Запрос параллелей
     private static void parallels() throws IOException, ClassNotFoundException{
@@ -347,8 +348,14 @@ public class createQuestion extends javax.swing.JFrame {
         ob = teacherSocket.getVector();
         Vector get = (Vector) ob;
         
-        selectParallel.removeAllItems();
-        DefaultListModel dlm = (DefaultListModel)selectParallel.getModel();
+        int count = get.size();
+        for(int i = 0; i < count; i++){
+            String element = get.elementAt(i).toString();
+            element = element.substring(1, element.length()-1);
+            if(!(element.equals("0"))){
+                selectParallel.addItem(element);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
