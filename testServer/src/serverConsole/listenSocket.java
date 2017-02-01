@@ -187,6 +187,7 @@ public class listenSocket extends javax.swing.JFrame {
                 try {toSend = dataBase.userQuestion(logServer.pendingTable.getValueAt(lastRow, 1).toString());} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
                 sendVector(toSend, logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 lastRow++;
+                logger("        <<< Отправлены вопросы пользователя на IP " + IP);
                 break;
                 //</editor-fold>
             //<editor-fold defaultstate="collapsed" desc="Запрос параллелей">  
@@ -212,15 +213,16 @@ public class listenSocket extends javax.swing.JFrame {
             //<editor-fold defaultstate="collapsed" desc="Добавление нового вопроса">  
             case "saveQuestion":
                 logger(">>> Получен запрос добавления нового вопроса с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
-                boolean flag = false;
                 logger("    сервер заблокирован, ожидает вектор вопроса");
-                getQuestion();
-                lastRow++;
+                boolean flag = getQuestion(logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 if(flag == false){
                     logger("    отказ сохранения вопроса!");
+                    sendText("false", logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 }else{
                     logger("    вопрос успешно сохранен!");
+                    sendText("true", logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 }
+                lastRow++;
                 break;
                 //</editor-fold>
         }
@@ -259,7 +261,10 @@ public class listenSocket extends javax.swing.JFrame {
         send.close();
     }
     //Получение вопроса
-    private static void getQuestion() throws UnknownHostException, IOException, ClassNotFoundException {
+    private static boolean getQuestion(String IP) throws UnknownHostException, IOException, ClassNotFoundException {
+        boolean flag = false;
+        sendText("true", IP);
+        
         ServerSocket server = new ServerSocket(1234);
         Socket getVector = server.accept();
         
@@ -273,25 +278,24 @@ public class listenSocket extends javax.swing.JFrame {
         logger("    вопрос получен!");
         
         Vector crypt = (Vector) ob;
-        String user_login = crypt.elementAt(0).toString(); String question = crypt.elementAt(1).toString();
-        String answer_0 = crypt.elementAt(2).toString(); String answer_1 = crypt.elementAt(3).toString();
-        String answer_2 = crypt.elementAt(4).toString(); String answer_3 = crypt.elementAt(5).toString();
-        String true_answer = crypt.elementAt(6).toString(); String difficulty = crypt.elementAt(7).toString();
-        String question_level = crypt.elementAt(8).toString(); String predmet = crypt.elementAt(9).toString();
+        
+        String question = crypt.elementAt(1).toString();System.out.println(question);
+        String question_level = crypt.elementAt(8).toString(); System.out.println(question_level);
+        String predmet = crypt.elementAt(9).toString();System.out.println(predmet);
         logger("    вопрос расшифрован! Проверяю на существование!");
         
-        System.out.println(user_login);
-        System.out.println(question);
-        System.out.println(answer_0);
-        System.out.println(answer_1);
-        System.out.println(answer_2);
-        System.out.println(answer_3);
-        System.out.println(true_answer);
-        System.out.println(difficulty);
-        System.out.println(question_level);
-        System.out.println(predmet);
-//        boolean exist = false;
-//        try {exist = dataBase.questionExist(question, predmet, question_level);} catch (SQLException ex) {}
+        boolean exist = false;
+        try {exist = dataBase.questionExist(question, predmet, question_level);} catch (SQLException ex) {}
+        
+        if(exist == false){
+            System.out.println("СОХРАНЯЮ");
+            try {dataBase.createUserQuestion(crypt);} catch (SQLException ex) {}
+            flag = true;
+        }else{
+            flag = false;
+        }
+        
+        return flag;
     }
     //Осуществеление записей в лог
     private static void logger(String newLine) {

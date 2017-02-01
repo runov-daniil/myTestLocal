@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class createQuestion extends javax.swing.JFrame {
     public static createQuestion createQuestion = new createQuestion();
@@ -332,8 +333,15 @@ public class createQuestion extends javax.swing.JFrame {
     }//GEN-LAST:event_saveQuestionActionPerformed
 
     private void saveQuestionCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionCheckActionPerformed
-        try {teacherSocket.send("saveQuestion", teacherClient.loginLabel.getText());} catch (IOException ex) {}
-        try {sendQuestion();} catch (IOException ex) {} catch (ClassNotFoundException ex) {}
+        try {boolean save = sendQuestion();
+            if(save = true){
+                JOptionPane.showMessageDialog(rootPane, "Вопрос успешно сохранен!");
+                try {teacherSocket.send("getQuestions", teacherClient.loginLabel.getText());} catch (IOException ex) {}
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Вопрос с такой формуллировкой уже существует!");
+            }
+        } catch (IOException ex) {} catch (ClassNotFoundException ex) {}
     }//GEN-LAST:event_saveQuestionCheckActionPerformed
 
     public static void main(boolean visible) {
@@ -377,21 +385,37 @@ public class createQuestion extends javax.swing.JFrame {
         }
     }
     //Формирование вопроса и отправка на сервер
-    private static void sendQuestion() throws IOException, ClassNotFoundException {
-        Vector toSend = new Vector();
+    private static boolean sendQuestion() throws IOException, ClassNotFoundException {
         boolean pending = teacherSocket.serverPending();
+        boolean save = false;
+        
         if(pending = true){
+            Vector toSend = new Vector();
             toSend.add(teacherClient.loginLabel.getText());
             toSend.add(questionText.getText());
             toSend.add(answerText0.getText());
             toSend.add(answerText1.getText());
             toSend.add(answerText2.getText());
             toSend.add(answerText3.getText());
-            toSend.add("123");
+            
+            if(answer0.isSelected()){
+                toSend.add(answerText0.getText());
+            }else if(answer1.isSelected()){
+                    toSend.add(answerText1.getText());
+            }else if(answer2.isSelected()){
+                    toSend.add(answerText2.getText());
+            }else if(answer3.isSelected()){
+                    toSend.add(answerText3.getText());
+            }
             toSend.add("1");
             toSend.add(selectParallel.getSelectedItem().toString());
             toSend.add(predmetsCB.getSelectedItem().toString());
+            
+            teacherSocket.sendVector(toSend);
+            
+            save = teacherSocket.serverPending();
         }
+        return save;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

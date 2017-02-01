@@ -382,52 +382,33 @@ public class dataBase {
     }
     //Добавление нового вопроса в БД
     public static void createNewQuestion(int difficulty) throws ClassNotFoundException, SQLException {
-        System.out.println("Вычисляю новый ID");
-        int ID = calculationQuestionID();
-        System.out.println("Новый ID "+ID);        
+        int ID = calculationQuestionID(); 
         Connection();
-        System.out.println("Соединение с базой установлено!\nИщу ID автора.");
         int idUser = 0;
         Statement idUserSt = conn.createStatement();
         ResultSet idUserRs = idUserSt.executeQuery("SELECT id_user FROM users WHERE login = '"+mainFrame.loginLabel.getText()+"';");
         idUser = idUserRs.getInt("id_user");
-        System.out.println("Автор найден, его ID "+idUser);
         if(difficulty == 1){
-            System.out.println("Уровень сложности вопроса 1, начинаю сохранение");
             String trueQuestion = "";
             if(newQuestion.answer0.isSelected()){
-                System.out.println("Первый ответ правильный");
                 trueQuestion = newQuestion.answerText0.getText();
             }else if(newQuestion.answer1.isSelected()){
-                System.out.println("Второй ответ правильный");
                 trueQuestion = newQuestion.answerText1.getText();
             }else if(newQuestion.answer2.isSelected()){
-                System.out.println("Третий ответ правильный");
                 trueQuestion = newQuestion.answerText2.getText();
             }else if(newQuestion.answer3.isSelected()){
-                System.out.println("Четвертый ответ правильный");
                 trueQuestion = newQuestion.answerText3.getText();
             }
             Statement saveQuestion = conn.createStatement();
-            System.out.println("Определяю ID предмета");
             Statement IDst = conn.createStatement();
             ResultSet IDrs = IDst.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+newQuestion.predmetsCB.getSelectedItem().toString()+"';");
-            System.out.println("Сохраняю");
-            System.out.println("INSERT INTO questions"
-                    + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
-                    + "VALUES('"+ID+"', '"+newQuestion.selectParallel.getSelectedItem()+"', '"+idUser+"', "
-                    + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"', "
-                    + "'"+newQuestion.answerText1.getText()+"', '"+newQuestion.answerText2.getText()+"', "
-                    + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1', '"+IDrs.getInt("id_predmet")+"');");
             saveQuestion.execute("INSERT INTO questions"
                     + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
                     + "VALUES('"+ID+"', '"+newQuestion.selectParallel.getSelectedItem()+"', '"+idUser+"', "
                     + "'"+newQuestion.questionText.getText()+"', '"+newQuestion.answerText0.getText()+"', "
                     + "'"+newQuestion.answerText1.getText()+"', '"+newQuestion.answerText2.getText()+"', "
                     + "'"+newQuestion.answerText3.getText()+"', '"+trueQuestion+"', '1', '"+IDrs.getInt("id_predmet")+"');");
-            System.out.println("Сохранение завершено!");
         }else if(difficulty == 2){
-            System.out.println("Уровень сложности вопроса 2, начинаю сохранение");
             Statement hardQuestionSave = conn.createStatement();
             Statement IDst = conn.createStatement();
             ResultSet IDrs = IDst.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+newQuestion.predmetsCB1.getSelectedItem().toString()+"';");
@@ -966,5 +947,38 @@ public class dataBase {
         }
         closeConnection();
         return exist;
+    }
+    
+    //Внесение пользовательских изменений в БД
+    //Добавление нового вопроса
+    public static void createUserQuestion(Vector crypt) throws ClassNotFoundException, SQLException {
+        int id = calculationQuestionID();
+        System.out.println("Новое ID вычислено");
+        Connection();
+        String user_login = crypt.elementAt(0).toString(); String question = crypt.elementAt(1).toString();
+        String answer_0 = crypt.elementAt(2).toString(); String answer_1 = crypt.elementAt(3).toString();
+        String answer_2 = crypt.elementAt(4).toString(); String answer_3 = crypt.elementAt(5).toString();
+        String true_answer = crypt.elementAt(6).toString(); String difficulty = crypt.elementAt(7).toString();
+        String question_level = crypt.elementAt(8).toString(); String predmet = crypt.elementAt(9).toString();
+        System.out.println("Вопрос разобран");
+        
+        Statement idUserST = conn.createStatement();
+        ResultSet idUserRS = idUserST.executeQuery("SELECT id_user FROM users WHERE login = '"+user_login+"';");
+        String idUser = idUserRS.getString("id_user");
+        System.out.println("Boe ID usera");
+        
+        Statement idPredmetST = conn.createStatement();
+        ResultSet idPredmetRS = idPredmetST.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+predmet+"';");
+        String idPredmet = idPredmetRS.getString("id_predmet");
+        System.out.println("Ищу ID предмета");
+        
+        Statement saveQuestion = conn.createStatement();
+        saveQuestion.execute("INSERT INTO questions"
+                + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
+                + "VALUES('"+id+"', '"+question_level+"', '"+idUser+"', "+question+"', '"+answer_0+"', '"+answer_1+"', '"+answer_2+"', "
+                + "'"+answer_3+"', '"+true_answer+"', '"+difficulty+"', '"+idPredmet+"');");
+        System.out.println("Вопрос сохранен");
+        closeConnection();
+        refreshQuestion();
     }
 } 

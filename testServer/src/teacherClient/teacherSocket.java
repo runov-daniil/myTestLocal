@@ -53,8 +53,9 @@ public class teacherSocket {
     //Ожидание сервера на прием вопроса
     public static boolean serverPending() throws IOException, ClassNotFoundException {
         boolean pending = false;
+        send("saveQuestion", teacherClient.loginLabel.getText());
         
-        ServerSocket client = new ServerSocket(7474);
+        ServerSocket client = new ServerSocket(6464);
         Socket get = client.accept();
         
         InputStream getIn = get.getInputStream();
@@ -63,7 +64,8 @@ public class teacherSocket {
         
         getLine = in.readUTF();
         
-        if(getLine.equals("1")){
+        System.out.println(getLine);
+        if(getLine.equals("true")){
             pending = true;
         }
         return pending;
