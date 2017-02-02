@@ -329,11 +329,19 @@ public class createQuestion extends javax.swing.JFrame {
     }//GEN-LAST:event_answer2ItemStateChanged
 
     private void saveQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionActionPerformed
-        
+        try {boolean save = sendQuestion(2);
+            if(save == true){
+                JOptionPane.showMessageDialog(rootPane, "Вопрос успешно сохранен!");
+                teacherClient.refreshQuestion();
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Вопрос с такой формуллировкой уже существует!");
+            }
+        } catch (IOException ex) {} catch (ClassNotFoundException ex) {}        
     }//GEN-LAST:event_saveQuestionActionPerformed
 
     private void saveQuestionCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionCheckActionPerformed
-        try {boolean save = sendQuestion();
+        try {boolean save = sendQuestion(1);
             if(save == true){
                 JOptionPane.showMessageDialog(rootPane, "Вопрос успешно сохранен!");
                 teacherClient.refreshQuestion();
@@ -385,35 +393,59 @@ public class createQuestion extends javax.swing.JFrame {
         }
     }
     //Формирование вопроса и отправка на сервер
-    private static boolean sendQuestion() throws IOException, ClassNotFoundException {
+    private static boolean sendQuestion(int difficulty) throws IOException, ClassNotFoundException {
         boolean pending = teacherSocket.serverPending(8484);
         boolean save = false;
         
+        Vector toSend = new Vector();
         if(pending = true){
-            Vector toSend = new Vector();
-            toSend.add(teacherClient.loginLabel.getText());
-            toSend.add(questionText.getText());
-            toSend.add(answerText0.getText());
-            toSend.add(answerText1.getText());
-            toSend.add(answerText2.getText());
-            toSend.add(answerText3.getText());
-            
-            if(answer0.isSelected()){
-                toSend.add(answerText0.getText());
-            }else if(answer1.isSelected()){
+            switch (difficulty) {
+                //<editor-fold defaultstate="collapsed" desc="Отправка вопроса с выбором ответа">  
+                case 1:
+                    toSend.add(teacherClient.loginLabel.getText());
+                    toSend.add(questionText.getText());
+                    toSend.add(answerText0.getText());
                     toSend.add(answerText1.getText());
-            }else if(answer2.isSelected()){
                     toSend.add(answerText2.getText());
-            }else if(answer3.isSelected()){
                     toSend.add(answerText3.getText());
-            }
-            toSend.add("1");
-            toSend.add(selectParallel.getSelectedItem().toString());
-            toSend.add(predmetsCB.getSelectedItem().toString());
             
-            teacherSocket.sendVector(toSend);
+                    if(answer0.isSelected()){
+                        toSend.add(answerText0.getText());
+                    }else if(answer1.isSelected()){
+                        toSend.add(answerText1.getText());
+                    }else if(answer2.isSelected()){
+                        toSend.add(answerText2.getText());
+                    }else if(answer3.isSelected()){
+                        toSend.add(answerText3.getText());
+                    }
+                    toSend.add("1");
+                    toSend.add(selectParallel.getSelectedItem().toString());
+                    toSend.add(predmetsCB.getSelectedItem().toString());
             
-            save = teacherSocket.serverPending(9494);
+                    teacherSocket.sendVector(toSend);
+            
+                    save = teacherSocket.serverPending(9494);
+                break;
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Отправка вопроса без выбора ответа">  
+                case 2:
+                    toSend.add(teacherClient.loginLabel.getText());
+                    toSend.add(questionText1.getText());
+                    toSend.add("null");
+                    toSend.add("null");
+                    toSend.add("null");
+                    toSend.add("null");
+                    toSend.add(answerText.getText());
+                    toSend.add("2");
+                    toSend.add(selectParallel1.getSelectedItem().toString());
+                    toSend.add(predmetsCB1.getSelectedItem().toString());
+            
+                    teacherSocket.sendVector(toSend);
+            
+                    save = teacherSocket.serverPending(9494);
+                break;
+                //</editor-fold>
+        }
         }
         return save;
     }
