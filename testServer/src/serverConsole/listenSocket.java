@@ -151,7 +151,7 @@ public class listenSocket extends javax.swing.JFrame {
                     logger("        авторизация успешна, уровень доступа пользователя " + authStatus);
                     try {dataBase.newOnline(login);} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
                     try {serverConsole.refreshOnline();} catch (ClassNotFoundException ex) {} catch (SQLException ex) {}
-                    sendText(authStatus, logServer.pendingTable.getValueAt(lastRow, 2).toString());
+                    sendText(authStatus, logServer.pendingTable.getValueAt(lastRow, 2).toString(), 6464);
                     lastRow++;
                 }
                 break;
@@ -217,10 +217,10 @@ public class listenSocket extends javax.swing.JFrame {
                 boolean flag = getQuestion(logServer.pendingTable.getValueAt(lastRow, 2).toString());
                 if(flag == false){
                     logger("    отказ сохранения вопроса!");
-                    sendText("false", logServer.pendingTable.getValueAt(lastRow, 2).toString());
+                    sendText("false", logServer.pendingTable.getValueAt(lastRow, 2).toString(), 9494);
                 }else{
                     logger("    вопрос успешно сохранен!");
-                    sendText("true", logServer.pendingTable.getValueAt(lastRow, 2).toString());
+                    sendText("true", logServer.pendingTable.getValueAt(lastRow, 2).toString(), 9494);
                 }
                 lastRow++;
                 break;
@@ -229,13 +229,11 @@ public class listenSocket extends javax.swing.JFrame {
     }
     
     //Отправление текстового сообщения
-    private static void sendText(String toSend, String IP) throws UnknownHostException, IOException{
+    private static void sendText(String toSend, String IP, int port) throws UnknownHostException, IOException{
         IP = IP.substring(1);
-        
-        int ClientPort = 6464;
         InetAddress ipAdress = InetAddress.getByName(IP);
         
-        Socket send = new Socket(ipAdress, ClientPort);
+        Socket send = new Socket(ipAdress, port);
         OutputStream out = send.getOutputStream();
         DataOutputStream outS = new DataOutputStream(out);
         outS.writeUTF(toSend);
@@ -263,7 +261,7 @@ public class listenSocket extends javax.swing.JFrame {
     //Получение вопроса
     private static boolean getQuestion(String IP) throws UnknownHostException, IOException, ClassNotFoundException {
         boolean flag = false;
-        sendText("true", IP);
+        sendText("true", IP, 8484);
         
         ServerSocket server = new ServerSocket(1234);
         Socket getVector = server.accept();

@@ -575,11 +575,21 @@ public class dataBase {
     }
     //Вычисление ID нового вопроса
     private static int calculationQuestionID() throws ClassNotFoundException, SQLException {
+        System.out.println("Запрос вычисления нового ID");
         int newID = 0;
         boolean flag = true;
-        int question_count = countQuestion();
+        System.out.println("Вычисляю количество вопросов в базе");
+        Connection();
+        Statement questionCountST = conn.createStatement();
+        System.out.println("Запрос для подсчета количества вопросов");
+        ResultSet questionCountRS = questionCountST.executeQuery("SELECT * FROM questions;");
+        System.out.println("Запрос выполнен");
+        int question_count = 0;
+        while(questionCountRS.next()){
+            question_count++;
+        }
+        System.out.println("Количество вычислено");
         if(question_count != 0){
-            Connection();
             while(true){
                 System.out.println("Проверяю");
                 rs = st.executeQuery("SELECT * FROM questions;");
@@ -595,16 +605,16 @@ public class dataBase {
                         flag = false;
                     }
                 }
-            if(flag == true){
-                System.out.println("Плюсую");
-                newID++;
-            }else{
-                System.out.println("Новый ID сформирован");
+                if(flag == true){
+                    System.out.println("Плюсую");
+                    newID++;
+                }else{
+                    System.out.println("Новый ID сформирован");
                 break;
+                }
             }
         }
         closeConnection();
-        }
         return newID;
     }
     //Вычисление ID нового предмета
@@ -721,17 +731,6 @@ public class dataBase {
             }
         }
         closeConnection();
-    }
-    //Подсчет количества вопросов в БД
-    public static int countQuestion() throws ClassNotFoundException, SQLException {
-        Connection();
-        rs = st.executeQuery("SELECT * FROM questions;");
-        int count = 0;
-        while(rs.next()){
-            count++;
-        }
-        closeConnection();
-        return count;
     }
     //Добавление или удаление нового предмета учителю
     public static void setPredmetsTeacher(String set, String predmet, String fio) throws ClassNotFoundException, SQLException {
@@ -931,51 +930,72 @@ public class dataBase {
     //Проверки и блокировки
     //Првоерка на существование вопроса
     public static boolean questionExist(String question, String predmet, String level) throws ClassNotFoundException, SQLException {
+        System.out.println("Запрос существования вопроса");
         boolean exist = false;
+        System.out.println("Подключаюсь к базе");
         Connection();
+        System.out.println("Подключение установлено");
         Statement idPredmetST = conn.createStatement();
+        System.out.println("запрашиваю ID предмета");
         ResultSet idPredmetRS = idPredmetST.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+predmet+"';");
         String idPredmet = idPredmetRS.getString("id_predmet");
         
+        System.out.println("Запрашиваю существование вопроса");
         rs = st.executeQuery("SELECT * FROM questions WHERE question = '"+question+"';");
-        String getQuestion = rs.getString("question");
-        String getPredmet = rs.getString("predmet");
-        String getLevel = rs.getString("question_level");
+        System.out.println("Запрос выполнен");
+        String getQuestion = "";
+        String getPredmet = "";
+        String getLevel = "";
+        while(rs.next()){
+            getQuestion = rs.getString("question");
+            System.out.println("Сохранена формулировка");
+            getPredmet = rs.getString("predmet");
+            System.out.println("Сохранен предмет");
+            getLevel = rs.getString("question_level");
+            System.out.println("Сохранен лвл");
+        }
         
         if(question.equals(getQuestion)&&(idPredmet.equals(getPredmet))&&(level.equals(getLevel))){
             exist = true;
         }
         closeConnection();
+        System.out.println("подключение закрыто");
         return exist;
     }
     
     //Внесение пользовательских изменений в БД
     //Добавление нового вопроса
     public static void createUserQuestion(Vector crypt) throws ClassNotFoundException, SQLException {
+        System.out.println("Получен вопрос на сохранение");
         int id = calculationQuestionID();
         System.out.println("Новое ID вычислено");
         Connection();
         String user_login = crypt.elementAt(0).toString(); String question = crypt.elementAt(1).toString();
         String answer_0 = crypt.elementAt(2).toString(); String answer_1 = crypt.elementAt(3).toString();
         String answer_2 = crypt.elementAt(4).toString(); String answer_3 = crypt.elementAt(5).toString();
-        String true_answer = crypt.elementAt(6).toString(); String difficulty = crypt.elementAt(7).toString();
-        String question_level = crypt.elementAt(8).toString(); String predmet = crypt.elementAt(9).toString();
+        String true_answer = crypt.elementAt(6).toString(); int difficulty = Integer.parseInt(crypt.elementAt(7).toString());
+        int question_level = Integer.parseInt(crypt.elementAt(8).toString()); String predmet = crypt.elementAt(9).toString();
         System.out.println("Вопрос разобран");
         
         Statement idUserST = conn.createStatement();
         ResultSet idUserRS = idUserST.executeQuery("SELECT id_user FROM users WHERE login = '"+user_login+"';");
-        String idUser = idUserRS.getString("id_user");
-        System.out.println("Boe ID usera");
+        int idUser = idUserRS.getInt("id_user");
+        System.out.println("Ищу ID usera");
         
         Statement idPredmetST = conn.createStatement();
         ResultSet idPredmetRS = idPredmetST.executeQuery("SELECT id_predmet FROM predmets WHERE namePredmet = '"+predmet+"';");
-        String idPredmet = idPredmetRS.getString("id_predmet");
+        int idPredmet = idPredmetRS.getInt("id_predmet");
         System.out.println("Ищу ID предмета");
         
+        System.out.println("Приступаю к сохранению!!!!");
         Statement saveQuestion = conn.createStatement();
+        System.out.println("INSERT INTO questions"
+                + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
+                + "VALUES('"+id+"', '"+question_level+"', '"+idUser+"', '"+question+"', '"+answer_0+"', '"+answer_1+"', '"+answer_2+"', "
+                + "'"+answer_3+"', '"+true_answer+"', '"+difficulty+"', '"+idPredmet+"');");
         saveQuestion.execute("INSERT INTO questions"
                 + "(id_question, question_level, id_user, question, answer_0, answer_1, answer_2, answer_3, true_answer, difficulty, predmet)"
-                + "VALUES('"+id+"', '"+question_level+"', '"+idUser+"', "+question+"', '"+answer_0+"', '"+answer_1+"', '"+answer_2+"', "
+                + "VALUES('"+id+"', '"+question_level+"', '"+idUser+"', '"+question+"', '"+answer_0+"', '"+answer_1+"', '"+answer_2+"', "
                 + "'"+answer_3+"', '"+true_answer+"', '"+difficulty+"', '"+idPredmet+"');");
         System.out.println("Вопрос сохранен");
         closeConnection();

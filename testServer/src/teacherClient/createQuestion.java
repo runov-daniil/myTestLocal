@@ -334,9 +334,9 @@ public class createQuestion extends javax.swing.JFrame {
 
     private void saveQuestionCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveQuestionCheckActionPerformed
         try {boolean save = sendQuestion();
-            if(save = true){
+            if(save == true){
                 JOptionPane.showMessageDialog(rootPane, "Вопрос успешно сохранен!");
-                try {teacherSocket.send("getQuestions", teacherClient.loginLabel.getText());} catch (IOException ex) {}
+                teacherClient.refreshQuestion();
                 this.dispose();
             }else{
                 JOptionPane.showMessageDialog(rootPane, "Вопрос с такой формуллировкой уже существует!");
@@ -386,7 +386,7 @@ public class createQuestion extends javax.swing.JFrame {
     }
     //Формирование вопроса и отправка на сервер
     private static boolean sendQuestion() throws IOException, ClassNotFoundException {
-        boolean pending = teacherSocket.serverPending();
+        boolean pending = teacherSocket.serverPending(8484);
         boolean save = false;
         
         if(pending = true){
@@ -413,7 +413,7 @@ public class createQuestion extends javax.swing.JFrame {
             
             teacherSocket.sendVector(toSend);
             
-            save = teacherSocket.serverPending();
+            save = teacherSocket.serverPending(9494);
         }
         return save;
     }

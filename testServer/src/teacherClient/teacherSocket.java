@@ -51,11 +51,11 @@ public class teacherSocket {
         return ob;
     }
     //Ожидание сервера на прием вопроса
-    public static boolean serverPending() throws IOException, ClassNotFoundException {
+    public static boolean serverPending(int port) throws IOException, ClassNotFoundException {
         boolean pending = false;
         send("saveQuestion", teacherClient.loginLabel.getText());
         
-        ServerSocket client = new ServerSocket(6464);
+        ServerSocket client = new ServerSocket(port);
         Socket get = client.accept();
         
         InputStream getIn = get.getInputStream();
@@ -68,6 +68,8 @@ public class teacherSocket {
         if(getLine.equals("true")){
             pending = true;
         }
+        client.close();
+        get.close();
         return pending;
     }
     //Отправка вектора

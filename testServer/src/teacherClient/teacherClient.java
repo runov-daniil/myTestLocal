@@ -174,7 +174,7 @@ public class teacherClient extends javax.swing.JFrame {
     }
     
     //Обновление вопросов учителя
-    private static void refreshQuestion() throws IOException, ClassNotFoundException{
+    public static void refreshQuestion() throws IOException, ClassNotFoundException{
         teacherSocket.send("getQuestions", loginLabel.getText());
         
         Object get = new Object();
