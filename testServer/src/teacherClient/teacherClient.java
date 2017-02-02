@@ -58,6 +58,11 @@ public class teacherClient extends javax.swing.JFrame {
         });
 
         deleteButton.setText("Удалить");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         updateButton.setText("Редактировать");
 
@@ -166,6 +171,10 @@ public class teacherClient extends javax.swing.JFrame {
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         createQuestion.main(true);
     }//GEN-LAST:event_createButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     public static void main(boolean visible) throws ClassNotFoundException {
         teacherClient.setResizable(false);
