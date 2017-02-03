@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import testserver.dataBase;
 
@@ -173,7 +174,18 @@ public class teacherClient extends javax.swing.JFrame {
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        int selectedRowCount = myQuestionTable.getSelectedRowCount();
+        if(selectedRowCount != 0){
+            if(selectedRowCount == 1){
+                int selectedRow = myQuestionTable.getSelectedRow();
+                try {teacherSocket.send("deleteQuestion", myQuestionTable.getValueAt(selectedRow, 1).toString()+"|"+loginLabel.getText());} catch (IOException ex) {}
+                try {refreshQuestion();} catch (IOException ex) {} catch (ClassNotFoundException ex) {}
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Выберите один вопрос!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Выберите вопрос для удаления!");
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     public static void main(boolean visible) throws ClassNotFoundException {

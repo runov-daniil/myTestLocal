@@ -1001,4 +1001,36 @@ public class dataBase {
         closeConnection();
         refreshQuestion();
     }
+    //Удаление вопроса из БД
+    public static void deleteUserQuestion(String getData) throws ClassNotFoundException, SQLException {
+        Connection();
+        int length = getData.length();
+        int i = 0;
+        String question = "";
+        String login = "";
+        boolean flag = true;
+        while(i < length){
+            char ch = getData.charAt(i);
+            if(flag == true){
+                if(ch != '|'){
+                    question = question + ch;
+                    i++;
+                }else{
+                    flag = false;
+                    i++;
+                }
+            }else{
+                login = login + ch;
+                i++;
+            }
+        }
+        
+        Statement idUserST = conn.createStatement();
+        ResultSet idUserRS = idUserST.executeQuery("SELECT id_user FROM users WHERE login = '"+login+"';");
+        int idUser = idUserRS.getInt("id_user");
+        
+        st.execute("DELETE FROM questions WHERE question = '"+question+"' AND id_user = '"+idUser+"';");
+        closeConnection();
+        refreshQuestion();
+    }
 } 

@@ -225,6 +225,14 @@ public class listenSocket extends javax.swing.JFrame {
                 lastRow++;
                 break;
                 //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Удаление вопроса">
+                case "deleteQuestion":
+                    logger(">>> Получен запрос удаления нового вопроса с IP " + logServer.pendingTable.getValueAt(lastRow, 2));
+                    try {dataBase.deleteUserQuestion(logServer.pendingTable.getValueAt(lastRow, 1).toString());} catch (SQLException ex) {}
+                    logger("        Вопрос удален!");
+                    lastRow++;
+                    break;
+                //</editor-fold>
         }
     }
     
